@@ -13,10 +13,7 @@ const TopBar = () => {
         />
         <p className="font-semibold max-xs:hidden">SPSS</p>
       </Link>
-      <div className="flex gap-4 items-center pr-8 cursor-pointer">
-        <span>
-          <p>Tên Đăng Nhập</p>
-        </span>
+      <div className="flex items-center pr-8 cursor-pointer">
         <Image
           src={'/assets/logo_bachkhoa.svg'}
           alt="avatar"

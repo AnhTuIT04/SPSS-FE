@@ -25,3 +25,34 @@ export const sideBarLinks = [
     label: 'Setting',
   },
 ];
+
+export const dashboardCards = [
+  {
+    imgURL: '/assets/total_user.svg',
+    label: 'Total User',
+    statistic: '2,024',
+    trend: 'up',
+    trendValue: '8.5%'
+  },
+  {
+    imgURL: '/assets/total_file.svg',
+    label: 'Total File',
+    statistic: '1,034',
+    trend: 'up',
+    trendValue: '1.3%'
+  },
+  {
+    imgURL: '/assets/total_money.svg',
+    label: 'Total Money',
+    statistic: '$100,000',
+    trend: 'down',
+    trendValue: '4.3%',
+  },
+  {
+    imgURL: '/assets/total_pending.svg',
+    label: 'Total Pending',
+    statistic: '2,040',
+    trend: 'up',
+    trendValue: '1.8%'
+  }
+]

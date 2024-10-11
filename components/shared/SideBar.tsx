@@ -33,6 +33,7 @@ export default function SideBar() {
           );
         })}
       </div>
+      <div className='h-60 w-full bg-orange-300 flex justify-center items-center max-lg:hidden'><p>Help Center</p></div>
     </section>
   );
 }
