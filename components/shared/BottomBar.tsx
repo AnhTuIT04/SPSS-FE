@@ -25,8 +25,8 @@ const BottomBar = () => {
               <Image 
                 src={link.imgURL}
                 alt={link.label}
-                width={30}
-                height={30}
+                width={24}
+                height={24}
               />
               <p className='max-sm:hidden'>{link.label}</p>
             </Link>

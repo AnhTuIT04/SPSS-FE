@@ -25,8 +25,8 @@ export default function SideBar() {
               <Image
                 src={link.imgURL}
                 alt={link.label}
-                width={30}
-                height={30}
+                width={24}
+                height={24}
               />
               <p className="max-lg:hidden">{link.label}</p>
             </Link>
