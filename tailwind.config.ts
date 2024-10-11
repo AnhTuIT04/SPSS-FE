@@ -11,6 +11,11 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'primary-blue': '#5475E5',
+        'primary-cyan': '#18BFFF'
+      },
+      screens: {
+        xs: '400px',
       },
     },
   },
