@@ -9,7 +9,7 @@ export default function SideBar() {
                     <Image src={logo_bachkhoa} alt="logo" width={50} height={50} />
                     <span className='text-3xl font-semibold pr-8'><h1 className=''>SPSS</h1></span>
                 </div>
-                <div className='pt-3'>
+                <div className='pt-2'>
                     <span><h3>Smart Printing Service for Students</h3></span>
                 </div>
             </div>
