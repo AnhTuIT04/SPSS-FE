@@ -10,12 +10,12 @@ export const studentSideBarLinks = [
       label: 'Start Printing',
     },
     {
-      imgURL: '/assets/student.svg',
+      imgURL: '/assets/buypages.svg',
       route: '/student/buypages',
       label: 'Buy Pages',
     },
     {
-      imgURL: '/assets/report.svg',
+      imgURL: '/assets/printinglog.svg',
       route: '/student/printinglog',
       label: 'Printing Log',
     },
