@@ -4,10 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import path from 'path';
+
+import { StudentIcon, SettingIcon, LogoutIcon, MoreIcon } from '@/constants/icons';
 
 const TopBar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -19,9 +21,9 @@ const TopBar = () => {
   };
 
   const menuItems = [
-    { name: 'My Profile', icon: '/assets/student.svg', path: '/profile' },
-    { name: 'Settings', icon: '/assets/setting.svg', path: '/settings' },
-    { name: 'Logout', icon: '/assets/logout.svg', path: '/logout' },
+    { name: 'My Profile', icon: StudentIcon, path: '/profile' },
+    { name: 'Setting', icon: SettingIcon, path: '/spso/setting' },
+    { name: 'Logout', icon: LogoutIcon, path: '/logout' },
   ];
 
   useEffect(() => {
@@ -35,40 +37,67 @@ const TopBar = () => {
   }, []);
 
   const handleNavigation = (path: string) => {
+    // Remember to clear the token when logging out: IMPORTANT
+    if (path === '/logout') {
+      setIsLoggedIn(false);
+      setShowMenu(false);
+      return;
+    }
+
     router.push(path);
     setShowMenu(false);
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full h-[70px] bg-red-200 flex justify-between items-center px-6 shadow-md z-50">
+    <nav className="fixed top-0 left-0 w-full h-[70px] bg-white flex justify-between items-center px-6 shadow-sm z-50">
       <Link href={'/spso/dashboard'} className="flex items-center gap-4">
         <Image src="/assets/logo_bachkhoa.svg" alt="Logo" width={50} height={50} />
-        <p className="font-semibold text-lg max-sm:hidden">SPSS</p>
+        <p className="text-2xl font-bold max-sm:hidden">SPSS</p>
       </Link>
 
-      <div className="relative flex items-center gap-4 cursor-pointer" ref={menuRef}>
-        <Image src={user.avatar} alt="avatar" width={44} height={44} className="rounded-full" />
-        <div>
-          <p className="font-semibold">{user.name}</p>
-          <p className="text-sm text-gray-500">{user.role}</p>
-        </div>
+      <div className="relative flex items-center gap-4" ref={menuRef}>
+        {isLoggedIn ? (
+          <>
+            <Image src={user.avatar} alt="avatar" width={44} height={44} className="rounded-full" />
+            <div>
+              <p className="font-semibold">{user.name}</p>
+              <p className="text-sm text-gray-500">{user.role}</p>
+            </div>
 
-        <Image src={'/assets/more.svg'} alt="more" width={24} height={24} onClick={() => setShowMenu(!showMenu)} className="cursor-pointer" />
+            <MoreIcon onClick={() => setShowMenu(!showMenu)} className="cursor-pointer w-6 h-6" />
 
-        {showMenu && (
-          <div className="absolute right-0 top-full mt-3 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-            <ul>
-              {menuItems.map((item) => (
-                <li
-                  key={item.name}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-lg flex items-center gap-2"
-                  onClick={() => handleNavigation(item.path)}
-                >
-                  <Image src={item.icon} alt={item.name} width={20} height={20} />
-                  {item.name}
-                </li>
-              ))}
-            </ul>
+            {showMenu && (
+              <div className="absolute right-0 z-50 w-48 mt-3 bg-white border border-gray-200 rounded-lg shadow-lg top-full">
+                <ul>
+                  {menuItems.map((item) => (
+                    <li
+                      key={item.name}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-100"
+                      onClick={() => handleNavigation(item.path)}
+                    >
+                      <item.icon width={20} height={20} />
+                      {item.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="flex gap-4">
+            <button
+              // onClick={() => handleNavigation('/login')}
+              onClick={() => setIsLoggedIn(true)}
+              className="w-[100px] px-4 py-2 font-bold text-blue-700 bg-transparent border border-blue-500 rounded hover:bg-blue-500 hover:text-white hover:border-transparent"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => handleNavigation('/register')}
+              className="w-[100px] px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-600"
+            >
+              Register
+            </button>
           </div>
         )}
       </div>

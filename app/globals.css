@@ -2,15 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Reset CSS */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +25,12 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (max-height: 660px) {
+  .hide-if-short {
+    display: none;
+  }
 }
 
 @layer utilities {
@@ -49,11 +56,39 @@ body {
   }
 
   .sidebar {
-    @apply sticky left-0 top-0 z-20 flex h-screen w-64 max-lg:w-fit flex-col justify-between overflow-auto pb-5 pt-28 max-md:hidden border-r;
+    @apply sticky left-0 top-0 z-20 flex items-center h-screen w-64 max-lg:w-fit flex-col justify-between overflow-auto pb-5 pt-24 max-md:hidden border-r;
+  }
+
+  .action-wrapper {
+    width: 80%;
   }
 
   .sidebar-link {
-    @apply relative flex justify-start gap-4 rounded-lg p-4;
+    @apply relative flex justify-start gap-4 rounded-lg py-4 font-semibold;
+  }
+
+  .help-content::before {
+    content: '';
+    position: absolute;
+    left: -70px;
+    top: -70px;
+    z-index: -1;
+    width: 140px;
+    height: 140px;
+    border-radius: 100%;
+    background-color: #262733;
+  }
+
+  .help-content::after {
+    content: '';
+    position: absolute;
+    right: -75px;
+    bottom: -75px;
+    z-index: -1;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    background-color: #262733;
   }
 
   .bottombar {
@@ -61,7 +96,7 @@ body {
   }
 
   .bottombar-container {
-    @apply flex items-center justify-between gap-3 xs:gap-5 xs:pb-2;
+    @apply flex items-center justify-between gap-3 xs:gap-5 xs:py-2;
   }
 
   .bottombar-link {
