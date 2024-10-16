@@ -17,7 +17,7 @@ const BottomBar = () => {
             <Link
               href={link.route}
               key={link.label}
-              className={`sidebar-link px-6
+              className={`bottombar-link px-6
                 ${isActive ? 'text-[#141522] bg-[#F5F5F7]' : 'text-[#8E92BC] bg-[#FFFFFF]'}
                 ${!isActive ? 'hover:bg-[hsl(240,9%,98.5%)]' : ''}`}
             >

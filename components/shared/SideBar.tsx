@@ -31,9 +31,9 @@ export default function SideBar() {
         })}
       </div>
 
-      <div className="help-center absolute left-[50%] translate-x-[-50%] bottom-0 w-[80%] h-64 rounded-[10px] max-lg:hidden hide-if-short">
+      <div className="help-center absolute left-[50%] translate-x-[-50%] bottom-4 w-[80%] h-64 rounded-[10px] max-lg:hidden hide-if-short">
         <span className="absolute top-0 left-[50%] translate-x-[-50%] translate-y-[-45%] z-20">
-          <Image src="/assets/question.png" width={100} height={100} alt="Question" />
+          <Image src="/assets/question.png" width={100} height={100} alt="Question" className="w-auto h-auto" priority />
         </span>
         <div className="help-content absolute left-[50%] translate-x-[-50%] bottom-0 w-full h-64 rounded-[10px] overflow-hidden bg-[#141522]">
           <div className="description mt-[32px]">
