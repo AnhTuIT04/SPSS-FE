@@ -84,8 +84,8 @@ const TopBar = () => {
         ) : (
           <div className="flex gap-4">
             <button
-              onClick={() => handleNavigation('/login')}
-              // onClick={() => setIsLoggedIn(true)}
+              // onClick={() => handleNavigation('/login')}
+              onClick={() => setIsLoggedIn(true)}
               className="w-[100px] px-4 py-2 font-bold text-blue-700 bg-transparent border border-[hsl(217,91%,50%)] rounded hover:bg-[hsl(217,91%,50%)] hover:text-white hover:border-transparent"
             >
               Login

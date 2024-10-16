@@ -24,7 +24,7 @@ const BottomBar = () => {
               <div className="w-[24px] h-[24px]">
                 <link.icon stroke={isActive ? '#141522' : '#8E92BC'} />
               </div>
-              <p className="max-lg:hidden">{link.label}</p>
+              <p className=" max-sm:hidden">{link.label}</p>
             </Link>
           );
         })}

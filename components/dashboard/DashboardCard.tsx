@@ -10,7 +10,7 @@ interface DashboardCardProps {
 
 const DashboardCard: React.FC<DashboardCardProps> = ({ imgURL, label, statistic, trend, trendValue }) => {
   return (
-    <div className="lg:col-span-2 col-span-1 bg-white flex flex-col justify-between w-[270px] h-[161px] border p-4 rounded-lg">
+    <div className="bg-white flex flex-col justify-between w-[270px] h-[160px] border p-4 rounded-lg shadow-lg">
       <div className="flex justify-between w-full">
         <div className="flex flex-col gap-5">
           <p className="text-xs text-gray-500">{label}</p>
