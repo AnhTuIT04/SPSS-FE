@@ -22,5 +22,13 @@
     "role": "spso",
     "image": "/assets/guest.png",
     "password": "$2a$10$ndHoE7WeHUYXRk9q5wOaN.OgveHjh.2.T7VuiZ15X8B2lILXQ.EWe"
+  },
+  {
+    "id": "851beeca-42e7-4af3-abdf-84e0923666c0",
+    "name": "Han Le",
+    "email": "lehoangngochanmonkey@gmail.com",
+    "role": "student",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$zIZlKW5MbwH870I90xrEoOXvlHpdXf5aqAwiJ7JIj/IJ.wskfGniS"
   }
 ]
