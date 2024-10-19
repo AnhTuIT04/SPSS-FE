@@ -14,5 +14,13 @@
     "role": "student",
     "image": "/assets/guest.png",
     "password": "$2a$10$FJxoQgADEFJJGoWQvvQFi.djgIbsW5NVJ6AnapCR5tKYUyLswUgFe"
+  },
+  {
+    "id": "851beeca-42e7-4af3-abdf-84e0923666c0",
+    "name": "Han Le",
+    "email": "lehoangngochanmonkey@gmail.com",
+    "role": "student",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$zIZlKW5MbwH870I90xrEoOXvlHpdXf5aqAwiJ7JIj/IJ.wskfGniS"
   }
 ]
