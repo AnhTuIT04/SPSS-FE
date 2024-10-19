@@ -1,59 +1,133 @@
-import { LoginIcon } from '@/constants/icons';
+'use client';
 
-function Login() {
+import * as z from 'zod';
+import { useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { LoginSchema } from '@/schemas';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormLabel,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
+import { CardWrapper } from '@/components/auth/card-wrapper';
+import { FormError } from '@/components/auth/form-error';
+import { FormSuccess } from '@/components/auth/form-success';
+import { login } from '@/actions';
+
+function LoginPage() {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>('');
+  const [success, setSuccess] = useState<string | undefined>('');
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = (user: z.infer<typeof LoginSchema>) => {
+    setError('');
+    setSuccess('');
+
+    startTransition(() => {
+      login(user).then((res) => {
+        setError(res?.error);
+        setSuccess(res?.success);
+      });
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-      <div className="max-w-screen-xl m-0 sm:m-8 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-        <div className="flex items-center justify-center flex-row lg:w-1/2 xl:w-5/12 p-5 sm:p-10">
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl xl:text-3xl font-extrabold">Sign in to your account</h1>
-            <div className="w-full flex-1 mt-8">
-              <div className="mx-auto max-w-xs">
-                <form>
-                  <input
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    type="email"
-                    placeholder="Email"
-                    autoComplete="email"
-                  />
-                  <input
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    type="password"
-                    placeholder="Password"
-                    autoComplete="current-password"
-                  />
+    <CardWrapper headLabel="Sign in" showSocial>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="email"
+                      placeholder="Enter your email"
+                      autoComplete="email"
+                      className="h-12 px-6 bg-[#F3F4F6] focus:bg-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                  <div className="flex items-center justify-between mt-5">
-                    <label className="flex items-center">
-                      <input type="checkbox" className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" />
-                      <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                    <a href="#" className="text-sm text-indigo-600 hover:underline">
-                      Forgot password?
-                    </a>
-                  </div>
-
-                  <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                    <LoginIcon stroke="#f3f4f6" className="w-6 h-6 -ml-2" />
-                    <span className="ml-3">Sign in</span>
-                  </button>
-                </form>
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="password"
+                      placeholder="Enter your password"
+                      autoComplete="current-password"
+                      className="h-12 px-6 bg-[#F3F4F6] focus:bg-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
-        </div>
 
-        <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
-          <div
-            className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-            style={{
-              backgroundImage: "url('/assets/bg_auth.svg')",
-            }}
-          ></div>
-        </div>
-      </div>
-    </div>
+          <FormError message={error || ''} />
+          <FormSuccess message={success || ''} />
+
+          <div className="flex items-center justify-between mt-4">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+              />
+              <span className="ml-2 text-sm text-gray-600">Remember me</span>
+            </label>
+            <a href="#" className="text-sm text-indigo-600 hover:underline">
+              Forgot password?
+            </a>
+          </div>
+
+          <Button
+            disabled={isPending}
+            type="submit"
+            size="lg"
+            className="h-12 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+          >
+            Sign in
+          </Button>
+        </form>
+      </Form>
+
+      <p className="mt-4 text-sm text-gray-600 text-center">
+        Don't have an account?{' '}
+        <a href="/register" className="text-indigo-600 hover:underline">
+          Sign up now
+        </a>
+      </p>
+    </CardWrapper>
   );
 }
 
-export default Login;
+export default LoginPage;

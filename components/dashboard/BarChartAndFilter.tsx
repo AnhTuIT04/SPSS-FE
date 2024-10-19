@@ -8,12 +8,10 @@ import { subDays } from 'date-fns';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-import { printData } from '@/constants';
-import LineChart from './LineChart';
-import { Bar } from 'react-chartjs-2';
-import BarChart from './BarChart';
+import { printData } from '@/constants/spso';
+import BarChartComponent from './BarChartComponent';
 
-const LineChartAndFilter = () => {
+const BarChartAndFilter = () => {
   const [chartData, setChartData] = useState(printData);
 
   const [dateRange, setDateRange] = useState({
@@ -52,7 +50,10 @@ const LineChartAndFilter = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (printerDropdownRef.current && !printerDropdownRef.current.contains(event.target as Node)) {
+      if (
+        printerDropdownRef.current &&
+        !printerDropdownRef.current.contains(event.target as Node)
+      ) {
         setShowPrinterDropdown(false); // Close  if clicked outside
       }
     };
@@ -65,7 +66,10 @@ const LineChartAndFilter = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (fileTypeDropdownRef.current && !fileTypeDropdownRef.current.contains(event.target as Node)) {
+      if (
+        fileTypeDropdownRef.current &&
+        !fileTypeDropdownRef.current.contains(event.target as Node)
+      ) {
         setShowFileTypeDropdown(false); // Close  if clicked outside
       }
     };
@@ -92,14 +96,13 @@ const LineChartAndFilter = () => {
       return isInDateRange && isFileTypeMatch && isPrinterMatch;
     });
 
-    console.log('Filtered Data:', newFilteredData); // Debugging line
     setChartData(newFilteredData);
   };
 
-  const handleApplyDateRange = () => {
-    setShowDatePicker(false);
-    filterData();
-  };
+  // const handleApplyDateRange = () => {
+  //   setShowDatePicker(false);
+  //   filterData();
+  // };
 
   return (
     <div className="flex flex-col w-full gap-10 pt-6">
@@ -112,7 +115,10 @@ const LineChartAndFilter = () => {
 
         {/* Filter by Date */}
         <div ref={datePickerRef} className="filter-content">
-          <button onClick={() => setShowDatePicker(!showDatePicker)} className="flex justify-between gap-10">
+          <button
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className="flex justify-between gap-10"
+          >
             <p>Date</p>
             <Image src="/assets/dropdown.svg" alt="Drop down" width={24} height={24} />
           </button>
@@ -133,7 +139,10 @@ const LineChartAndFilter = () => {
 
         {/* Filter by Printer */}
         <div ref={printerDropdownRef} className="filter-content">
-          <button onClick={() => setShowPrinterDropdown(!showPrinterDropdown)} className="flex justify-between gap-10">
+          <button
+            onClick={() => setShowPrinterDropdown(!showPrinterDropdown)}
+            className="flex justify-between gap-10"
+          >
             <p>{selectedPrinter === 'All' ? 'Printer' : selectedPrinter}</p>
             <Image src="/assets/dropdown.svg" alt="Drop down" width={24} height={24} />
           </button>
@@ -170,8 +179,11 @@ const LineChartAndFilter = () => {
 
         {/* Filter by File Type */}
         <div ref={fileTypeDropdownRef} className="filter-content">
-          <button onClick={() => setShowFileTypeDropdown(!showFileTypeDropdown)} className="flex justify-between gap-10">
-            <p>{selectedFileType === 'All'? 'File Type' : selectedFileType}</p>
+          <button
+            onClick={() => setShowFileTypeDropdown(!showFileTypeDropdown)}
+            className="flex justify-between gap-10"
+          >
+            <p>{selectedFileType === 'All' ? 'File Type' : selectedFileType}</p>
             <Image src="/assets/dropdown.svg" alt="Drop down" width={24} height={24} />
           </button>
           {showFileTypeDropdown && (
@@ -223,13 +235,10 @@ const LineChartAndFilter = () => {
           </button>
         </div>
       </div>
-      
-      <div className='flex flex-wrap'>
-        <LineChart data={chartData} />
-        <BarChart />
-      </div>
+
+      <BarChartComponent data={chartData} />
     </div>
   );
 };
 
-export default LineChartAndFilter;
+export default BarChartAndFilter;

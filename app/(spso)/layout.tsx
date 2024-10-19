@@ -1,11 +1,17 @@
+import 'tailwindcss/tailwind.css';                         // Import Tailwind CSS first
+import 'primereact/resources/themes/saga-blue/theme.css';  // PrimeReact theme
+import 'primereact/resources/primereact.min.css';          // PrimeReact core styles
+import 'primeicons/primeicons.css';                        // PrimeIcons
 import '@/app/globals.css';
-import TopBar from '@/components/shared/TopBar';
-import SideBar from '@/components/shared/SideBar';
-import BottomBar from '@/components/shared/BottomBar';
+import { PrimeReactProvider } from "primereact/api";
+import Tailwind from "primereact/passthrough/tailwind";
+import TopBar from '@/components/TopBar';
+import SideBar from '@/components/SideBar';
+import BottomBar from '@/components/BottomBar';
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
+    <PrimeReactProvider value={{ unstyled: true, pt: Tailwind }}>
       <TopBar />
       <main className="flex">
         <SideBar />
@@ -14,6 +20,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </section>
       </main>
       <BottomBar />
-    </>
+    </PrimeReactProvider>
   );
 }

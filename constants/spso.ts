@@ -1,6 +1,6 @@
 import { DashboardIcon, PrinterIcon, StudentIcon, ReportIcon, SettingIcon } from './icons';
 
-export const sideBarLinks = [
+export const spsoSideBarLinks = [
   {
     icon: DashboardIcon,
     route: '/spso/dashboard',
@@ -96,4 +96,148 @@ export const printData = [
   { date: '2024-10-29', value: 50, fileType: 'DOCX', printer: 'Printer B' },
   { date: '2024-10-30', value: 40, fileType: 'PDF', printer: 'Printer C' },
   { date: '2024-10-31', value: 55, fileType: 'JPEG', printer: 'Printer A' },
+];
+
+
+export const paymentData = [
+  { date: '2024-09-26', value: 40},
+  { date: '2024-09-27', value: 55},
+  { date: '2024-09-28', value: 30},
+  { date: '2024-09-29', value: 70},
+  { date: '2024-09-30', value: 20},
+  { date: '2024-10-01', value: 65},
+  { date: '2024-10-02', value: 45},
+  { date: '2024-10-03', value: 75},
+  { date: '2024-10-04', value: 80},
+  { date: '2024-10-05', value: 50},
+  { date: '2024-10-06', value: 60},
+  { date: '2024-10-07', value: 30},
+  { date: '2024-10-08', value: 90},
+  { date: '2024-10-09', value: 35},
+  { date: '2024-10-10', value: 50},
+  { date: '2024-10-11', value: 70},
+  { date: '2024-10-12', value: 80},
+  { date: '2024-10-13', value: 45},
+  { date: '2024-10-14', value: 65},
+  { date: '2024-10-15', value: 25},
+  { date: '2024-10-16', value: 50},
+  { date: '2024-10-17', value: 90},
+  { date: '2024-10-18', value: 55},
+  { date: '2024-10-19', value: 80},
+  { date: '2024-10-20', value: 60},
+  { date: '2024-10-21', value: 40},
+  { date: '2024-10-22', value: 30},
+  { date: '2024-10-23', value: 70},
+  { date: '2024-10-24', value: 45},
+  { date: '2024-10-25', value: 85},
+  { date: '2024-10-26', value: 75},
+  { date: '2024-10-27', value: 20},
+  { date: '2024-10-28', value: 60},
+  { date: '2024-10-29', value: 50},
+  { date: '2024-10-30', value: 40},
+  { date: '2024-10-31', value: 55},
+];
+
+type PrintingLog = {
+  id: number;
+  name: string;
+  date: string;
+  fileName: string;
+  fileType: string;
+  fileSize: string;
+  printer: string;
+  status: string;
+}
+
+export const printingLogs: PrintingLog[] = [
+  {
+    id: 1,
+    name: 'John Doe',
+    date: '2024-09-26',
+    fileName: 'file1.pdf',
+    fileType: 'PDF',
+    fileSize: '2.3MB',
+    printer: 'Printer A',
+    status: 'Success',
+  },
+  {
+    id: 2,
+    name: 'Jane Doe',
+    date: '2024-09-27',
+    fileName: 'file2.docx',
+    fileType: 'DOCX',
+    fileSize: '1.3MB',
+    printer: 'Printer B',
+    status: 'Success',
+  },
+  {
+    id: 3,
+    name: 'John Doe',
+    date: '2024-09-28',
+    fileName: 'file3.pdf',
+    fileType: 'PDF',
+    fileSize: '3.3MB',
+    printer: 'Printer A',
+    status: 'Success',
+  },
+  {
+    id: 4,
+    name: 'Jane Doe',
+    date: '2024-09-29',
+    fileName: 'file4.jpeg',
+    fileType: 'JPEG',
+    fileSize: '4.3MB',
+    printer: 'Printer C',
+    status: 'Success',
+  },
+  {
+    id: 5,
+    name: 'John Doe',
+    date: '2024-09-30',
+    fileName: 'file5.pdf',
+    fileType: 'PDF',
+    fileSize: '2.3MB',
+    printer: 'Printer A',
+    status: 'Success',
+  },
+  {
+    id: 6,
+    name: 'Jane Doe',
+    date: '2024-10-01',
+    fileName: 'file6.docx',
+    fileType: 'DOCX',
+    fileSize: '1.3MB',
+    printer: 'Printer B',
+    status: 'Success',
+  },
+  {
+    id: 7,
+    name: 'John Doe',
+    date: '2024-10-02',
+    fileName: 'file7.pdf',
+    fileType: 'PDF',
+    fileSize: '3.3MB',
+    printer: 'Printer C',
+    status: 'Success',
+  },
+  {
+    id: 8,
+    name: 'Jane Doe',
+    date: '2024-10-03',
+    fileName: 'file8.jpeg',
+    fileType: 'JPEG',
+    fileSize: '4.3MB',
+    printer: 'Printer A',
+    status: 'Success',
+  },
+  {
+    id: 9,
+    name: 'John Doe',
+    date: '2024-10-04',
+    fileName: 'file9aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.pdf',
+    fileType: 'PDF',
+    fileSize: '2.3MB',
+    printer: 'Printer B',
+    status: 'Success',
+  }
 ];
