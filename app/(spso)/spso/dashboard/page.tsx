@@ -1,7 +1,8 @@
 'use client';
 
+import BarChart from '@/components/dashboard/BarChart';
 import DashboardCard from '@/components/dashboard/DashboardCard';
-import DashboardFilterAndChart from '@/components/dashboard/DashboardFilterAndChart';
+import LineChartAndFilter from '@/components/dashboard/LineChartAndFilter';
 import { dashboardCards } from '@/constants';
 
 
@@ -20,10 +21,10 @@ export default function Home() {
           <DashboardCard key={card.label} {...card} trend={card.trend as 'up' | 'down'} />
         ))}
       </div>
-
       
-      <DashboardFilterAndChart />
-
+      <div className='w-full flex flex-wrap'>
+        <LineChartAndFilter />
+      </div>
     </div>
   );
 }

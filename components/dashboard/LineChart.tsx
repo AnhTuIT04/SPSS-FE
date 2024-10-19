@@ -1,5 +1,3 @@
-// components/LineChart.tsx
-import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend, Filler } from 'chart.js';
 
@@ -37,7 +35,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
     responsive: true,
     plugins: {
       legend: {
-        display: true, // Hide the legend
+        display: false, // Hide the legend
       },
       tooltip: {
         enabled: true,
@@ -74,7 +72,7 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => {
   };
 
   return (
-    <div>
+    <div className=' bg-white p-4 rounded-lg'>
       <Line data={chartData} options={chartOptions} />
     </div>
   );

@@ -4,14 +4,16 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import { DateRange, RangeKeyDict } from 'react-date-range';
-import { addDays, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
 import { printData } from '@/constants';
-import LineChart from '../LineChart';
+import LineChart from './LineChart';
+import { Bar } from 'react-chartjs-2';
+import BarChart from './BarChart';
 
-const DashboardFilterAndChart = () => {
+const LineChartAndFilter = () => {
   const [chartData, setChartData] = useState(printData);
 
   const [dateRange, setDateRange] = useState({
@@ -117,14 +119,14 @@ const DashboardFilterAndChart = () => {
           {showDatePicker && (
             <div className="absolute z-10 mt-2 p-3 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
               <DateRange ranges={[dateRange]} onChange={handleSelectDateRange} moveRangeOnFirstSelection={false} showDateDisplay={true} />
-              <div className="bg-white w-full flex justify-center">
+              {/* <div className="bg-white w-full flex justify-center">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
                   onClick={handleApplyDateRange}
                 >
                   Apply Now
                 </button>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
@@ -221,9 +223,13 @@ const DashboardFilterAndChart = () => {
           </button>
         </div>
       </div>
-      <LineChart data={chartData} />
+      
+      <div className='flex flex-wrap'>
+        <LineChart data={chartData} />
+        <BarChart />
+      </div>
     </div>
   );
 };
 
-export default DashboardFilterAndChart;
+export default LineChartAndFilter;
