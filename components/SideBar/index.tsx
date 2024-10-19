@@ -1,18 +1,29 @@
-'use client';
-
 import Image from 'next/image';
-import { sideBarLinks } from '@/constants';
-import { usePathname } from 'next/navigation';
+import { headers } from 'next/headers';
+import { auth } from '@/auth';
 import Link from 'next/link';
 
-export default function SideBar() {
-  const pathname = usePathname();
+import { spsoSideBarLinks } from '@/constants/spso';
+import { studentSideBarLinks } from '@/constants/student';
+
+export default async function SideBar() {
+  const session = await auth();
+  const sideBarLinks =
+    session?.user.role === 'spso'
+      ? spsoSideBarLinks
+      : session?.user.role === 'student'
+      ? studentSideBarLinks
+      : [];
+
+  const heads = headers();
+  const pathname = heads.get('next-url') || '/spso/dashboard';
 
   return (
     <section className="custom-scrollbar sidebar">
       <div className="action-wrapper">
         {sideBarLinks.map((link) => {
-          const isActive = (pathname.includes(link.route) && link.route.length > 1) || pathname === link.route;
+          const isActive =
+            (pathname.includes(link.route) && link.route.length > 1) || pathname === link.route;
 
           return (
             <Link
@@ -33,16 +44,27 @@ export default function SideBar() {
 
       <div className="help-center absolute left-[50%] translate-x-[-50%] bottom-4 w-[80%] h-64 rounded-[10px] max-lg:hidden hide-if-short">
         <span className="absolute top-0 left-[50%] translate-x-[-50%] translate-y-[-45%] z-20">
-          <Image src="/assets/question.png" width={100} height={100} alt="Question" className="w-auto h-auto" priority />
+          <Image
+            src="/assets/question.png"
+            width={100}
+            height={100}
+            alt="Question"
+            className="w-auto h-auto"
+            priority
+          />
         </span>
         <div className="help-content absolute left-[50%] translate-x-[-50%] bottom-0 w-full h-64 rounded-[10px] overflow-hidden bg-[#141522]">
           <div className="description mt-[32px]">
             <h2 className="text-white text-center font-semibold text-xl">SPSS</h2>
-            <p className="text-white text-center mt-1 px-[15px] text-xs">A Smart Printing Service for Students</p>
+            <p className="text-white text-center mt-1 px-[15px] text-xs">
+              A Smart Printing Service for Students
+            </p>
           </div>
 
           <div className="copyright mt-5">
-            <p className="text-white text-center mt-1 px-[1px] text-xs">Bản quyền thuộc hcmut.edu.vn</p>
+            <p className="text-white text-center mt-1 px-[1px] text-xs">
+              Bản quyền thuộc hcmut.edu.vn
+            </p>
             <p className="text-white text-center mt-1 px-[1px] text-xs">Liên hệ: 0999.888.777</p>
             <p className="text-white text-center mt-1 px-[1px] text-xs">Email: spss@hcmut.edu.vn</p>
           </div>

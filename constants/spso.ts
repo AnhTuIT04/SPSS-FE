@@ -1,6 +1,6 @@
 import { DashboardIcon, PrinterIcon, StudentIcon, ReportIcon, SettingIcon } from './icons';
 
-export const sideBarLinks = [
+export const spsoSideBarLinks = [
   {
     icon: DashboardIcon,
     route: '/spso/dashboard',

@@ -1,80 +1,142 @@
-import { GitHubIcon, GoogleIcon } from '@/constants/icons';
+'use client';
 
-function Register() {
+import * as z from 'zod';
+import { useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { RegisterSchema } from '@/schemas';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormLabel,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
+import { CardWrapper } from '@/components/auth/card-wrapper';
+import { FormError } from '@/components/auth/form-error';
+import { FormSuccess } from '@/components/auth/form-success';
+import { register } from '@/actions';
+
+function RegisterPage() {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>('');
+  const [success, setSuccess] = useState<string | undefined>('');
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = (user: z.infer<typeof RegisterSchema>) => {
+    setError('');
+    setSuccess('');
+
+    startTransition(() => {
+      register(user).then((res) => {
+        setError(res?.error);
+        setSuccess(res?.success);
+      });
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-      <div className="max-w-screen-xl m-0 sm:m-8 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-        <div className="lg:w-1/2 xl:w-5/12 p-5 sm:p-10">
-          <div className="flex flex-col items-center">
-            <h1 className="text-2xl xl:text-3xl font-extrabold">Sign up</h1>
-            <div className="w-full flex-1 mt-8">
-              <div className="flex flex-col items-center">
-                <button className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
-                  <div className="bg-white p-2 rounded-full">
-                    <GoogleIcon className="w-4" />
-                  </div>
-                  <span className="ml-4">Sign Up with Google</span>
-                </button>
+    <CardWrapper headLabel="Sign up" showSocial>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="text"
+                      placeholder="Enter your name"
+                      autoComplete="name"
+                      className="h-12 px-6 bg-[#F3F4F6] focus:bg-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                <button className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline mt-5">
-                  <div className="bg-white p-1 rounded-full">
-                    <GitHubIcon className="w-8" />
-                  </div>
-                  <span className="ml-4">Sign Up with GitHub</span>
-                </button>
-              </div>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="email"
+                      placeholder="Enter your email"
+                      autoComplete="email"
+                      className="h-12 px-6 bg-[#F3F4F6] focus:bg-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="my-8 border-b text-center">
-                <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
-                  Or sign up with e-mail
-                </div>
-              </div>
-
-              <div className="mx-auto max-w-xs">
-                <form>
-                  <input
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    type="email"
-                    placeholder="Email"
-                    autoComplete="email"
-                  />
-                  <input
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    type="password"
-                    placeholder="Password"
-                    autoComplete="current-password"
-                  />
-                  <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                    <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                      <circle cx="8.5" cy="7" r="4" />
-                      <path d="M20 8v6M23 11h-6" />
-                    </svg>
-                    <span className="ml-3">Sign Up</span>
-                  </button>
-                  <p className="mt-6 text-xs text-gray-600 text-center">
-                    I agree to abide by the terms and conditions of this service
-                    <a href="#" className="border-b border-gray-500 border-dotted">
-                      Terms of Service
-                    </a>
-                    and its
-                  </p>
-                </form>
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="password"
+                      placeholder="Enter your password"
+                      autoComplete="current-password"
+                      className="h-12 px-6 bg-[#F3F4F6] focus:bg-white"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
-        </div>
-        <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
-          <div
-            className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-            style={{
-              backgroundImage: "url('/assets/bg_auth.svg')",
-            }}
-          ></div>
-        </div>
-      </div>
-    </div>
+
+          <FormError message={error || ''} />
+          <FormSuccess message={success || ''} />
+
+          <Button
+            disabled={isPending}
+            type="submit"
+            size="lg"
+            className="h-12 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+          >
+            Sign up
+          </Button>
+        </form>
+      </Form>
+
+      <p className="mt-4 text-sm text-gray-600 text-center">
+        Already have an account?{' '}
+        <a href="/login" className="text-indigo-600 hover:underline">
+          Sign in
+        </a>
+      </p>
+    </CardWrapper>
   );
 }
 
-export default Register;
+export default RegisterPage;

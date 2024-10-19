@@ -1,7 +1,7 @@
 import '@/app/globals.css';
-import TopBar from '@/components/shared/TopBar';
-import SideBar from './student/commons/SideBar';
-import BottomBar from '@/components/shared/BottomBar';
+import TopBar from '@/components/TopBar';
+import SideBar from '@/components/SideBar';
+import BottomBar from '@/components/BottomBar';
 
 export default function StudentLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

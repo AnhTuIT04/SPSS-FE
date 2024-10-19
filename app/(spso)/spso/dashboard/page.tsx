@@ -2,13 +2,9 @@
 
 import DashboardCard from '@/components/dashboard/DashboardCard';
 import DashboardFilterAndChart from '@/components/dashboard/DashboardFilterAndChart';
-import { dashboardCards } from '@/constants';
-
-
-import { useState } from 'react';
+import { dashboardCards } from '@/constants/spso';
 
 export default function Home() {
-  
   return (
     <div className="flex flex-col gap-2">
       <div>
@@ -21,9 +17,7 @@ export default function Home() {
         ))}
       </div>
 
-      
       <DashboardFilterAndChart />
-
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { addDays, subDays } from 'date-fns';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-import { printData } from '@/constants';
+import { printData } from '@/constants/spso';
 import LineChart from '../LineChart';
 
 const DashboardFilterAndChart = () => {
@@ -50,7 +50,10 @@ const DashboardFilterAndChart = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (printerDropdownRef.current && !printerDropdownRef.current.contains(event.target as Node)) {
+      if (
+        printerDropdownRef.current &&
+        !printerDropdownRef.current.contains(event.target as Node)
+      ) {
         setShowPrinterDropdown(false); // Close  if clicked outside
       }
     };
@@ -63,7 +66,10 @@ const DashboardFilterAndChart = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (fileTypeDropdownRef.current && !fileTypeDropdownRef.current.contains(event.target as Node)) {
+      if (
+        fileTypeDropdownRef.current &&
+        !fileTypeDropdownRef.current.contains(event.target as Node)
+      ) {
         setShowFileTypeDropdown(false); // Close  if clicked outside
       }
     };
@@ -110,13 +116,21 @@ const DashboardFilterAndChart = () => {
 
         {/* Filter by Date */}
         <div ref={datePickerRef} className="filter-content">
-          <button onClick={() => setShowDatePicker(!showDatePicker)} className="flex justify-between gap-10">
+          <button
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className="flex justify-between gap-10"
+          >
             <p>Date</p>
             <Image src="/assets/dropdown.svg" alt="Drop down" width={24} height={24} />
           </button>
           {showDatePicker && (
             <div className="absolute z-10 mt-2 p-3 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-              <DateRange ranges={[dateRange]} onChange={handleSelectDateRange} moveRangeOnFirstSelection={false} showDateDisplay={true} />
+              <DateRange
+                ranges={[dateRange]}
+                onChange={handleSelectDateRange}
+                moveRangeOnFirstSelection={false}
+                showDateDisplay={true}
+              />
               <div className="bg-white w-full flex justify-center">
                 <button
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
@@ -131,7 +145,10 @@ const DashboardFilterAndChart = () => {
 
         {/* Filter by Printer */}
         <div ref={printerDropdownRef} className="filter-content">
-          <button onClick={() => setShowPrinterDropdown(!showPrinterDropdown)} className="flex justify-between gap-10">
+          <button
+            onClick={() => setShowPrinterDropdown(!showPrinterDropdown)}
+            className="flex justify-between gap-10"
+          >
             <p>{selectedPrinter === 'All' ? 'Printer' : selectedPrinter}</p>
             <Image src="/assets/dropdown.svg" alt="Drop down" width={24} height={24} />
           </button>
@@ -168,8 +185,11 @@ const DashboardFilterAndChart = () => {
 
         {/* Filter by File Type */}
         <div ref={fileTypeDropdownRef} className="filter-content">
-          <button onClick={() => setShowFileTypeDropdown(!showFileTypeDropdown)} className="flex justify-between gap-10">
-            <p>{selectedFileType === 'All'? 'File Type' : selectedFileType}</p>
+          <button
+            onClick={() => setShowFileTypeDropdown(!showFileTypeDropdown)}
+            className="flex justify-between gap-10"
+          >
+            <p>{selectedFileType === 'All' ? 'File Type' : selectedFileType}</p>
             <Image src="/assets/dropdown.svg" alt="Drop down" width={24} height={24} />
           </button>
           {showFileTypeDropdown && (

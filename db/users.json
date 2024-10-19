@@ -1,0 +1,18 @@
+[
+  {
+    "id": "4112335b-68e3-43a9-b0f7-cec746f52d3e",
+    "name": "Tu Huynh Van",
+    "email": "tuvantulc@gmail.com",
+    "role": "spso",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$Utcjk1T/zgUspNCPjJ0QEesbIdVTzdEG5sDwZQpSSrcP9xJPb8AbO"
+  },
+  {
+    "id": "7b9f8bf0-f7b8-4af0-be97-7236d53539ee",
+    "name": "Tu Huynh Van",
+    "email": "tu.huynhit2901@hcmut.edu.vn",
+    "role": "student",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$FJxoQgADEFJJGoWQvvQFi.djgIbsW5NVJ6AnapCR5tKYUyLswUgFe"
+  }
+]

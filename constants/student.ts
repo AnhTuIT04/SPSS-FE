@@ -9,7 +9,7 @@ export const studentSideBarLinks = [
   {
     icon: PrinterIcon,
     route: '/student/print',
-    label: 'Start Printing',
+    label: 'Print Docs',
   },
   {
     icon: BuyPagesIcon,

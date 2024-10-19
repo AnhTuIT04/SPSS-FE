@@ -1,40 +1,25 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
+
 import '@/app/globals.css';
-import user from '@/public/mooc/user';
-import TopBar from '@/components/shared/TopBar';
+import TopBar from '@/components/TopBar';
+import { auth } from '@/auth';
 
-export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const token = user.token;
-    const userRole = user.role.toLowerCase();
-
-    if (token && userRole) {
-      if (userRole === 'spso') {
-        router.replace('/spso/dashboard');
-      } else if (userRole === 'student') {
-        router.replace('/student/dashboard');
-      }
-    }
-
-    setLoading(false);
-  }, [router]);
-
-  if (loading)
-    return (
-      <div className="flex space-x-2 justify-center items-center bg-white h-screen dark:invert">
-        <span className="sr-only">Loading...</span>
-        <div className="h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-        <div className="h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-        <div className="h-8 w-8 bg-black rounded-full animate-bounce"></div>
-      </div>
-    );
+export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth();
+  const isAuthenticated = !!session;
+  const role = session?.user.role;
+  // Loading screen
+  // TODO: ....
+  // return (
+  // <div>Hello world</div>
+  //     <div className="flex space-x-2 justify-center items-center bg-white h-screen dark:invert">
+  //       <span className="sr-only">Loading...</span>
+  //       <div className="h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+  //       <div className="h-8 w-8 bg-black rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+  //       <div className="h-8 w-8 bg-black rounded-full animate-bounce"></div>
+  //     </div>
+  //   );
 
   return (
     <div>
@@ -47,27 +32,31 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
                 A smart printing service for students at HCMUT
               </h1>
               <p className="py-5 text-xl leading-normal text-gray-500 lg:text-xl xl:text-2xl dark:text-gray-300">
-                Với SPSS, việc in tài liệu, bài tập, báo cáo, và luận văn trở nên đơn giản hơn bao giờ hết. Chỉ cần tải lên tài liệu, chọn máy in gần
-                nhất, và nhận bản in nhanh chóng. SPSS còn cung cấp các tính năng tiện ích như xem lại tài liệu đã in, theo dõi lịch sử giao dịch,
-                quản lý tài khoản hiệu quả với chi phí phải chăng. Chúng tôi luôn ưu tiên sự tiện lợi và trải nghiệm của bạn.
+                Với SPSS, việc in tài liệu, bài tập, báo cáo, và luận văn trở nên đơn giản hơn bao
+                giờ hết. Chỉ cần tải lên tài liệu, chọn máy in gần nhất, và nhận bản in nhanh chóng.
+                SPSS còn cung cấp các tính năng tiện ích như xem lại tài liệu đã in, theo dõi lịch
+                sử giao dịch, quản lý tài khoản hiệu quả với chi phí phải chăng. Chúng tôi luôn ưu
+                tiên sự tiện lợi và trải nghiệm của bạn.
               </p>
 
               <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row mt-6">
-                <button
-                  type="button"
-                  onClick={() => router.push('/login')}
-                  className="text-white bg-[hsl(217,91%,50%)] hover:bg-[hsl(217,91%,40%)] focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg font-medium rounded-[14px] px-8 py-4 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Get started
-                </button>
+                <Link href={isAuthenticated ? `/${role}/dashboard` : '/login'}>
+                  <button
+                    type="button"
+                    className="text-white bg-[hsl(217,91%,50%)] hover:bg-[hsl(217,91%,40%)] focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg font-medium rounded-[14px] px-8 py-4 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Get started
+                  </button>
+                </Link>
 
-                <button
-                  type="button"
-                  // onClick={() => router.push('/login')}
-                  className="text-gray bg-[hsl(0,0%,100%)] border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg font-medium rounded-[14px] px-8 py-4 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Contact us!
-                </button>
+                <Link href={'#' /** TODO add logic here */}>
+                  <button
+                    type="button"
+                    className="text-gray bg-[hsl(0,0%,100%)] border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 text-lg font-medium rounded-[14px] px-8 py-4 text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    Contact us!
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
