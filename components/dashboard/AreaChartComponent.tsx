@@ -32,9 +32,9 @@ interface AreaChartComponentProps {
 const AreaChartComponent: React.FC<AreaChartComponentProps> = ({data}) => {
   return (
     <Card>
-      <CardHeader>
+      {/* <CardHeader>
         <CardTitle>Payment Log</CardTitle>
-      </CardHeader>
+      </CardHeader> */}
       <CardContent>
         <ChartContainer config={chartConfig}>
           <AreaChart

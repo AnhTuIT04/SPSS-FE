@@ -3,6 +3,7 @@ import { dashboardCards } from '@/constants/spso';
 import BarChartAndFilter from '@/components/dashboard/BarChartAndFilter';
 import AreaChartAndFilter from '@/components/dashboard/AreaChartAndFilter';
 import PrintingLogTable from '@/components/PrintTable/PrintingLogTable';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function Home() {
   return (

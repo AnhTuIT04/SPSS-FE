@@ -4,6 +4,7 @@ import { printingLogs } from '@/constants/spso';
 import { PrintingLog, columns } from './columns';
 import { DataTable } from './data-table';
 
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import {
   Card,
   CardContent,
@@ -40,16 +41,19 @@ export default function DemoPage() {
   }, [date]);
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="font-bold">Printing Info</CardTitle>
-        <div>
-          <DatePickerWithRange date={date} setDate={setDate} />
-        </div>
-      </CardHeader>
-      <CardContent >
-        <DataTable columns={columns} data={data} />
-      </CardContent>
-    </Card>
+      <ScrollArea className="max-lg:hidden whitespace-nowrap rounded-md border">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="font-bold">Printing Info</CardTitle>
+            <div>
+              <DatePickerWithRange date={date} setDate={setDate} />
+            </div>
+          </CardHeader>
+          <CardContent >
+            <DataTable columns={columns} data={data} />
+          </CardContent>
+        </Card>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
   );
 }

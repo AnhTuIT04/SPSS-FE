@@ -30,9 +30,9 @@ interface BarChartComponentProps {
 const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => {
   return (
       <Card>
-        <CardHeader>
+        {/* <CardHeader>
           <CardTitle>Printing Log</CardTitle>
-        </CardHeader>
+        </CardHeader> */}
         <CardContent>
           <ChartContainer config={chartConfig} className="min-h-[200px] w-full>">
             <BarChart accessibilityLayer data={data}>
