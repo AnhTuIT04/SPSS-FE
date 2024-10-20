@@ -10,7 +10,7 @@ export default function StudentLayout({ children }: Readonly<{ children: React.R
       <main className="flex">
         <SideBar />
         <section className="main-container bg-[#fafafa]">
-          <div className="w-full">{children}</div>
+          <div className="w-full h-full">{children}</div>
         </section>
       </main>
       <BottomBar />
