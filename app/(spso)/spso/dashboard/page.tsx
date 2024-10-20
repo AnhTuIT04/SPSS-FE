@@ -18,12 +18,26 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="w-full flex flex-wrap gap-10">
+      {/* <div className="w-full flex flex-wrap gap-10">
         <BarChartAndFilter />
         <AreaChartAndFilter />
       </div>
 
-      <PrintingLogTable />
+      <PrintingLogTable /> */}
+
+      <Tabs defaultValue="printing" className="w-full">
+        <TabsList>
+          <TabsTrigger value="printing">Printing</TabsTrigger>
+          <TabsTrigger value="payment">Payment</TabsTrigger>
+        </TabsList>
+        <TabsContent value="printing" className='flex flex-col gap-10'>
+          <BarChartAndFilter />
+          <PrintingLogTable />
+        </TabsContent>
+        <TabsContent value="payment">
+          <AreaChartAndFilter />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
