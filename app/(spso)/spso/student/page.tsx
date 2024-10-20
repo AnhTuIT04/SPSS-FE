@@ -1,8 +1,11 @@
+import StudentTable from '@/components/StudentTable/StudentTable'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <div className='flex flex-col'>
+      <StudentTable />
+    </div>
   )
 }
 

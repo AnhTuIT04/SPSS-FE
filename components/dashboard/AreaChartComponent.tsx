@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { TrendingUp } from 'lucide-react';
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import {
   Card,
@@ -10,33 +10,33 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from '@/components/ui/chart';
 
 const chartConfig = {
-  desktop: {
-    label: "PaymentLog",
-    color: "hsl(var(--chart-1))",
+  payment: {
+    label: 'PaymentLog',
+    color: 'hsl(var(--chart-1))',
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 interface AreaChartComponentProps {
-  data: { date: string; value: number}[];
+  data: { date: string; value: number }[];
 }
 
-const AreaChartComponent: React.FC<AreaChartComponentProps> = ({data}) => {
+const AreaChartComponent: React.FC<AreaChartComponentProps> = ({ data }) => {
   return (
     <Card>
       {/* <CardHeader>
         <CardTitle>Payment Log</CardTitle>
       </CardHeader> */}
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="min-h-[200px] w-full>">
           <AreaChart
             accessibilityLayer
             data={data}
@@ -62,13 +62,10 @@ const AreaChartComponent: React.FC<AreaChartComponentProps> = ({data}) => {
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value) => {
-                return value.toString() + " $";
+                return value.toString() + ' $';
               }}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
             <Area
               dataKey="value"
               type="natural"
@@ -80,7 +77,7 @@ const AreaChartComponent: React.FC<AreaChartComponentProps> = ({data}) => {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
 export default AreaChartComponent;
