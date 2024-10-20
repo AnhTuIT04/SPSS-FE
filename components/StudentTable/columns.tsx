@@ -6,6 +6,7 @@ import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
 export type Student = {
   id: number;
@@ -94,9 +95,11 @@ export const columns: ColumnDef<Student>[] = [
     id: 'actions',
     cell: ({ row }) => {
       return (
-        <Button variant="default" size="icon">
-          <ChevronRightIcon className="h-4 w-4" />
-        </Button>
+        <Link href={`/spso/student/${row.getValue('id')}`}>
+          <Button variant="default" size="icon" >
+            <ChevronRightIcon className="h-4 w-4" />
+          </Button>
+        </Link>
       );
     },
   },
