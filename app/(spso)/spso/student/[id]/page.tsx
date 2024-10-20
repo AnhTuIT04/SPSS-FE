@@ -27,8 +27,14 @@ interface ProfileProps {
 const Profile = ({ student }: { student: Student }) => {
   return (
     <div>
-      <div className='flex'>
-        <Image src={`https://github.com/shadcn.png`} alt={student.name} width={200} height={200} />
+      <div className="flex">
+        <Image
+          priority
+          src={`https://github.com/shadcn.png`}
+          alt={student.name}
+          width={200}
+          height={200}
+        />
         <span className="font-semibold">
           <h1>{student.name}</h1>
         </span>
@@ -49,7 +55,6 @@ const StudentProfile = () => {
 
     fetchStudentData();
   }, [id]);
-
 
   return (
     <Tabs defaultValue="profile" className="w-full">
