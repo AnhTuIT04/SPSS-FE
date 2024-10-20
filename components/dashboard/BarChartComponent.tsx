@@ -1,26 +1,58 @@
-// components/BarChartComponent.tsx
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+'use client';
 
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
+
+const chartConfig = {
+  printLog: {
+    label: 'PrintLog',
+    color: '#2563eb',
+  },
+} satisfies ChartConfig;
 
 interface BarChartComponentProps {
-  data: { date: string; value: number, filetype: string, printer: string }[];
+  data: { date: string; value: number; filetype: string; printer: string }[];
 }
 
 const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => {
   return (
-    <div className="w-full h-[500px] bg-white p-4 shadow-lg rounded-lg">
-      <span className='font-semibold'><p>Printing Log</p></span>
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis dataKey="value" />
-          <Tooltip />
-          <Bar dataKey="value" fill="#3B82F6" barSize={15} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Printing Log</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig} className="min-h-[200px] w-full>">
+            <BarChart accessibilityLayer data={data}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString();
+                }}
+              />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <Bar dataKey="value" fill="#2563eb" radius={4} />
+            </BarChart>
+          </ChartContainer>
+        </CardContent>
+      </Card>
   );
 };
 

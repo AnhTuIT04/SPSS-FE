@@ -1,10 +1,8 @@
-'use client';
-
 import DashboardCard from '@/components/dashboard/DashboardCard';
 import { dashboardCards } from '@/constants/spso';
 import BarChartAndFilter from '@/components/dashboard/BarChartAndFilter';
 import AreaChartAndFilter from '@/components/dashboard/AreaChartAndFilter';
-import PrintingLogTable from '@/components/dashboard/PrintingLogTable';
+import PrintingLogTable from '@/components/PrintTable/PrintingLogTable';
 
 export default function Home() {
   return (
@@ -18,8 +16,8 @@ export default function Home() {
           <DashboardCard key={card.label} {...card} trend={card.trend as 'up' | 'down'} />
         ))}
       </div>
-      
-      <div className='w-full flex flex-wrap gap-10'>
+
+      <div className="w-full flex flex-wrap gap-10">
         <BarChartAndFilter />
         <AreaChartAndFilter />
       </div>

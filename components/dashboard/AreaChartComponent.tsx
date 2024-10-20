@@ -1,53 +1,86 @@
+"use client"
+
+import { TrendingUp } from "lucide-react"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+
 import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
 
-interface DataPoint {
-  date: string;
-  value: number;
-  fileType: string;
-  printer: string;
+const chartConfig = {
+  desktop: {
+    label: "PaymentLog",
+    color: "hsl(var(--chart-1))",
+  },
+} satisfies ChartConfig
+
+interface AreaChartComponentProps {
+  data: { date: string; value: number}[];
 }
 
-interface AreaChartProps {
-  data: DataPoint[];
-}
-
-const AreaChartComponent: React.FC<AreaChartProps> = ({ data }) => {
+const AreaChartComponent: React.FC<AreaChartComponentProps> = ({data}) => {
   return (
-    <div className="w-full h-[500px] bg-white p-4 shadow-lg rounded-lg">
-      <span className='font-semibold'><p>Payment Log</p></span>
-      <ResponsiveContainer>
-        <AreaChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis dataKey="value" />
-          <Tooltip />
-          {/* <Legend /> */}
-          <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <Area
-            type="monotone"
-            dataKey="value"
-            stroke="#8884d8"
-            fill="url(#colorUv)"
-            animationDuration={500}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  );
-};
+    <Card>
+      <CardHeader>
+        <CardTitle>Payment Log</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <AreaChart
+            accessibilityLayer
+            data={data}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => {
+                const date = new Date(value);
+                return date.toLocaleDateString();
+              }}
+            />
+            <YAxis
+              dataKey="value"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => {
+                return value.toString() + " $";
+              }}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="line" />}
+            />
+            <Area
+              dataKey="value"
+              type="natural"
+              fill="#2563eb"
+              fillOpacity={0.4}
+              stroke="#2563eb"
+            />
+          </AreaChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
+  )
+}
 
 export default AreaChartComponent;
