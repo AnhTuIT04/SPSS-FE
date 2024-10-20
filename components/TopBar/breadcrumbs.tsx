@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import {
   Breadcrumb,
@@ -24,10 +24,9 @@ function generateBreadcrumbs(pathname: string) {
 
 export default function TopBarBreadcrumb() {
   const pathname = usePathname();
-  const router = useRouter();
   const breadcrumbs = generateBreadcrumbs(pathname);
 
-  if (breadcrumbs.length < 3) return <></>;
+  if (breadcrumbs.length <= 3) return <></>;
 
   return (
     <div className="h-full ml-[104px]">

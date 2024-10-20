@@ -52,7 +52,9 @@ export default function DemoPage() {
   useEffect(() => {
     const filteredData = paymentData.filter((log) => {
       const logDate = new Date(log.date);
-      return logDate >= date?.from && logDate <= date?.to;
+      return (
+        logDate >= (date?.from || subDays(new Date(), 6)) && logDate <= (date?.to || new Date())
+      );
     });
 
     setData(filteredData); // Update data with filtered results
