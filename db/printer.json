@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "name": "Printer 1",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 100, "days": 30 },
+    "location": "Building 1, Room 101, 1st Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx"]
+  },
+  {
+    "id": "2",
+    "name": "Printer 2",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 200, "days": 60 },
+    "location": "Building 2, Room 202, 2nd Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".xlsx", ".pptx", ".png", ".jpg", ".jpeg", ".svg", ".txt"]
+  },
+  {
+    "id": "3",
+    "name": "Printer 3",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 200, "days": 60 },
+    "location": "Building 2, Room 202, 2nd Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".xlsx", ".pptx", ".png"]
+  },
+  {
+    "id": "4",
+    "name": "Printer 4",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 200, "days": 60 },
+    "location": "Building 2, Room 202, 2nd Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx"]
+  },
+  {
+    "id": "5",
+    "name": "Printer 6",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 200, "days": 60 },
+    "location": "Building 6, Room 202, 2nd Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".pptx", ".png", ".jpg", ".jpeg"]
+  },
+  {
+    "id": "6",
+    "name": "Printer 6",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 150, "days": 45 },
+    "location": "Building 3, Room 303, 3rd Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".xlsx"]
+  },
+  {
+    "id": "7",
+    "name": "Printer 7",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 250, "days": 90 },
+    "location": "Building 4, Room 404, 4th Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".pptx", ".png", ".jpg"]
+  },
+  {
+    "id": "8",
+    "name": "Printer 8",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 300, "days": 120 },
+    "location": "Building 5, Room 505, 5th Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".xlsx", ".pptx", ".png", ".jpg", ".jpeg", ".svg"]
+  },
+  {
+    "id": "9",
+    "name": "Printer 9",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 100, "days": 30 },
+    "location": "Building 6, Room 606, 6th Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".txt"]
+  },
+  {
+    "id": "10",
+    "name": "Printer 10",
+    "image": "/assets/printer.jpg",
+    "resetCycle": { "pages": 200, "days": 60 },
+    "location": "Building 7, Room 707, 7th Floor, Near the entrance",
+    "supportedFiles": [".pdf", ".docx", ".xlsx", ".pptx", ".png", ".jpg", ".jpeg", ".svg", ".txt"]
+  }
+]

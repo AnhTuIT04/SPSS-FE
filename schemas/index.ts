@@ -32,3 +32,13 @@ export const RegisterSchema = z.object({
     message: 'Minimum 6 characters required',
   }),
 });
+
+export const PrinterSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  image: z.string(),
+  location: z.string(),
+  supportedFiles: z.array(z.string()),
+  status: z.enum(['DISABLED', 'ENABLE']),
+  supportedPageSize: z.array(z.string()),
+});

@@ -14,23 +14,24 @@ import {
   MenubarTrigger,
 } from '@/components/ui/menubar';
 
-import Logout from '@/components/TopBar/logout';
-import { LoginIcon, MoreIcon, PrinterIcon, StudentIcon } from '@/constants/icons';
+import Logout from '@/components/TopBar/LogoutItem';
+import TopBarBreadcrumb from '@/components/TopBar/breadcrumbs';
+import { MoreIcon, PrinterIcon, StudentIcon } from '@/constants/icons';
 
 const TopBar = async () => {
   const session = await auth();
   const isAuthenticated = !!session;
 
-  const handleOnClick = () => {
-    console.log('Sign out clicked');
-  };
-
   return (
     <nav className="fixed top-0 left-0 w-full h-[70px] bg-white flex justify-between items-center px-6 shadow-sm z-50">
-      <Link href="/" className="flex items-center gap-4">
-        <Image src="/assets/logo_bachkhoa.svg" alt="Logo" width={50} height={50} priority />
-        <p className="text-2xl font-bold max-sm:hidden">SPSS</p>
-      </Link>
+      <div className="relative flex items-center justify-center">
+        <Link href="/" className="flex items-center gap-4">
+          <Image src="/assets/logo_bachkhoa.svg" alt="Logo" width={50} height={50} priority />
+          <p className="text-2xl font-bold max-sm:hidden">SPSS</p>
+        </Link>
+
+        <TopBarBreadcrumb />
+      </div>
 
       <div className="relative flex items-center gap-4">
         {isAuthenticated ? (
