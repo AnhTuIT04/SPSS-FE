@@ -50,7 +50,6 @@ export const columns: ColumnDef<PrintingLog>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className='min-w-0'
         >
           Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -64,7 +63,7 @@ export const columns: ColumnDef<PrintingLog>[] = [
     cell: ({ row }) => {
       const date = new Date(row.getValue('date'));
       const formattedDate = date.toLocaleDateString();
-      return <span className="text-right font-medium min-w-0">{formattedDate}</span>;
+      return <span className="text-right font-medium">{formattedDate}</span>;
     },
   },
   {
@@ -74,7 +73,6 @@ export const columns: ColumnDef<PrintingLog>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className='max-w-28'
         >
           File Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -82,7 +80,7 @@ export const columns: ColumnDef<PrintingLog>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="text-right table-cell max-w-28">{row.getValue('fileName')}</span>;
+      return <span className="text-right table-cell max-w-40">{row.getValue('fileName')}</span>;
     }
   },
   {
@@ -92,7 +90,6 @@ export const columns: ColumnDef<PrintingLog>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className='max-lg:hidden'
         >
           File Type
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -100,7 +97,7 @@ export const columns: ColumnDef<PrintingLog>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="text-right max-lg:hidden">{row.getValue('fileType')}</span>;
+      return <span className="text-right">{row.getValue('fileType')}</span>;
     },
   },
   {
@@ -110,7 +107,6 @@ export const columns: ColumnDef<PrintingLog>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className='max-lg:hidden'
         >
           File Size
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -118,7 +114,7 @@ export const columns: ColumnDef<PrintingLog>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="text-right max-lg:hidden">{row.getValue('fileSize')}</span>;
+      return <span className="text-right">{row.getValue('fileSize')}</span>;
     },
   },
   {
@@ -128,7 +124,6 @@ export const columns: ColumnDef<PrintingLog>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          className='max-lg:hidden'
         >
           Printer
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -136,35 +131,35 @@ export const columns: ColumnDef<PrintingLog>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="text-right max-lg:hidden">{row.getValue('printer')}</span>;
+      return <span className="text-right">{row.getValue('printer')}</span>;
     },
   },
   {
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-        return <span className='status-success min-w-0'>{row.getValue('status')}</span>;
+        return <span className='status-success'>{row.getValue('status')}</span>;
     },
   },
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => {
-  //     return (
-  //       <DropdownMenu>
-  //         <DropdownMenuTrigger asChild>
-  //           <Button variant="ghost" className="h-8 w-8 p-0">
-  //             <span className="sr-only">Open menu</span>
-  //             <MoreHorizontal className="h-4 w-4" />
-  //           </Button>
-  //         </DropdownMenuTrigger>
-  //         <DropdownMenuContent align="end">
-  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-  //           <DropdownMenuSeparator />
-  //           <DropdownMenuItem>View customer</DropdownMenuItem>
-  //           <DropdownMenuItem>View payment details</DropdownMenuItem>
-  //         </DropdownMenuContent>
-  //       </DropdownMenu>
-  //     );
-  //   },
-  // },
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View customer</DropdownMenuItem>
+            <DropdownMenuItem>View payment details</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
 ];
