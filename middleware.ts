@@ -1,17 +1,15 @@
-import authConfig from '@/auth.config';
-import NextAuth from 'next-auth';
+import { auth } from '@/auth';
 
 import { DEFAULT_AUTH_REDIRECT, apiAuthPrefix, publicRoutes, authRoutes } from '@/routes';
 
-const { auth } = NextAuth(authConfig);
-
 export default auth((req) => {
   const { nextUrl } = req;
+  const pathname = nextUrl.pathname;
   const isLoggedIn = !!req.auth;
 
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isApiAuthRoute = pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(pathname);
+  const isAuthRoute = authRoutes.includes(pathname);
 
   // Allow access to public routes and API auth routes
   if (isPublicRoute || isApiAuthRoute) {
@@ -29,6 +27,15 @@ export default auth((req) => {
   // Redirect to login if not logged in and trying to access a protected route
   if (!isLoggedIn) {
     return Response.redirect(new URL('/login', nextUrl));
+  }
+
+  // Redirect to access-forbidden if user role does not match the route (e.g. student trying to access /spso/...)
+  const role = req.auth?.user.role;
+  if (pathname.startsWith('/spso') || pathname.startsWith('/student')) {
+    if (role && !pathname.startsWith(`/${role}`)) {
+      console.log(`User role ${role} does not match route ${pathname}`);
+      return Response.redirect(new URL('/access-forbidden', nextUrl));
+    }
   }
 });
 
