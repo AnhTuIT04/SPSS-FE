@@ -5,7 +5,7 @@ import { MoreHorizontal } from 'lucide-react';
 import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { ChevronRightIcon } from '@radix-ui/react-icons';
+import { ChevronRightIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
 export type Student = {
@@ -97,7 +97,7 @@ export const columns: ColumnDef<Student>[] = [
       return (
         <Link href={`/spso/student/${row.getValue('id')}`}>
           <Button variant="default" size="icon" >
-            <ChevronRightIcon className="h-4 w-4" />
+            <Pencil2Icon className="h-4 w-4" />
           </Button>
         </Link>
       );

@@ -14,5 +14,13 @@
     "role": "student",
     "image": "/assets/guest.png",
     "password": "$2a$10$FJxoQgADEFJJGoWQvvQFi.djgIbsW5NVJ6AnapCR5tKYUyLswUgFe"
+  },
+  {
+    "id": "a590994f-a9eb-4507-bf9f-e352ee7d242f",
+    "name": "Lê Hoàng Khánh Vinh",
+    "email": "khanhvinh123123@gmail.com",
+    "role": "spso",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$aFkkisggOWc8TYmYO81vYuTNboS75HrEwjjHAOs1CfUcxdbkUbvsG"
   }
 ]
