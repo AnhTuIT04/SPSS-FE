@@ -14,5 +14,13 @@
     "role": "student",
     "image": "/assets/guest.png",
     "password": "$2a$10$FJxoQgADEFJJGoWQvvQFi.djgIbsW5NVJ6AnapCR5tKYUyLswUgFe"
+  },
+  {
+    "id": "584d7a20-5301-477d-b805-6a25989f6f05",
+    "name": "Han",
+    "email": "han.lehoangngoc@hcmut.edu.vn",
+    "role": "student",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$NHHSXfg2xaiRywQpz.mmMOOTQLH29WRaWWEerc7A9jJnBEdNqdb9."
   }
 ]
