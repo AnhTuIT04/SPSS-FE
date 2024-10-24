@@ -5,7 +5,7 @@ import '@/app/globals.css';
 import TopBar from '@/components/TopBar';
 import { auth } from '@/auth';
 
-export default async function ProtectedLayout({ children }: { children: React.ReactNode }) {
+export default async function HomePage() {
   const session = await auth();
   const isAuthenticated = !!session;
   const role = session?.user.role;
@@ -66,8 +66,6 @@ export default async function ProtectedLayout({ children }: { children: React.Re
         <div className="text-base text-center text-gray-700 dark:text-white">
           Trusted by <span className="text-indigo-600">2000+</span> students
         </div>
-
-        {children}
       </div>
     </div>
   );
