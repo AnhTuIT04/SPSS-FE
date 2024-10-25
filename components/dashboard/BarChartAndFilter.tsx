@@ -92,7 +92,7 @@ const BarChartAndFilter = () => {
   useEffect(() => {
     const filteredData = printData.filter((log) => {
       const logDate = new Date(log.date);
-      const isDateMatch = logDate >= date?.from && logDate <= date?.to;
+      const isDateMatch = logDate >= (date?.from ?? new Date(0)) && logDate <= (date?.to ?? new Date());
       const isPrinterMatch = selectedPrinter === 'All' || log.printer === selectedPrinter;
       const isFileTypeMatch = selectedFileType === 'All' || log.fileType === selectedFileType;
       return isPrinterMatch && isFileTypeMatch && isDateMatch;
