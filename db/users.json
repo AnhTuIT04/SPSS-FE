@@ -22,5 +22,13 @@
     "role": "spso",
     "image": "/assets/guest.png",
     "password": "$2a$10$aFkkisggOWc8TYmYO81vYuTNboS75HrEwjjHAOs1CfUcxdbkUbvsG"
+  },
+  {
+    "id": "584d7a20-5301-477d-b805-6a25989f6f05",
+    "name": "Han",
+    "email": "han.lehoangngoc@hcmut.edu.vn",
+    "role": "student",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$NHHSXfg2xaiRywQpz.mmMOOTQLH29WRaWWEerc7A9jJnBEdNqdb9."
   }
 ]
