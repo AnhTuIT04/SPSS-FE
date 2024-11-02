@@ -1,4 +1,4 @@
-import { DashboardIcon, PrinterIcon, BuyPagesIcon } from './icons';
+import { DashboardIcon, PrinterIcon, BuyPagesIcon, ProfileIcon } from './icons';
 
 export const studentMenuItems = [
   {
@@ -15,6 +15,11 @@ export const studentMenuItems = [
     icon: BuyPagesIcon,
     route: '/student/buypages',
     label: 'Pages',
+  },
+  {
+    icon: ProfileIcon,
+    route: '/student/profile',
+    label: 'Profile',
   },
 ];
 

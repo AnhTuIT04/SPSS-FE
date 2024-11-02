@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { printers } from '@/constants/student';
 import styles from '@/app/(student)/student.module.css';
 import Image from 'next/image';
@@ -8,6 +9,7 @@ import deleteFileBtn from '@/public/assets/deletefilebtn.svg';
 import imgPlaceholder from '@/public/assets/imgplaceholder.svg';
 import { Select, InputNumber, Radio, Input } from 'antd';
 import type { InputNumberProps, RadioChangeEvent } from 'antd';
+import confetti from 'canvas-confetti'
 
 const Print = () => {
     const [step, setStep] = useState('select-printer');
@@ -53,6 +55,47 @@ const Print = () => {
     const onInputChange = (e) => {
         setInputValue(e.target.value);
         setValue(2);  // Auto-select value 2 when typing in the input
+    };
+
+    // const handlePrint = () => {
+    //     alert(`Gửi yêu cầu in thành công`);
+    // };
+
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState(''); // 'success' or 'error'
+
+
+    const isSuccess = 'success';
+    const handleSubmit = () => {
+        setNotificationType(isSuccess ? 'success' : 'error');
+        setShowNotification(true);
+
+        // Chạy hiệu ứng pháo giấy
+        if (isSuccess === 'success') {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // setTimeout(() => {
+        //     setShowNotification(false);
+        // }, 3000); // Ẩn thông báo sau 3 giây
+    };
+
+    const handleCancel = () => {
+        setShowNotification(false);
+    };
+
+    const router = useRouter();
+
+    const handleNavigateDashboard = () => {
+        router.push('/student/dashboard');
+    };
+
+    const handleNavigateBuyPages = () => {
+        router.push('/student/buypages');
     };
 
     return (
@@ -102,7 +145,7 @@ const Print = () => {
             )}
 
             {step === 'upload' && (
-                <div className=" justify-center max-w-screen-md mx-auto bg-white p-6 rounded-lg shadow-lg">
+                <div className="justify-center max-w-screen-md mx-auto bg-white p-6 rounded-lg shadow-lg">
                     <div className='mb-4'>
                         <h1 className="mb-[4px] text-2xl font-bold">Upload File</h1>
                         <p className='text-[14px] leading-[20px] text-[#6D6D6D]'>Add your document here</p>
@@ -188,7 +231,7 @@ const Print = () => {
                             <span>Pages</span>
                             <div>
                                 <Radio.Group className='ml-[24px]' onChange={onChangeRadio} value={value}>
-                                    <Radio className='block' value={1}>All</Radio>
+                                    <Radio className='flex' value={1}>All</Radio>
                                     <Radio className='flex' value={2}>
                                         <Input
                                             style={{ width: '100%' }}
@@ -219,24 +262,65 @@ const Print = () => {
                             <button className={styles.buttonBack} onClick={() => handlePrevStep('upload')}>
                                 Back
                             </button>
-                            <button className={styles.buttonNext} onClick={() => handleNextStep('review')}>
-                                Next
+                            <button className={styles.buttonNext} onClick={handleSubmit}>
+                                Print
                             </button>
                         </div>
                     </div>
                 </div>
             )}
 
-            {step === 'review' && (
-                <div>
-                    <h2>Review and Submit</h2>
-                    <button className={styles.buttonBack} onClick={() => handlePrevStep('specify-props')}>
-                        Back
-                    </button>
-                    <button className={styles.buttonNext} onClick={() => handleNextStep('select-printer')}>
-                        Start Over
-                    </button>
-                    <button>Submit</button>
+            {/* Overlay và thông báo */}
+            {showNotification && (
+                <div className="z-50 absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm">
+                    {/* <div
+                        className={`px-6 py-4 rounded text-white ${notificationType === 'success' ? 'bg-green-500' : 'bg-red-500'
+                            }`}
+                    >
+                        {notificationType === 'success' ? 'Submission Successful!' : 'Submission Failed!'}
+                    </div> */}
+                    {isSuccess === 'success' && (
+                        <div className="flex flex-col items-center justify-center max-w-screen-md mx-auto bg-white p-6 rounded-lg shadow-lg">
+                            <div className='text-[green] text-[24px] leading-[28px] mb-[10px]'>
+                                Request created successfully!
+                            </div>
+                            <div className='text-[16px] leading-[19px] text-[#656565] mb-[40px]'>
+                                Your document was sent to {selectedPrinter?.name}
+                            </div>
+                            <div className='text-[16px] leading-[19px] text-[#656565]'>
+                                Come after 1PM at {selectedPrinter?.location} to get your document
+                            </div>
+                            <div>
+                                <button className='p-[8px] border-[1px] border-[rgba(0,0,0,0.2)] rounded-[10px] mt-[40px] hover:bg-gray-200'
+                                    onClick={handleNavigateDashboard}
+                                >
+                                    Return to Dashboard
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                    {isSuccess === 'error' && (
+                        <div className="relative flex flex-col items-center justify-center max-w-screen-md mx-auto bg-white p-6 rounded-lg shadow-lg">
+                            <div className='font-normal text-[24px] leading-[32px] mb-[10px]'>
+                                You don't have enough pages to print!
+                            </div>
+                            <div className='text-[16px] leading-[19px] text-[#656565] mb-[80px]'>
+                                Buy more pages or changing printing properties.
+                            </div>
+                            <div className='absolute right-[16px] bottom-0 flex space-x-2 justify-end'>
+                                <button className='p-[8px] border-[1px] border-[rgba(0,0,0,0.2)] rounded-[10px] hover:bg-gray-200 mb-[16px]'
+                                    onClick={handleCancel}
+                                >
+                                    Cancel
+                                </button>
+                                <button className='p-[8px] border-[1px] border-[rgba(0,0,0,0.2)] rounded-[10px] hover:bg-gray-200 mb-[16px]'
+                                    onClick={handleNavigateBuyPages}
+                                >
+                                    Buy Pages
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
