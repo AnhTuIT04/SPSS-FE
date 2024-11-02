@@ -9,6 +9,7 @@ import deleteFileBtn from '@/public/assets/deletefilebtn.svg';
 import imgPlaceholder from '@/public/assets/imgplaceholder.svg';
 import { Select, InputNumber, Radio, Input } from 'antd';
 import type { InputNumberProps, RadioChangeEvent } from 'antd';
+import { message, Upload } from 'antd';
 import confetti from 'canvas-confetti'
 
 const Print = () => {
@@ -28,6 +29,28 @@ const Print = () => {
         setSelectedPrinter(printer);
         console.log(`choose ${printer.name}`)
         alert(`Bạn đã chọn ${printer.name}. Tiếp tục sang bước upload tài liệu.`);
+    };
+
+    const { Dragger } = Upload;
+
+    const props = {
+        name: 'file',
+        multiple: true,
+        action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+        onChange(info) {
+            const { status } = info.file;
+            if (status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully.`);
+            } else if (status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+        onDrop(e) {
+            console.log('Dropped files', e.dataTransfer.files);
+        },
     };
 
     // Select
@@ -145,12 +168,15 @@ const Print = () => {
             )}
 
             {step === 'upload' && (
+
                 <div className="justify-center max-w-screen-md mx-auto bg-white p-6 rounded-lg shadow-lg">
                     <div className='mb-4'>
                         <h1 className="mb-[4px] text-2xl font-bold">Upload File</h1>
                         <p className='text-[14px] leading-[20px] text-[#6D6D6D]'>Add your document here</p>
                     </div>
-                    <div className='flex-col justify-center items-center my-[16px] p-[24px] gap-[12px] w-full h-full bg-[#FFFFFF] border-[1px] border-dashed border-[#1849D6] rounded-[8px]'>
+
+                    {/* <div className='flex-col justify-center items-center my-[16px] p-[24px] gap-[12px] w-full h-full bg-[#FFFFFF] border-[1px] border-dashed border-[#1849D6] rounded-[8px]'> */}
+                    <Dragger {...props}>
                         <div className='flex justify-center'>
                             <Image src={uploadFile} alt='upload'></Image>
                         </div>
@@ -167,8 +193,10 @@ const Print = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
+                    </Dragger>
+                    {/* </div> */}
+
+                    <div className='mt-[8px]'>
                         <span className='text-[14px] leading-[20px] text-[#6D6D6D]'>Only support {selectedPrinter?.fileType.map((type, index) => (
                             <span key={index}>.{type.toLowerCase()} </span>
                         ))}
@@ -193,6 +221,7 @@ const Print = () => {
                         <button className={styles.buttonNext} onClick={() => handleNextStep('specify-props')}>Next</button>
                     </div>
                 </div>
+
             )}
 
             {step === 'specify-props' && (
