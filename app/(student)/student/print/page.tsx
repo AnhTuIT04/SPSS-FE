@@ -320,7 +320,8 @@ const Print = () => {
                                 Come after 1PM at {selectedPrinter?.location} to get your document
                             </div>
                             <div>
-                                <button className='p-[8px] border-[1px] border-[rgba(0,0,0,0.2)] rounded-[10px] mt-[40px] hover:bg-gray-200'
+                                <button className={`${styles.buttonNext} p-[8px] mt-[40px]`}
+                                    // className='p-[8px] border-[1px] border-[rgba(0,0,0,0.2)] rounded-[10px] mt-[40px] hover:bg-gray-200'
                                     onClick={handleNavigateDashboard}
                                 >
                                     Return to Dashboard
@@ -337,12 +338,12 @@ const Print = () => {
                                 Buy more pages or changing printing properties.
                             </div>
                             <div className='absolute right-[16px] bottom-0 flex space-x-2 justify-end'>
-                                <button className='p-[8px] border-[1px] border-[rgba(0,0,0,0.2)] rounded-[10px] hover:bg-gray-200 mb-[16px]'
+                                <button className={`${styles.buttonBack} p-[8px] mb-[16px]`}
                                     onClick={handleCancel}
                                 >
                                     Cancel
                                 </button>
-                                <button className='p-[8px] border-[1px] border-[rgba(0,0,0,0.2)] rounded-[10px] hover:bg-gray-200 mb-[16px]'
+                                <button className={`${styles.buttonNext} p-[8px] mb-[16px]`}
                                     onClick={handleNavigateBuyPages}
                                 >
                                     Buy Pages
