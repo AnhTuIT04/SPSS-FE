@@ -24,7 +24,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface BarChartComponentProps {
-  data: { date: string; value: number; filetype: string; printer: string }[];
+  data: { date: string; value: number; fileType: string; printer: string }[];
 }
 
 const BarChartComponent: React.FC<BarChartComponentProps> = ({ data }) => {

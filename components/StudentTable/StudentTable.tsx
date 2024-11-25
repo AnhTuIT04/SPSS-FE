@@ -1,6 +1,5 @@
 'use client';
 
-import { printingLogs } from '@/constants/spso';
 import { Student, columns } from './columns';
 import { DataTable } from './data-table';
 

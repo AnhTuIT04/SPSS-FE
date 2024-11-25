@@ -1,4 +1,4 @@
-import { DashboardIcon, PrinterIcon, BuyPagesIcon, PrintingLogIcon, SettingIcon } from './icons';
+import { DashboardIcon, PrinterIcon, BuyPagesIcon, ProfileIcon } from './icons';
 
 export const studentMenuItems = [
   {
@@ -9,22 +9,17 @@ export const studentMenuItems = [
   {
     icon: PrinterIcon,
     route: '/student/print',
-    label: 'Print Docs',
+    label: 'Print',
   },
   {
     icon: BuyPagesIcon,
     route: '/student/buypages',
-    label: 'Buy Pages',
+    label: 'Pages',
   },
   {
-    icon: PrintingLogIcon,
-    route: '/student/log',
-    label: 'Logs',
-  },
-  {
-    icon: SettingIcon,
-    route: '/student/settings',
-    label: 'Settings',
+    icon: ProfileIcon,
+    route: '/student/profile',
+    label: 'Profile',
   },
 ];
 

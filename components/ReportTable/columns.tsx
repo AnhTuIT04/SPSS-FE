@@ -5,18 +5,15 @@ import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
-import Link from 'next/link';
 
-export type Student = {
+export type Report = {
   id: number;
   name: string;
-  studentId: string;
-  email: string;
-  page: number;
-  image: string;
+  date: string;
+  type: boolean;
 };
 
-export const columns: ColumnDef<Student>[] = [
+export const columns: ColumnDef<Report>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => {
@@ -49,56 +46,52 @@ export const columns: ColumnDef<Student>[] = [
     },
   },
   {
-    accessorKey: 'studentId',
+    accessorKey: 'date',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Student ID
+          Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const date = new Date(row.getValue('date'));
+      const formattedDate = date.toLocaleDateString();
+      return <span className="text-right font-medium">{formattedDate}</span>;
+    },
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'type',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Email
+          Type
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-  },
-  {
-    accessorKey: 'page',
-    header: ({ column }) => {
+    cell: ({ row }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Page
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <span className="text-right table-cell">
+          {row.getValue('type') ? 'Printing' : 'Payment'}
+        </span>
       );
     },
   },
   {
     id: 'actions',
-    cell: ({ row }) => {
+    cell: () => {
       return (
-        <Link href={`/spso/student/${row.getValue('id')}`}>
-          <Button variant="default" size="icon" >
-            <ChevronRightIcon className="h-4 w-4" />
-          </Button>
-        </Link>
+        <Button variant="default" size="icon">
+          <ChevronRightIcon className="h-4 w-4" />
+        </Button>
       );
     },
   },

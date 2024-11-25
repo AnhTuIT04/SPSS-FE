@@ -1,9 +1,20 @@
-import React from 'react'
+import React from 'react';
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+
+import ReportTable from '@/components/ReportTable/ReportTable';
 
 const Page = () => {
   return (
-    <div>Page</div>
-  )
-}
+    <ReportTable />
+  );
+};
 
-export default Page
+export default Page;

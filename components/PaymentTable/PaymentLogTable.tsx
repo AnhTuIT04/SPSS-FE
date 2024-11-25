@@ -16,8 +16,13 @@ import { DatePickerWithRange } from '../PrintTable/DateRangePicker';
 import { useEffect, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
+import { table } from 'console';
 
-async function getData(): Promise<PaymentLog[]> {
+async function getData(data?: PaymentLog[] | PromiseLike<PaymentLog[]> | undefined): Promise<PaymentLog[]> {
+  if (data) {
+    return data;
+  }
+
   const response = await fetch('https://67143dff690bf212c76102cb.mockapi.io/api/v1/paymentData');
 
   // Check if the request was successful
@@ -30,10 +35,11 @@ async function getData(): Promise<PaymentLog[]> {
   return printingLogs;
 }
 
-export default function DemoPage() {
-  const [paymentData, setPaymentData] = useState<PaymentLog[]>([]);
+export default function DemoPage({paymentData}: {paymentData?: PaymentLog[]}) {
+  
+  const [tableData, setTableData] = useState<PaymentLog[]>([]);
 
-  const [data, setData] = useState(paymentData);
+  const [data, setData] = useState(tableData);
   const [date, setDate] = useState<DateRange | undefined>({
     from: subDays(new Date(), 6),
     to: new Date(),
@@ -42,15 +48,15 @@ export default function DemoPage() {
   // Fetching payment data on component mount
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedData = await getData();
-      setPaymentData(fetchedData); // No need to spread, just set fetched data
+      const fetchedData = await getData(paymentData? paymentData : undefined);
+      setTableData(fetchedData); // No need to spread, just set fetched data
     };
     fetchData();
   }, []);
 
   // Filtering data based on selected date range whenever `paymentData` or `date` changes
   useEffect(() => {
-    const filteredData = paymentData.filter((log) => {
+    const filteredData = tableData.filter((log) => {
       const logDate = new Date(log.date);
       return (
         logDate >= (date?.from || subDays(new Date(), 6)) && logDate <= (date?.to || new Date())
@@ -58,7 +64,7 @@ export default function DemoPage() {
     });
 
     setData(filteredData); // Update data with filtered results
-  }, [paymentData, date]); // Re-run filter logic when `paymentData` or `date` changes
+  }, [tableData, date]); // Re-run filter logic when `tableData` or `date` changes
 
   return (
     <ScrollArea className="max-lg:hidden whitespace-nowrap rounded-md border">

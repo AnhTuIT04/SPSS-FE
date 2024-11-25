@@ -23,16 +23,18 @@ import { subDays } from 'date-fns';
 //   return printingLogs;
 // }
 
-export default function DemoPage() {
+export default function DemoPage({printData} : {printData?: PrintingLog[]}) {
   // const data = await getData();
-  const [data, setData] = useState(printingLogs);
+  const tableData = printData || printingLogs;
+
+  const [data, setData] = useState(tableData);
   const [date, setDate] = useState<DateRange | undefined>({
     from: subDays(new Date(), 6),
     to: new Date(),
   });
 
   useEffect(() => {
-    const filteredData = printingLogs.filter((log) => {
+    const filteredData = tableData.filter((log) => {
       const logDate = new Date(log.date);
       return logDate >= date?.from && logDate <= date?.to;
     });
