@@ -5,11 +5,11 @@ import * as z from 'zod';
 
 import PrinterCard from '@/components/PrinterCard';
 import Invisible from '@/components/ui/invisible';
+import { PrinterSchema } from '@/schemas';
 import { getPrinters } from '@/db/printer';
 
-import { PrinterSchema } from '@/schemas';
-
 interface CardLayoutProps {
+  searchResults: z.infer<typeof PrinterSchema>[];
   page: number;
   limit: number;
 }
@@ -19,8 +19,8 @@ const getFakePrinters = (totalPrinters: number, printersPerRow: number) => {
   return remainder === 0 ? 0 : printersPerRow - remainder;
 };
 
-const CardLayout: React.FC<CardLayoutProps> = ({ page, limit }) => {
-  const [printers, setPrinters] = useState<z.infer<typeof PrinterSchema>[]>([]);
+const CardLayout: React.FC<CardLayoutProps> = ({ searchResults, page, limit }) => {
+  const [printers, setPrinters] = useState<z.infer<typeof PrinterSchema>[]>(searchResults);
   const [printersPerRow, setPrintersPerRow] = useState(1);
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,12 +50,15 @@ const CardLayout: React.FC<CardLayoutProps> = ({ page, limit }) => {
     };
   }, [containerWidth, printers]);
 
-  // Fetch printers
   useEffect(() => {
-    getPrinters(page, limit).then((printers) => {
-      setPrinters(printers);
-    });
-  }, []);
+    if (printers.length !== 0) {
+      setPrinters(searchResults);
+    } else {
+      getPrinters(page, limit).then((printers) => {
+        setPrinters(printers);
+      });
+    }
+  }, [searchResults]);
 
   const fakePrinterCount = getFakePrinters(printers.length, printersPerRow);
 

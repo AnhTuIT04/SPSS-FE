@@ -1,16 +1,25 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface PrinterCardProps {
   id: string;
   name: string;
   image: string;
   location: string;
-  supportedFiles: string[];
+  supportedFileTypes: string[];
+  supportedPageSizes: string[];
 }
 
-const PrinterCard: React.FC<PrinterCardProps> = ({ id, name, image, location, supportedFiles }) => {
+const PrinterCard: React.FC<PrinterCardProps> = ({
+  id,
+  name,
+  image,
+  location,
+  supportedFileTypes,
+  supportedPageSizes,
+}) => {
   return (
-    <div className="relative w-[340px] h-[536px] rounded-lg shadow-xl bg-white overflow-hidden">
+    <div className="relative w-[340px] h-[670px] rounded-lg shadow-xl bg-white overflow-hidden">
       {/* Image Section */}
       <div className="w-full h-[220px] bg-gray-400 flex justify-center items-center">
         <img
@@ -30,10 +39,10 @@ const PrinterCard: React.FC<PrinterCardProps> = ({ id, name, image, location, su
           <div className="border-t border-gray-300 my-2"></div>
 
           {/* File Types Section with Scroll */}
-          <div>
+          <div className="h-[124px]">
             <h3 className="text-lg font-semibold mt-2">File Types</h3>
             <div className="grid grid-cols-3 gap-3 mt-2 max-h-[84px] overflow-y-auto pr-2">
-              {supportedFiles.map((file, index) => (
+              {supportedFileTypes.map((file, index) => (
                 <span
                   key={index}
                   className="bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-center text-sm"
@@ -43,12 +52,29 @@ const PrinterCard: React.FC<PrinterCardProps> = ({ id, name, image, location, su
               ))}
             </div>
           </div>
+
+          {/* Page Sizes Section with Scroll */}
+          <div className="h-[124px]">
+            <h3 className="text-lg font-semibold mt-2">Page Sizes</h3>
+            <div className="grid grid-cols-3 gap-3 mt-2 max-h-[84px] overflow-y-auto pr-2">
+              {supportedPageSizes.map((size, index) => (
+                <span
+                  key={index}
+                  className="relative bg-green-100 text-green-600 px-4 py-2 rounded-full text-center text-sm"
+                >
+                  {size}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Configure Button */}
-        <button className="absolute left-6 bottom-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-          Configure
-        </button>
+        <Link href={`/spso/printer/${id}`}>
+          <button className="absolute left-6 bottom-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+            Configure
+          </button>
+        </Link>
       </div>
     </div>
   );

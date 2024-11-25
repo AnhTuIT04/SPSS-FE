@@ -71,7 +71,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
     return () => {
       clearTimeout(handler);
     };
-  }, [inputValue, fetchSuggestions]);
+  }, [inputValue]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
