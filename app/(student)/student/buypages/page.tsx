@@ -3,11 +3,25 @@ import React from 'react'
 import styles from '@/app/(student)/student.module.css';
 import { InputNumber } from 'antd'
 import type { InputNumberProps } from 'antd'
+import { useState } from 'react';
 
 const Page = () => {
+    const [outputValue, setOutputValue] = useState(0);
+
+    const handleInputChange = (value: number | null) => {
+        if (value !== null) {
+            setOutputValue(value * 1000); // Example: square the input
+        } else {
+            setOutputValue(0); // Reset output when input is cleared
+        }
+    };
     // Input
-    const onChangeInput: InputNumberProps['onChange'] = (value) => {
-        console.log('changed', value);
+    // const handleInputChange: InputNumberProps['onChange'] = (value) => {
+    //     console.log('changed', value);
+    // };
+    const formatNumber = (value: number | null): string => {
+        if (value === null) return '0';
+        return new Intl.NumberFormat('vi-VN').format(value); // Định dạng cho locale Việt Nam
     };
 
     return (
@@ -33,7 +47,7 @@ const Page = () => {
                                 className='block'
                                 style={{ width: '200px' }}
                                 placeholder='Enter number of page(s)'
-                                onChange={onChangeInput}
+                                onChange={handleInputChange}
                                 changeOnWheel
                             />
                             <span className='ml-2 text-[16px] font-bold'>1.000VNĐ</span>
@@ -47,7 +61,7 @@ const Page = () => {
                             Total
                         </span>
                         <span className='text-[36px] font-bold mb-4'>
-                            50.000VNĐ
+                            {formatNumber(outputValue)}VNĐ
                         </span>
                     </div>
                     <div className='absolute right-0 bottom-0'>
