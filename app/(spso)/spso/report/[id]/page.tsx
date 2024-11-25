@@ -1,14 +1,10 @@
-'use client'
-
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
 
 const ReportIdPage = () => {
-  const docs = [
-    { uri: "https://i.imgur.com/Xae1MTJ.jpeg" },
-  ];
   return (
-    <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+    <div className="w-full h-[36rem]">
+      <iframe className="w-full h-full" src="/file/pdf.pdf" />
+    </div>
   )
 }
 
