@@ -13,8 +13,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { signIn, signOut } from '@/auth';
 import { getUserByEmail, saveUser } from '@/db';
-import { UserSchema, LoginSchema, RegisterSchema } from '@/schemas';
+import {
+  UserSchema,
+  LoginSchema,
+  RegisterSchema,
+  AddPrinterSchema,
+  PrinterSchema,
+} from '@/schemas';
 import { DEFAULT_AUTH_REDIRECT } from '@/routes';
+import { savePrinter } from '@/db/printer';
 
 const saltRounds = 10;
 
@@ -104,4 +111,29 @@ export const logout = async () => {
   await signOut({
     redirectTo: '/',
   });
+};
+
+export const addPrinter = async (printer: z.infer<typeof AddPrinterSchema>) => {
+  const validatedField = AddPrinterSchema.safeParse(printer);
+  if (!validatedField.success) {
+    return { error: 'Please fill in all the fields!' };
+  }
+
+  const { name, image, location, status, supportedFileTypes, supportedPageSizes } =
+    validatedField.data;
+  const id = uuidv4();
+
+  const newPrinter: z.infer<typeof PrinterSchema> = {
+    id,
+    name,
+    image,
+    location,
+    status,
+    supportedFileTypes,
+    supportedPageSizes,
+  };
+
+  await savePrinter(newPrinter);
+
+  return { success: 'Printer added successfully' };
 };

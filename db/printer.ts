@@ -2,7 +2,7 @@
 
 import * as z from 'zod';
 import fs from 'fs';
-import { PrinterSchema } from '@/schemas';
+import { AddPrinterSchema, PrinterSchema } from '@/schemas';
 
 const PRINTER_FILE_PATH = 'db/printer.json';
 
@@ -70,7 +70,7 @@ export const searchPrinters = async (query: string) => {
  * @request body { id: string, name: string, image: string, resetCycle: { pages: number, days: number }, location: string, supportedFiles: string[] }
  * @response body { id: string, name: string, image: string, resetCycle: { pages: number, days: number }, location: string, supportedFiles: string[] }
  */
-export const savePrinter = async (printer: z.infer<typeof PrinterSchema>) => {
+export const savePrinter = async (printer: z.infer<typeof AddPrinterSchema>) => {
   const printers = await readPrintersFromFile();
   printers.push(printer);
   await writePrintersToFile(printers);
