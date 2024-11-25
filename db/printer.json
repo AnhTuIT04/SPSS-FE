@@ -1,83 +1,5 @@
 [
   {
-    "id": "1",
-    "name": "Printer 1",
-    "image": "/assets/printer.jpg",
-    "resetCycle": {
-      "pages": 100,
-      "days": 30
-    },
-    "location": "Building 1, Room 101, 1st Floor, Near the entrance",
-    "supportedFileTypes": [
-      ".pdf",
-      ".docx",
-      ".xlsx",
-      ".pptx",
-      ".png",
-      ".jpg",
-      ".jpeg",
-      ".svg",
-      ".txt"
-    ],
-    "supportedPageSizes": [
-      "A0",
-      "A1",
-      "A2",
-      "A3",
-      "A4",
-      "A5",
-      "A6"
-    ]
-  },
-  {
-    "id": "2",
-    "name": "Printer 2",
-    "image": "/assets/printer.jpg",
-    "resetCycle": {
-      "pages": 200,
-      "days": 60
-    },
-    "location": "Building 2, Room 202, 2nd Floor, Near the entrance",
-    "supportedFileTypes": [
-      ".pdf",
-      ".docx",
-      ".xlsx",
-      ".pptx",
-      ".png",
-      ".jpg",
-      ".jpeg",
-      ".svg",
-      ".txt"
-    ],
-    "supportedPageSizes": [
-      "A4",
-      "A0",
-      "A2"
-    ]
-  },
-  {
-    "id": "3",
-    "name": "Printer 3",
-    "image": "/assets/printer.jpg",
-    "resetCycle": {
-      "pages": 200,
-      "days": 60
-    },
-    "location": "Building 2, Room 202, 2nd Floor, Near the entrance",
-    "supportedFileTypes": [
-      ".pdf",
-      ".docx",
-      ".xlsx",
-      ".pptx",
-      ".png"
-    ],
-    "supportedPageSizes": [
-      "A4",
-      "A0",
-      "A2"
-    ]
-  },
-  {
     "id": "4",
     "name": "Printer 4",
     "image": "/assets/printer.jpg",
@@ -94,50 +16,8 @@
       "A4",
       "A0",
       "A2"
-    ]
-  },
-  {
-    "id": "5",
-    "name": "Printer 6",
-    "image": "/assets/printer.jpg",
-    "resetCycle": {
-      "pages": 200,
-      "days": 60
-    },
-    "location": "Building 6, Room 202, 2nd Floor, Near the entrance",
-    "supportedFileTypes": [
-      ".pdf",
-      ".docx",
-      ".pptx",
-      ".png",
-      ".jpg",
-      ".jpeg"
     ],
-    "supportedPageSizes": [
-      "A4",
-      "A0",
-      "A2"
-    ]
-  },
-  {
-    "id": "6",
-    "name": "Printer 6",
-    "image": "/assets/printer.jpg",
-    "resetCycle": {
-      "pages": 150,
-      "days": 45
-    },
-    "location": "Building 3, Room 303, 3rd Floor, Near the entrance",
-    "supportedFileTypes": [
-      ".pdf",
-      ".docx",
-      ".xlsx"
-    ],
-    "supportedPageSizes": [
-      "A4",
-      "A0",
-      "A2"
-    ]
+    "status": "ENABLE"
   },
   {
     "id": "7",
@@ -159,7 +39,8 @@
       "A4",
       "A0",
       "A2"
-    ]
+    ],
+    "status": "ENABLE"
   },
   {
     "id": "8",
@@ -188,7 +69,8 @@
       "A4",
       "A5",
       "A6"
-    ]
+    ],
+    "status": "ENABLE"
   },
   {
     "id": "9",
@@ -208,68 +90,35 @@
       "A4",
       "A0",
       "A2"
-    ]
+    ],
+    "status": "ENABLE"
   },
   {
     "id": "10",
-    "name": "Printer 10",
-    "image": "/assets/printer.jpg",
+    "name": "Printer 12",
+    "image": "https://upcdn.io/W142hJk/raw/demo/4kAxwyv27S.jpg",
     "resetCycle": {
       "pages": 200,
       "days": 60
     },
-    "location": "Building 7, Room 707, 7th Floor, Near the entrance",
+    "location": "Building 7, Room 707, 7th Floor, Near the entrance.",
     "supportedFileTypes": [
-      ".pdf",
       ".docx",
-      ".xlsx",
-      ".pptx",
-      ".png",
-      ".jpg",
       ".jpeg",
+      ".pdf",
+      ".png",
+      ".pptx",
       ".svg",
-      ".txt"
-    ],
-    "supportedPageSizes": [
-      "A4",
-      "A0",
-      "A2"
-    ]
-  },
-  {
-    "id": "c97c5e62-3635-4df4-b6a8-f4e9d93cdda3",
-    "name": "Printer 12",
-    "image": "https://upcdn.io/W142hJk/raw/demo/4kF3XNc2Fm.png",
-    "location": "DI AN H1 101",
-    "status": "ENABLE",
-    "supportedFileTypes": [
-      ".csv",
-      ".docx",
-      ".doc",
-      ".ppt"
-    ],
-    "supportedPageSizes": [
-      "A4",
-      "A0",
-      "A2"
-    ]
-  },
-  {
-    "id": "5aaf84e7-f90e-4e5e-b841-5b4ed326a298",
-    "name": "abcd",
-    "image": "https://upcdn.io/W142hJk/raw/demo/4kF37zVGHe.jpeg",
-    "location": "h1 101",
-    "status": "ENABLE",
-    "supportedFileTypes": [
-      ".doc",
-      ".docx",
-      ".csv"
+      ".txt",
+      ".xlsx"
     ],
     "supportedPageSizes": [
       "A0",
       "A1",
-      "A4"
-    ]
+      "A4",
+      "A5"
+    ],
+    "status": "DISABLED"
   },
   {
     "id": "0ef531dc-920e-465c-8516-7ba9ded63edc",
