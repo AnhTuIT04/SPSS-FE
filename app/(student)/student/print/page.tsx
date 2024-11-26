@@ -71,7 +71,7 @@ const Print = () => {
     useEffect(() => {
         const results = printers.filter(printer => {
             const searchLower = searchVal.trim().toLowerCase();
-    
+
             return (
                 printer.name.toLowerCase().includes(searchLower) ||  // Tìm kiếm theo name
                 printer.location.toLowerCase().includes(searchLower) ||  // Tìm kiếm theo location
@@ -79,13 +79,13 @@ const Print = () => {
                 printer.status.toLowerCase().includes(searchLower)  // Tìm kiếm theo status
             );
         });
-    
+
         setSearchResults(results);
     }, [searchVal, printers]);
 
     // Hiển thị loading hoặc lỗi
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;   
+    if (error) return <p>Error: {error}</p>;
 
 
     const handleSearchChange = event => {
@@ -241,7 +241,15 @@ const Print = () => {
                                         handleNextStep('upload');
                                     }}
                                 >
-                                    <div className="h-[222px] bg-[#DEDEDE] rounded-tl-lg rounded-tr-lg"></div>
+                                    <div className="h-[222px] bg-[#DEDEDE] rounded-tl-lg rounded-tr-lg">
+                                        <Image
+                                            src={printer.image}
+                                            alt='printer'
+                                            width={5000}
+                                            height={5000}
+                                            className="w-full h-full object-cover"
+                                        ></Image>
+                                    </div>
                                     <div className="p-4">
                                         <p className="text-xl font-bold my-[8px]">{printer.name}</p>
                                         <p>Status: {printer.status}</p>
