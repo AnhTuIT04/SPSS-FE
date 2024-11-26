@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Table, DatePicker, Spin, message } from 'antd'; import dayjs from 'dayjs';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(isBetween);
@@ -67,6 +69,20 @@ export default function Home() {
         setFilteredData(filtered);
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+
+        const filtered = data.filter((item) =>
+            Object.values(item).some(
+                (field) =>
+                    typeof field === 'string' &&
+                    field.toLowerCase().includes(value.toLowerCase())
+            )
+        );
+
+        setFilteredData(filtered);
+    }
+
     // Table columns definition
     const columns = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -76,6 +92,8 @@ export default function Home() {
         { title: 'Printer', dataIndex: 'printer', key: 'printer' },
         { title: 'Status', dataIndex: 'status', key: 'status' },
     ];
+
+
     return (
         <div>
             <div className="flex flex-col gap-2">
@@ -124,16 +142,27 @@ export default function Home() {
             </div>
 
 
-            <div style={{ padding: 20 }}>
-                {/* Date Range Picker */}
-                <div style={{ marginBottom: 20 }}>
-                    <RangePicker onChange={handleDateChange} />
+            <div className='flex flex-col w-full gap-4'>
+                <div className='flex w-full justify-between items-center'>
+                    {/* Search Bar */}
+                    <div className='w-full max-w-xl'>
+                        <Label htmlFor="studentSearchBar" className="text-right">
+                            Search Bar
+                        </Label>
+                        <Input id="studentSearchBar" placeholder="Enter keywords..." className="col-span-3" onChange={handleSearchChange} />
+                    </div>
+                    {/* Date Range Picker */}
+                    <div className='pt-4'>
+                        <RangePicker onChange={handleDateChange} />
+                    </div>
                 </div>
                 {/* Table */}
                 {loading ? (
                     <Spin tip="Loading..." />
                 ) : (
-                    <Table columns={columns} dataSource={filteredData} rowKey="id" />
+                    <div>
+                        <Table columns={columns} dataSource={filteredData} rowKey="id" />
+                    </div>
                 )}
             </div>
         </div>
