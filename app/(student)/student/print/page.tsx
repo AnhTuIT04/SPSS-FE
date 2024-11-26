@@ -1,7 +1,7 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { printers } from '@/constants/student';
+// import { printers } from '@/constants/student';
 import styles from '@/app/(student)/student.module.css';
 import Image from 'next/image';
 import uploadFile from '@/public/assets/uploadfile.svg';
@@ -11,6 +11,7 @@ import { Select, InputNumber, Radio, Input } from 'antd';
 import type { InputNumberProps, RadioChangeEvent } from 'antd';
 import { message, Upload } from 'antd';
 import confetti from 'canvas-confetti'
+import axios from 'axios';
 
 const Print = () => {
     const [step, setStep] = useState('select-printer');
@@ -23,7 +24,75 @@ const Print = () => {
         setStep(prevStep);
     };
 
+    const [printers, setPrinters] = useState([]);
     const [selectedPrinter, setSelectedPrinter] = useState(null);
+    const [value, setValue] = useState(1);
+    const [inputValue, setInputValue] = useState('');  // Store input value
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState(''); // 'success' or 'error'
+    const [formValues, setFormValues] = useState({
+        pageSize: 'A4',
+        copies: 1,
+        pageSelection: 'all', // 'all' or 'custom'
+        customPages: '',
+        printType: 'onesided', // 'onesided' or 'doublesided'
+    });
+
+    const [searchVal, setSearchVal] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+
+
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Gửi request đến API
+    useEffect(() => {
+        const fetchPrinter = async () => {
+            try {
+                const response = await fetch('https://673760e4aafa2ef222339c88.mockapi.io/log');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch printer data');
+                }
+                const data = await response.json();
+                setPrinters(data);
+                setSearchResults(data); // Khởi tạo kết quả tìm kiếm là toàn bộ dữ liệu
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPrinter();
+    }, []);
+
+    // Lọc dữ liệu khi searchVal thay đổi
+    useEffect(() => {
+        const results = printers.filter(printer => {
+            const searchLower = searchVal.trim().toLowerCase();
+    
+            return (
+                printer.name.toLowerCase().includes(searchLower) ||  // Tìm kiếm theo name
+                printer.location.toLowerCase().includes(searchLower) ||  // Tìm kiếm theo location
+                printer.fileType.some(type => type.toLowerCase().includes(searchLower)) ||  // Tìm kiếm trong fileType
+                printer.status.toLowerCase().includes(searchLower)  // Tìm kiếm theo status
+            );
+        });
+    
+        setSearchResults(results);
+    }, [searchVal, printers]);
+
+    // Hiển thị loading hoặc lỗi
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;   
+
+
+    const handleSearchChange = event => {
+        setSearchVal(event.target.value);
+    };
+
+
 
     const selectPrinter = (printer) => {
         setSelectedPrinter(printer);
@@ -64,7 +133,6 @@ const Print = () => {
     };
 
     // Radio
-    const [value, setValue] = useState(1);
     const onChangeRadio = (e: RadioChangeEvent) => {
         console.log('radio checked', e.target.value);
         setValue(e.target.value);
@@ -72,7 +140,6 @@ const Print = () => {
             setInputValue('');  // Clear input when selecting "All"
         }
     };
-    const [inputValue, setInputValue] = useState('');  // Store input value
 
     // Handle input change and auto-select the second radio button
     const onInputChange = (e) => {
@@ -80,16 +147,39 @@ const Print = () => {
         setValue(2);  // Auto-select value 2 when typing in the input
     };
 
+
+
+
+    const handleSelectChange = (field, value) => {
+        console.log('select', value);
+        setFormValues((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const handleInputChange = (field, value) => {
+        console.log('choose', value);
+        setFormValues((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post('https://673760e4aafa2ef222339c88.mockapi.io/student', formValues); // Thay URL bằng API của bạn
+            console.log('Print request submitted:', response.data);
+            alert('Print request submitted successfully!');
+            handlePrintSubmit();
+        } catch (error) {
+            console.error('Error submitting print request:', error);
+            alert('Failed to submit print request.');
+        }
+    };
     // const handlePrint = () => {
     //     alert(`Gửi yêu cầu in thành công`);
     // };
 
-    const [showNotification, setShowNotification] = useState(false);
-    const [notificationType, setNotificationType] = useState(''); // 'success' or 'error'
+
 
 
     const isSuccess = 'success';
-    const handleSubmit = () => {
+    const handlePrintSubmit = () => {
         setNotificationType(isSuccess ? 'success' : 'error');
         setShowNotification(true);
 
@@ -125,10 +215,22 @@ const Print = () => {
         <div className="w-full h-full">
             {step === 'select-printer' && (
                 <div>
+                    <input
+                        className="search-input"
+                        type="text"
+                        placeholder="Tìm kiếm máy in..."
+                        // value={query}
+                        // onChange={(e) => setQuery(e.target.value)}
+                        value={searchVal}
+                        onChange={(e) => setSearchVal(e.target.value)}
+                    // onChange={e => { setSearchVal(e.target.value); handleSearchClick(); }}
+                    // value={searchTerm}
+                    // onChange={handleSearch}
+                    />
                     <h1 className="text-2xl font-bold mb-4">Select Printer</h1>
                     <div className="flex items-center justify-center m-auto">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                            {printers.map((printer) => (
+                            {searchResults.map((printer) => (
                                 <div
                                     key={printer.id}
                                     className="bg-white shadow-md rounded-lg cursor-pointer hover:bg-blue-100 transition w-[300px] h-fit"
@@ -238,7 +340,7 @@ const Print = () => {
                                     className='block'
                                     defaultValue="A4"
                                     style={{ width: '100%' }}
-                                    onChange={handleChangeSelect}
+                                    onChange={(value) => handleSelectChange('pageSize', value)}
                                     options={[
                                         { value: 'A4', label: 'A4' },
                                         { value: 'A3', label: 'A3' },
@@ -252,14 +354,14 @@ const Print = () => {
                                     style={{ width: '100%' }}
                                     min={1}
                                     defaultValue={1}
-                                    onChange={onChangeInput}
+                                    onChange={(value) => handleInputChange('copies', value)}
                                     changeOnWheel />
                             </div>
                         </div>
                         <div className='mb-[16px]'>
                             <span>Pages</span>
                             <div>
-                                <Radio.Group className='ml-[24px]' onChange={onChangeRadio} value={value}>
+                                {/* <Radio.Group className='ml-[24px]' onChange={onChangeRadio} value={value}>
                                     <Radio className='flex' value={1}>All</Radio>
                                     <Radio className='flex' value={2}>
                                         <Input
@@ -271,6 +373,32 @@ const Print = () => {
                                         />
                                     </Radio>
 
+                                </Radio.Group> */
+                                }
+                                <Radio.Group
+                                    className="ml-[24px]"
+                                    onChange={(e) =>
+                                        handleInputChange(
+                                            'pageSelection',
+                                            e.target.value === 1 ? 'all' : 'custom'
+                                        )
+                                    }
+                                    value={formValues.pageSelection === 'all' ? 1 : 2}
+                                >
+                                    <Radio className="flex" value={1}>
+                                        All
+                                    </Radio>
+                                    <Radio className="flex" value={2}>
+                                        <Input
+                                            style={{ width: '100%' }}
+                                            placeholder="eg. 1-5, 8, 11-13"
+                                            disabled={formValues.pageSelection === 'all'}
+                                            value={formValues.customPages}
+                                            onChange={(e) =>
+                                                handleInputChange('customPages', e.target.value)
+                                            }
+                                        />
+                                    </Radio>
                                 </Radio.Group>
                             </div>
                         </div>
@@ -280,7 +408,7 @@ const Print = () => {
                                 className='block'
                                 defaultValue="One-sided"
                                 style={{ width: '100%' }}
-                                onChange={handleChangeSelect}
+                                onChange={(value) => handleSelectChange('printType', value)}
                                 options={[
                                     { value: 'onesided', label: 'One-sided' },
                                     { value: 'doublesided', label: 'Double-sided' },
