@@ -47,7 +47,7 @@ const InfoItem = ({ label, info, onEdit }: { label: any, info: any, onEdit: any 
             <div className='text-[15px] text-[#000000]'>{label}</div>
             <div className='flex items-center gap-2'>
                 <div
-                    className='flex items-center my-[8px] px-[24px] w-[450px] max-lg:w-full h-[40px] bg-[#f9f9f9] rounded-[7.5px] text-[15px] text-[#959595]'>
+                    className='flex items-center my-[8px] px-[24px] w-[400px] max-lg:w-full h-[40px] bg-[#f9f9f9] rounded-[7.5px] text-[15px] text-[#959595]'>
                     {information}
                 </div>
                 <Dialog>
@@ -165,7 +165,7 @@ const Page = () => {
                     <span className='font-medium text-[15px] text-[#000000] opacity-50'>{student.email}</span>
                 </div>
             </div>
-            <div className='flex flex-wrap w-full gap-20 max-lg:gap-1'>
+            <div className='flex  gap-20 max-lg:gap-1'>
                 <div className='max-lg:w-full'>
                     {/* Full Name */}
                     <InfoItem label="Full Name" info={student.name} onEdit={(newName: String) => (handleUpdateStudent({ ...student, name: newName }))} />
@@ -173,6 +173,8 @@ const Page = () => {
                     <InfoItem label="Gender" info={student.gender} onEdit={(newGender: String) => (handleUpdateStudent({ ...student, gender: newGender }))} />
                     {/* Faculty */}
                     <InfoItem label="Faculty" info={student.faculty} onEdit={(newFaculty: String) => (handleUpdateStudent({ ...student, faculty: newFaculty }))} />
+                    {/* Email */}
+                    <InfoItem label="Email" info={student.email} onEdit={(newEmail: String) => (handleUpdateStudent({ ...student, email: newEmail }))} />
                 </div>
                 <div className='max-lg:w-full'>
                     {/* ID */}

@@ -28,51 +28,78 @@ export default function Home() {
     //     { id: 5, filename: 'doc5.txt', size: '800KB', date: '2024-10-09', printer: 'Printer B', status: 'Pending' },
     // ];
 
-    const [data, setData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState<'printLog' | 'paymentLog'>('printLog');
+
+    const [dataPrint, setDataPrint] = useState([]);
+    const [filteredDataPrint, setFilteredDataPrint] = useState([]);
+    const [loadingPrint, setLoadingPrint] = useState(false);
+
+    const [dataPayment, setDataPayment] = useState([]);
+    const [filteredDataPayment, setFilteredDataPayment] = useState([]);
+    const [loadingPayment, setLoadingPayment] = useState(false);
 
     // Fetch data from API
-    const fetchData = async () => {
-        setLoading(true);
+    const fetchDataPrint = async () => {
+        setLoadingPrint(true);
         try {
             const response = await fetch('https://673760e4aafa2ef222339c88.mockapi.io/log'); // Replace with your API URL
             if (!response.ok) throw new Error('Failed to fetch data');
             const result = await response.json();
-            setData(result);
-            setFilteredData(result); // Initialize filtered data
+            setDataPrint(result);
+            setFilteredDataPrint(result); // Initialize filtered data
         } catch (error) {
             message.error('Failed to load data. Please try again.');
             console.error(error);
         } finally {
-            setLoading(false);
+            setLoadingPrint(false);
         }
     };
 
     useEffect(() => {
-        fetchData();
+        fetchDataPrint();
+    }, []);
+
+    // Fetch data from API
+    const fetchDataPayment = async () => {
+        setLoadingPayment(true);
+        try {
+            const response = await fetch('https://67143dff690bf212c76102cb.mockapi.io/api/v1/paymentData'); // Replace with your API URL
+            if (!response.ok) throw new Error('Failed to fetch data');
+            const result = await response.json();
+            setDataPayment(result);
+            setFilteredDataPayment(result); // Initialize filtered data
+        } catch (error) {
+            message.error('Failed to load data. Please try again.');
+            console.error(error);
+        } finally {
+            setLoadingPayment(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchDataPayment();
     }, []);
 
     // Handle date range filtering
-    const handleDateChange = (dates) => {
+    const handleDateChangePrint = (dates) => {
         if (!dates || dates.length === 0) {
-            setFilteredData(data); // Reset to original data if no date selected
+            setFilteredDataPrint(dataPrint); // Reset to original data if no date selected
             return;
         }
 
         const [start, end] = dates;
-        const filtered = data.filter((item) => {
+        const filtered = dataPrint.filter((item) => {
             const itemDate = dayjs(item.date);
             return itemDate.isBetween(start, end, null, '[]'); // Include start and end dates
         });
 
-        setFilteredData(filtered);
+        setFilteredDataPrint(filtered);
     };
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChangePrint = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
 
-        const filtered = data.filter((item) =>
+        const filtered = dataPrint.filter((item) =>
             Object.values(item).some(
                 (field) =>
                     typeof field === 'string' &&
@@ -80,11 +107,41 @@ export default function Home() {
             )
         );
 
-        setFilteredData(filtered);
+        setFilteredDataPrint(filtered);
+    }
+
+    // Handle date range filtering
+    const handleDateChangePayment = (dates) => {
+        if (!dates || dates.length === 0) {
+            setFilteredDataPayment(dataPayment); // Reset to original data if no date selected
+            return;
+        }
+
+        const [start, end] = dates;
+        const filtered = dataPayment.filter((item) => {
+            const itemDate = dayjs(item.date);
+            return itemDate.isBetween(start, end, null, '[]'); // Include start and end dates
+        });
+
+        setFilteredDataPayment(filtered);
+    };
+
+    const handleSearchChangePayment = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+
+        const filtered = dataPayment.filter((item) =>
+            Object.values(item).some(
+                (field) =>
+                    typeof field === 'string' &&
+                    field.toLowerCase().includes(value.toLowerCase())
+            )
+        );
+
+        setFilteredDataPayment(filtered);
     }
 
     // Table columns definition
-    const columns = [
+    const columnsPrint = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
         { title: 'File Name', dataIndex: 'filename', key: 'filename' },
         { title: 'Size', dataIndex: 'size', key: 'size' },
@@ -93,10 +150,19 @@ export default function Home() {
         { title: 'Status', dataIndex: 'status', key: 'status' },
     ];
 
+    const columnsPayment = [
+        { title: 'ID', dataIndex: 'id', key: 'id' },
+        { title: 'Number of Pages', dataIndex: 'numberOfPages', key: 'numberOfPages' },
+        { title: 'Size', dataIndex: 'size', key: 'size' },
+        { title: 'Date', dataIndex: 'date', key: 'date' },
+        { title: 'Amount', dataIndex: 'amount', key: 'amount' },
+        { title: 'Status', dataIndex: 'status', key: 'status' },
+    ];
+
 
     return (
         <div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 mb-[32px]">
                 <div>
                     <p className="text-2xl font-bold">Dashboard</p>
                 </div>
@@ -140,31 +206,77 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            {/* Nút chuyển đổi */}
+            <p className="text-2xl font-bold mb-[12px]">Log</p>
+            <div className="mb-4 flex space-x-4">
+                <button
+                    className={`px-4 py-2 rounded ${activeTab === 'printLog' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    onClick={() => setActiveTab('printLog')}
+                >
+                    Printing
+                </button>
+                <button
+                    className={`px-4 py-2 rounded ${activeTab === 'paymentLog' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    onClick={() => setActiveTab('paymentLog')}
+                >
+                    Payment
+                </button>
+            </div>
 
-
-            <div className='flex flex-col w-full gap-4'>
-                <div className='flex w-full justify-between items-center'>
-                    {/* Search Bar */}
-                    <div className='w-full max-w-xl'>
-                        <Label htmlFor="studentSearchBar" className="text-right">
-                            Search Bar
-                        </Label>
-                        <Input id="studentSearchBar" placeholder="Enter keywords..." className="col-span-3" onChange={handleSearchChange} />
-                    </div>
-                    {/* Date Range Picker */}
-                    <div className='pt-4'>
-                        <RangePicker onChange={handleDateChange} />
-                    </div>
-                </div>
-                {/* Table */}
-                {loading ? (
-                    <Spin tip="Loading..." />
-                ) : (
-                    <div>
-                        <Table columns={columns} dataSource={filteredData} rowKey="id" />
+            {activeTab === 'printLog' &&
+                (
+                    <div className='flex flex-col w-full gap-4'>
+                        <div className='flex w-full justify-between items-center'>
+                            {/* Search Bar */}
+                            <div className='w-full max-w-xl'>
+                                {/* <Label htmlFor="studentSearchBar" className="text-right">
+                                    Search Bar
+                                </Label> */}
+                                <Input id="studentSearchBar" placeholder="Search by keywords..." className="col-span-3 w-[400px]" onChange={handleSearchChangePrint} />
+                            </div>
+                            {/* Date Range Picker */}
+                            <div className=''>
+                                <span className='text-l mr-2'>Filter by Date</span>
+                                <RangePicker onChange={handleDateChangePrint} />
+                            </div>
+                        </div>
+                        {/* Table */}
+                        {loadingPrint ? (
+                            <Spin tip="Loading..." />
+                        ) : (
+                            <div>
+                                <Table columns={columnsPrint} dataSource={filteredDataPrint} rowKey="id" />
+                            </div>
+                        )}
                     </div>
                 )}
-            </div>
+
+            {activeTab === 'paymentLog' && (
+                <div className='flex flex-col w-full gap-4'>
+                    <div className='flex w-full justify-between items-center'>
+                        {/* Search Bar */}
+                        <div className='w-full max-w-xl'>
+                            {/* <Label htmlFor="studentSearchBar" className="text-right">
+                                Search Bar
+                            </Label> */}
+                            <Input id="studentSearchBar" placeholder="Search by keywords..." className="col-span-3 w-[400px]" onChange={handleSearchChangePayment} />
+                        </div>
+                        {/* Date Range Picker */}
+                        <div className=''>
+                            <span className='text-l mr-2'>Filter by Date</span>
+                            <RangePicker onChange={handleDateChangePayment} />
+                        </div>
+                    </div>
+                    {/* Table */}
+                    {loadingPrint ? (
+                        <Spin tip="Loading..." />
+                    ) : (
+                        <div>
+                            <Table columns={columnsPayment} dataSource={filteredDataPayment} rowKey="id" />
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

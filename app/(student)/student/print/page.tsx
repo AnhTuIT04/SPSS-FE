@@ -31,6 +31,7 @@ const Print = () => {
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState(''); // 'success' or 'error'
     const [formValues, setFormValues] = useState({
+        printer: '', // newly added!!!!!!!!!!!
         pageSize: 'A4',
         copies: 1,
         pageSelection: 'all', // 'all' or 'custom'
@@ -106,6 +107,8 @@ const Print = () => {
         name: 'file',
         multiple: true,
         action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+        // listType: 'picture',
+        // defaultFileList: "fileList",
         onChange(info) {
             const { status } = info.file;
             if (status !== 'uploading') {
@@ -114,7 +117,7 @@ const Print = () => {
             if (status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully.`);
             } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
+                // message.error(`${info.file.name} file upload failed.`);
             }
         },
         onDrop(e) {
@@ -164,7 +167,7 @@ const Print = () => {
         try {
             const response = await axios.post('https://673760e4aafa2ef222339c88.mockapi.io/student', formValues); // Thay URL bằng API của bạn
             console.log('Print request submitted:', response.data);
-            alert('Print request submitted successfully!');
+            // alert('Print request submitted successfully!');
             handlePrintSubmit();
         } catch (error) {
             console.error('Error submitting print request:', error);
@@ -239,10 +242,12 @@ const Print = () => {
                                     onClick={() => {
                                         selectPrinter(printer);
                                         handleNextStep('upload');
+                                        handleInputChange('printer', printer.name);
                                     }}
                                 >
                                     <div className="h-[222px] bg-[#DEDEDE] rounded-tl-lg rounded-tr-lg">
                                         <Image
+                                            priority={true}
                                             src={printer.image}
                                             alt='printer'
                                             width={5000}
@@ -312,7 +317,7 @@ const Print = () => {
                         ))}
                             file</span>
                     </div>
-                    <div className='relative flex flex-row my-[16px] px-[16px] py-[8px] gap-[8px] w-full bg-[#FFFFFF] border-[1px] border-[solid] border-[#E7E7E7] rounded-[12px]'>
+                    {/* <div className='relative flex flex-row my-[16px] px-[16px] py-[8px] gap-[8px] w-full bg-[#FFFFFF] border-[1px] border-[solid] border-[#E7E7E7] rounded-[12px]'>
                         <div className='flex items-center self-center'>
                             <img width="40" height="auto" src="https://img.icons8.com/flat-round/50/check-file.png" alt="check-file" />
                         </div>
@@ -325,7 +330,7 @@ const Print = () => {
                         <button className='flex items-center self-center absolute my-auto right-[10px]'>
                             <Image src={deleteFileBtn} alt='delete btn'></Image>
                         </button>
-                    </div>
+                    </div> */}
                     <div className='flex space-x-2 justify-end'>
                         <button className={styles.buttonBack} onClick={() => handlePrevStep('select-printer')}>Back</button>
                         <button className={styles.buttonNext} onClick={() => handleNextStep('specify-props')}>Next</button>
