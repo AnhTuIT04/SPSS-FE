@@ -2,11 +2,36 @@
 import React from 'react'
 import styles from '@/app/(student)/student.module.css';
 import { InputNumber } from 'antd'
-import type { InputNumberProps } from 'antd'
-import { useState } from 'react';
+import { InputNumberProps, Spin, Table, message } from 'antd'
+import { useState, useEffect } from 'react';
 
 const Page = () => {
     const [outputValue, setOutputValue] = useState(0);
+
+    const [dataPayment, setDataPayment] = useState([]);
+    const [filteredDataPayment, setFilteredDataPayment] = useState([]);
+    const [loadingPayment, setLoadingPayment] = useState(false);
+
+    // Fetch data from API
+    const fetchDataPayment = async () => {
+        setLoadingPayment(true);
+        try {
+            const response = await fetch('https://67143dff690bf212c76102cb.mockapi.io/api/v1/paymentData'); // Replace with your API URL
+            if (!response.ok) throw new Error('Failed to fetch data');
+            const result = await response.json();
+            setDataPayment(result);
+            setFilteredDataPayment(result); // Initialize filtered data
+        } catch (error) {
+            message.error('Failed to load data. Please try again.');
+            console.error(error);
+        } finally {
+            setLoadingPayment(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchDataPayment();
+    }, []);
 
     const handleInputChange = (value: number | null) => {
         if (value !== null) {
@@ -24,6 +49,46 @@ const Page = () => {
         return new Intl.NumberFormat('vi-VN').format(value); // Định dạng cho locale Việt Nam
     };
 
+    const columnsPayment = [
+        {
+            title: 'Number of Pages', dataIndex: 'numberOfPages', key: 'numberOfPages',
+            render: (text, record) => (
+                <span style={{
+                    borderRight: '2px solid #000',
+                    paddingRight: 32,
+                    fontWeight: 'bold',
+                    fontSize: '18px'
+                }}>
+                    +{text} A4 pages
+                </span>
+            ),
+        },
+        {
+            title: 'Date', dataIndex: 'date', key: 'date',
+            render: (text, record) => (
+                <span style={{
+                    borderRight: '2px solid #000',
+                    paddingRight: 32,
+                    fontWeight: 'bold',
+                    fontSize: '18px'
+                }}>
+                    {text}
+                </span>
+            ),
+        },
+        {
+            title: 'Amount', dataIndex: 'amount', key: 'amount',
+            render: (text, record) => (
+                <span style={{
+                    fontWeight: 'bold',
+                    fontSize: '18px'
+                }}>
+                    Paid {text}VNĐ
+                </span>
+            ),
+        },
+    ];
+
     return (
         <div>
             <div className='relative flex items-center text-center max-w-[1130px] h-[200px] mx-auto bg-white p-6 rounded-lg shadow-lg'>
@@ -31,8 +96,21 @@ const Page = () => {
                     <span className='font-bold text-[64px]'>132</span>
                     <span className='text-[24px] leading-[30px] flex'>pages remaining</span>
                 </div>
-                <div>
-
+                <div className='absolute right-5'>
+                    {/* Table */}
+                    {loadingPayment ? (
+                        <Spin tip="Loading..." />
+                    ) : (
+                        <div>
+                            <Table
+                                rowClassName={() => 'gray-background'}
+                                showHeader={false}
+                                pagination={false}
+                                columns={columnsPayment}
+                                dataSource={filteredDataPayment.slice(0, 3)}
+                                rowKey="id" />
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="mt-[80px] justify-center max-w-[1130px] mx-auto bg-white p-6 rounded-lg shadow-lg">

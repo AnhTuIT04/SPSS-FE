@@ -1,7 +1,9 @@
 'use client';
 
+
 import React, { useState, useEffect } from 'react';
-import { Table, DatePicker, Spin, message } from 'antd'; import dayjs from 'dayjs';
+import { Table, DatePicker, Spin, message } from 'antd';
+import dayjs from 'dayjs';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -210,13 +212,13 @@ export default function Home() {
             <p className="text-2xl font-bold mb-[12px]">Log</p>
             <div className="mb-4 flex space-x-4">
                 <button
-                    className={`px-4 py-2 rounded ${activeTab === 'printLog' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    className={`px-4 py-2 rounded ${activeTab === 'printLog' ? 'bg-black text-white' : 'bg-gray-200'}`}
                     onClick={() => setActiveTab('printLog')}
                 >
                     Printing
                 </button>
                 <button
-                    className={`px-4 py-2 rounded ${activeTab === 'paymentLog' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    className={`px-4 py-2 rounded ${activeTab === 'paymentLog' ? 'bg-black text-white' : 'bg-gray-200'}`}
                     onClick={() => setActiveTab('paymentLog')}
                 >
                     Payment
@@ -268,7 +270,7 @@ export default function Home() {
                         </div>
                     </div>
                     {/* Table */}
-                    {loadingPrint ? (
+                    {loadingPayment ? (
                         <Spin tip="Loading..." />
                     ) : (
                         <div>
