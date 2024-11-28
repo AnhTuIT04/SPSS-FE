@@ -245,7 +245,7 @@ const Print = () => {
                                         <div className="h-[222px] bg-[#DEDEDE] rounded-tl-lg rounded-tr-lg">
                                             <Image
                                                 priority={true}
-                                                src={printer.image}
+                                                src={`https://khanhnguyen.vn/wp-content/uploads/2019/07/7000-1-533x400.jpg`}
                                                 alt='printer'
                                                 width={5000}
                                                 height={5000}
@@ -431,7 +431,7 @@ const Print = () => {
                                 Back
                             </button>
                             <button className={styles.buttonNext} onClick={handleSubmit}>
-                                Print
+                                Submit Request
                             </button>
                         </div>
                     </div>
@@ -455,8 +455,9 @@ const Print = () => {
                             <div className='text-[16px] leading-[19px] text-[#656565] mb-[40px]'>
                                 Your document was sent to {selectedPrinter?.name}
                             </div>
-                            <div className='text-[16px] leading-[19px] text-[#656565]'>
-                                Come after 1PM at {selectedPrinter?.location} to get your document
+                            <div className="text-[16px] leading-[19px] text-[#656565]">
+                                {`Come after ${new Date(Date.now() + 3600000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} at ${selectedPrinter?.location
+                                    } to get your document`}
                             </div>
                             <div>
                                 <button className={`${styles.buttonNext} p-[8px] mt-[40px]`}
