@@ -44,7 +44,7 @@ export default function Home() {
     const fetchDataPrint = async () => {
         setLoadingPrint(true);
         try {
-            const response = await fetch('https://673760e4aafa2ef222339c88.mockapi.io/log'); // Replace with your API URL
+            const response = await fetch('https://673760e4aafa2ef222339c88.mockapi.io/student'); // Replace with your API URL
             if (!response.ok) throw new Error('Failed to fetch data');
             const result = await response.json();
             setDataPrint(result);
@@ -102,15 +102,14 @@ export default function Home() {
         const value = e.target.value;
 
         const filtered = dataPrint.filter((item) =>
-            Object.values(item).some(
-                (field) =>
-                    typeof field === 'string' &&
-                    field.toLowerCase().includes(value.toLowerCase())
+            Object.values(item).some((field) =>
+                // Convert field to string and check if it includes the search value
+                String(field).toLowerCase().includes(value.toLowerCase())
             )
         );
 
         setFilteredDataPrint(filtered);
-    }
+    };
 
     // Handle date range filtering
     const handleDateChangePayment = (dates) => {
@@ -149,16 +148,49 @@ export default function Home() {
         { title: 'Size', dataIndex: 'size', key: 'size' },
         { title: 'Date', dataIndex: 'date', key: 'date' },
         { title: 'Printer', dataIndex: 'printer', key: 'printer' },
-        { title: 'Status', dataIndex: 'status', key: 'status' },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => (
+                <span
+                    style={{
+                        color: status === 'Completed' ? 'green' : status === 'Rejected' ? 'red' : 'inherit',
+                    }}
+                >
+                    {status}
+                </span>
+            )
+        },
     ];
 
     const columnsPayment = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
         { title: 'Number of Pages', dataIndex: 'numberOfPages', key: 'numberOfPages' },
-        { title: 'Size', dataIndex: 'size', key: 'size' },
+        // { title: 'Size', dataIndex: 'size', key: 'size' },
         { title: 'Date', dataIndex: 'date', key: 'date' },
-        { title: 'Amount', dataIndex: 'amount', key: 'amount' },
-        { title: 'Status', dataIndex: 'status', key: 'status' },
+        {
+            title: 'Amount', dataIndex: 'amount', key: 'amount',
+            render: (amount) => (
+                <span>
+                    {amount}VNĐ
+                </span>
+            ),
+        },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => (
+                <span
+                    style={{
+                        color: status === 'Completed' ? 'green' : status === 'Rejected' ? 'red' : 'inherit',
+                    }}
+                >
+                    {status}
+                </span>
+            )
+        },
     ];
 
 
