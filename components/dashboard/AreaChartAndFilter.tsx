@@ -73,7 +73,7 @@ const AreaChartAndFilter = () => {
           </DropdownMenu>
 
           {/* Reset Filter */}
-          <Button variant="outline" onClick={resetFilter}>
+          <Button variant="destructive" onClick={resetFilter}>
             Reset Filter
           </Button>
         </CardDescription>

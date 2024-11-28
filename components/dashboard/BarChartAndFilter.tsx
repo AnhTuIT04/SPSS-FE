@@ -10,14 +10,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -27,6 +25,26 @@ import {
 import { DatePickerWithRange } from '../PrintTable/DateRangePicker';
 import { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
+import { PrintingLog } from '../PrintTable/columns';
+
+async function getData(): Promise<PrintingLog[]> {
+  // Fetch data from your API here.
+  const response = await fetch('https://671bd0b12c842d92c38167df.mockapi.io/api/v1/printingLog');
+
+  // Check if the request was successful
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+
+  const printingLogs: PrintingLog[]= await response.json();
+
+  return printingLogs;
+}
+
+interface PrintLog {
+  date: string;
+  value: number;
+}
 
 interface PrinterFilterProps {
   selectedPrinter: string;
@@ -79,6 +97,17 @@ const FileTypeFilter = ({ selectedFileType, setSelectedFileType }: FileTypeFilte
 };
 
 const BarChartAndFilter = () => {
+  const [data, setData] = useState<PrintingLog[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedData = await getData();
+      setData(fetchedData); // No need to spread, just set fetched data
+    };
+    fetchData();
+  }, []);
+
+
+
   const [chartData, setChartData] = useState(printData);
 
   const [selectedFileType, setSelectedFileType] = useState('All');
@@ -141,7 +170,7 @@ const BarChartAndFilter = () => {
           </DropdownMenu>
 
           {/* Reset Filter */}
-          <Button variant="outline" onClick={resetFilter}>
+          <Button variant="destructive" onClick={resetFilter}>
             Reset Filter
           </Button>
         </CardDescription>

@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from '@/components/ui/dialog';
 import {
   DropdownMenu,
@@ -25,14 +26,24 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useState } from 'react';
 
-const EditRemainingPage = () => {
+
+const EditDefaultPage = ({ defaultPage, setDefaultPage }: { defaultPage: number, setDefaultPage: (value: number) => void }) => {
+  const [page, setPage] = useState<number>(defaultPage);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPage(Number(e.target.value));
+  }
+
+  const handleSave = () => {
+    setDefaultPage(page);
+  }
+
   return (
     <Card className="max-w-2xl">
       <CardHeader>
@@ -42,7 +53,7 @@ const EditRemainingPage = () => {
       </CardHeader>
       <CardContent className="flex justify-between items-center max-w-2xl">
         <span className="text-gray-500">
-          <p>100 pages</p>
+          <p>{defaultPage} pages</p>
         </span>
         <Dialog>
           <DialogTrigger asChild>
@@ -61,11 +72,13 @@ const EditRemainingPage = () => {
                 <Label htmlFor="defaultPage" className="text-right">
                   Default Pages
                 </Label>
-                <Input id="defaultPage" value="100" className="col-span-3" />
+                <Input id="defaultPage" placeholder={String(defaultPage)} className="col-span-3" onChange={handleOnChange} />
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <DialogClose>
+                <Button type="submit" onClick={handleSave} >Save changes</Button>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -74,8 +87,13 @@ const EditRemainingPage = () => {
   );
 };
 
-const EditPageTimePeriod = () => {
-  const [timePeriod, setTimePeriod] = useState('Monthly');
+const EditPageTimePeriod = ({ pageTimePeriod, setPageTimePeriod }: { pageTimePeriod: string, setPageTimePeriod: (value: string) => void }) => {
+  const [timePeriod, setTimePeriod] = useState(pageTimePeriod);
+
+  const handleSave = () => {
+    setPageTimePeriod(timePeriod);
+  }
+
   return (
     <Card className="max-w-2xl">
       <CardHeader>
@@ -87,7 +105,7 @@ const EditPageTimePeriod = () => {
       </CardHeader>
       <CardContent className="flex justify-between items-center max-w-2xl">
         <span className="text-gray-500">
-          <p>Every month</p>
+          <p>{pageTimePeriod}</p>
         </span>
         <Dialog>
           <DialogTrigger asChild>
@@ -123,7 +141,9 @@ const EditPageTimePeriod = () => {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <DialogClose>
+                <Button type="submit" onClick={handleSave}>Save changes</Button>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -132,8 +152,13 @@ const EditPageTimePeriod = () => {
   );
 };
 
-const EditReportTimePeriod = () => {
-  const [timePeriod, setTimePeriod] = useState('Monthly');
+const EditReportTimePeriod = ({ reportTimePeriod, setReportTimePeriod }: { reportTimePeriod: string, setReportTimePeriod: (value: string) => void }) => {
+  const [timePeriod, setTimePeriod] = useState<string>(reportTimePeriod);
+
+  const handleSave = () => {
+    setReportTimePeriod(timePeriod);
+  }
+
   return (
     <Card className="max-w-2xl">
       <CardHeader>
@@ -146,7 +171,7 @@ const EditReportTimePeriod = () => {
       </CardHeader>
       <CardContent className="flex justify-between items-center max-w-2xl">
         <span className="text-gray-500">
-          <p>Every month</p>
+          <p>{reportTimePeriod}</p>
         </span>
         <Dialog>
           <DialogTrigger asChild>
@@ -182,7 +207,9 @@ const EditReportTimePeriod = () => {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <DialogClose>
+                <Button type="submit" onClick={handleSave}>Save changes</Button>
+              </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -192,6 +219,10 @@ const EditReportTimePeriod = () => {
 };
 
 const Page = () => {
+  const [defaultPage, setDefaultPage] = useState<number>(100);
+  const [pageTimePeriod, setPageTimePeriod] = useState<string>('Monthly');
+  const [reportTimePeriod, setReportTimePeriod] = useState<string>('Monthly');
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -199,13 +230,13 @@ const Page = () => {
         <CardDescription>Update settings for your SPSS</CardDescription>
       </CardHeader>
       <CardContent>
-        <EditRemainingPage />
+        <EditDefaultPage defaultPage={defaultPage} setDefaultPage={setDefaultPage} />
       </CardContent>
       <CardContent>
-        <EditPageTimePeriod />
+        <EditPageTimePeriod pageTimePeriod={pageTimePeriod} setPageTimePeriod={setPageTimePeriod} />
       </CardContent>
       <CardContent>
-        <EditReportTimePeriod />
+        <EditReportTimePeriod reportTimePeriod={reportTimePeriod} setReportTimePeriod={setReportTimePeriod} />
       </CardContent>
     </Card>
   );

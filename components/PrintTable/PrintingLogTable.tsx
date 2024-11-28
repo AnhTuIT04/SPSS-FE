@@ -1,6 +1,6 @@
 'use client';
 
-import { printingLogs } from '@/constants/spso';
+
 import { PrintingLog, columns } from './columns';
 import { DataTable } from './data-table';
 
@@ -8,8 +8,6 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -18,20 +16,39 @@ import { useEffect, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
 
-// async function getData(): Promise<PrintingLog[]> {
-//   // Fetch data from your API here.
-//   return printingLogs;
-// }
+async function getData(): Promise<PrintingLog[]> {
+  // Fetch data from your API here.
+  const response = await fetch('https://671bd0b12c842d92c38167df.mockapi.io/api/v1/printingLog');
+
+  // Check if the request was successful
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+
+  const printingLogs: PrintingLog[]= await response.json();
+
+  return printingLogs;
+}
+
+
 
 export default function DemoPage({printData} : {printData?: PrintingLog[]}) {
   // const data = await getData();
-  const tableData = printData || printingLogs;
+  const [tableData, setTableData] = useState<PrintingLog[]>([])
 
-  const [data, setData] = useState(tableData);
+  const [data, setData] = useState<PrintingLog[]>(tableData);
   const [date, setDate] = useState<DateRange | undefined>({
     from: subDays(new Date(), 6),
     to: new Date(),
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedData = await getData();
+      setTableData(fetchedData); // No need to spread, just set fetched data
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const filteredData = tableData.filter((log) => {

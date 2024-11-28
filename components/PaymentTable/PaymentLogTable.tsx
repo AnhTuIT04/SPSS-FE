@@ -16,7 +16,7 @@ import { DatePickerWithRange } from '../PrintTable/DateRangePicker';
 import { useEffect, useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
-import { table } from 'console';
+
 
 async function getData(data?: PaymentLog[] | PromiseLike<PaymentLog[]> | undefined): Promise<PaymentLog[]> {
   if (data) {
