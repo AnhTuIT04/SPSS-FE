@@ -218,16 +218,15 @@ const Print = () => {
         <div className="w-full h-full">
             {step === 'select-printer' && (
                 <div>
-                    <input
-                        className="search-input mb-4 p-2 w-[400px] border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                        type="text"
-                        placeholder="Search by keywords..."
-                        value={searchVal}
-                        onChange={(e) => setSearchVal(e.target.value)}
-                    />
-
                     <div>
                         <h1 className="text-2xl font-bold mb-4">Select Printer</h1>
+                        <input
+                            className="search-input mb-4 p-2 w-[400px] border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                            type="text"
+                            placeholder="Search by keywords..."
+                            value={searchVal}
+                            onChange={(e) => setSearchVal(e.target.value)}
+                        />
                         <div className="flex items-center justify-center m-auto">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                                 {searchResults.map((printer) => (
