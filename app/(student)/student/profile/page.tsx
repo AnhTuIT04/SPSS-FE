@@ -48,7 +48,7 @@ const InfoItem = ({ label, info, onEdit }: { label: any, info: any, onEdit: any 
             <div className='flex items-center gap-2'>
                 <div
                     className='flex items-center my-[8px] px-[24px] w-[400px] max-lg:w-full h-[40px] bg-[#f9f9f9] rounded-[7.5px] text-[15px] text-[#959595]'>
-                    {information}
+                    {info}
                 </div>
                 <Dialog>
                     <DialogTrigger asChild>

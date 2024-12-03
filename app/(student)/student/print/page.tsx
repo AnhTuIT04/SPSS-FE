@@ -251,71 +251,70 @@ const Print = () => {
     router.push('/student/buypages');
   };
 
-  return (
-    <div className="w-full h-full">
-      {step === 'select-printer' && (
-        <div>
-          <input
-            className="search-input mb-4 p-2 w-[400px] border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-            type="text"
-            placeholder="Search by keywords..."
-            value={searchVal}
-            onChange={(e) => setSearchVal(e.target.value)}
-          />
-
-          <div>
-            <h1 className="text-2xl font-bold mb-4">Select Printer</h1>
-            <div className="flex items-center justify-center m-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {searchResults.map((printer) => (
-                  <div
-                    key={printer.id}
-                    className="bg-white shadow-md rounded-lg cursor-pointer hover:bg-blue-100 transition w-[300px] h-fit"
-                    // className={`p-6  h-auto rounded-[8px] ${printer.status === 'Offline' ? 'bg-gray-200' : 'bg-white border-[1px] border-[solid] border-[#d5d5d5]  hover:border-[#1488DB]'}`}
-                    // className="bg-white p-6 border-[1px] border-[solid] border-[#d5d5d5] rounded-[8px] h-auto hover:border-[#1488DB] "
-                    onClick={() => {
-                      selectPrinter(printer);
-                      handleNextStep('upload');
-                      handleInputChange('printer', printer.name);
-                    }}
-                  >
-                    <div className="h-[222px] bg-[#DEDEDE] rounded-tl-lg rounded-tr-lg">
-                      <Image
-                        priority={true}
-                        src={`https://khanhnguyen.vn/wp-content/uploads/2019/07/7000-1-533x400.jpg`}
-                        alt='printer'
-                        width={5000}
-                        height={5000}
-                        className="w-full h-full object-cover"
-                      ></Image>
-                    </div>
-                    <div className="p-4">
-                      <p className="text-xl font-bold my-[8px]">{printer.name}</p>
-                      <p>Status: {printer.status}</p>
-                      <hr className="my-4 border-gray-300" />
-                      <div>
-                        File Type:
-                        <div className="inline-flex">
-                          {printer.fileType &&
-                            printer.fileType.map((type, index) => (
-                              <div
-                                key={index}
-                                className="flex-row justify-center items-end mx-[2px] px-[12px] py-[8px] gap-[10px] w-fit h-[31px] border-[1px] border-[solid] border-[#546FFF] rounded-[100px] text-[12px] text-[#546FFF]"
-                              >
-                                {type}
-                              </div>
-                            ))}
+    return (
+        <div className="w-full h-full">
+            {step === 'select-printer' && (
+                <div>
+                    <div>
+                        <h1 className="text-2xl font-bold mb-4">Select Printer</h1>
+                        <input
+                            className="search-input mb-4 p-2 w-[400px] border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                            type="text"
+                            placeholder="Search by keywords..."
+                            value={searchVal}
+                            onChange={(e) => setSearchVal(e.target.value)}
+                        />
+                        <div className="flex items-center justify-center m-auto">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                {searchResults.map((printer) => (
+                                    <div
+                                        key={printer.id}
+                                        className="bg-white shadow-md rounded-lg cursor-pointer hover:bg-blue-100 transition w-[300px] h-fit"
+                                        // className={`p-6  h-auto rounded-[8px] ${printer.status === 'Offline' ? 'bg-gray-200' : 'bg-white border-[1px] border-[solid] border-[#d5d5d5]  hover:border-[#1488DB]'}`}
+                                        // className="bg-white p-6 border-[1px] border-[solid] border-[#d5d5d5] rounded-[8px] h-auto hover:border-[#1488DB] "
+                                        onClick={() => {
+                                            selectPrinter(printer);
+                                            handleNextStep('upload');
+                                            handleInputChange('printer', printer.name);
+                                        }}
+                                    >
+                                        <div className="h-[222px] bg-[#DEDEDE] rounded-tl-lg rounded-tr-lg">
+                                            <Image
+                                                priority={true}
+                                                src={`https://khanhnguyen.vn/wp-content/uploads/2019/07/7000-1-533x400.jpg`}
+                                                alt='printer'
+                                                width={5000}
+                                                height={5000}
+                                                className="w-full h-full object-cover"
+                                            ></Image>
+                                        </div>
+                                        <div className="p-4">
+                                            <p className="text-xl font-bold my-[8px]">{printer.name}</p>
+                                            <p>Status: {printer.status}</p>
+                                            <hr className="my-4 border-gray-300" />
+                                            <div>
+                                                File Type:
+                                                <div className="inline-flex">
+                                                    {printer.fileType &&
+                                                        printer.fileType.map((type, index) => (
+                                                            <div
+                                                                key={index}
+                                                                className="flex-row justify-center items-end mx-[2px] px-[12px] py-[8px] gap-[10px] w-fit h-[31px] border-[1px] border-[solid] border-[#546FFF] rounded-[100px] text-[12px] text-[#546FFF]"
+                                                            >
+                                                                {type}
+                                                            </div>
+                                                        ))}
+                                                </div>
+                                            </div>
+                                            <p className="text-gray-500 my-[8px]">Location: {printer.location}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                      </div>
-                      <p className="text-gray-500 my-[8px]">Location: {printer.location}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+                </div>
+            )}
 
       {step === 'upload' && (
 

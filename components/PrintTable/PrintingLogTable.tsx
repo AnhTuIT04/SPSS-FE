@@ -25,14 +25,14 @@ async function getData(): Promise<PrintingLog[]> {
     throw new Error(`Error: ${response.status}`);
   }
 
-  const printingLogs: PrintingLog[]= await response.json();
+  const printingLogs: PrintingLog[] = await response.json();
 
   return printingLogs;
 }
 
 
 
-export default function DemoPage({printData} : {printData?: PrintingLog[]}) {
+export default function DemoPage({ printData }: { printData?: PrintingLog[] }) {
   // const data = await getData();
   const [tableData, setTableData] = useState<PrintingLog[]>([])
 
@@ -57,22 +57,22 @@ export default function DemoPage({printData} : {printData?: PrintingLog[]}) {
     });
 
     setData(filteredData);
-  }, [date]);
+  }, [tableData, date]);
 
   return (
-      <ScrollArea className="max-lg:hidden whitespace-nowrap rounded-md border">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="font-bold">Printing Info</CardTitle>
-            <div>
-              <DatePickerWithRange date={date} setDate={setDate} />
-            </div>
-          </CardHeader>
-          <CardContent >
-            <DataTable columns={columns} data={data} />
-          </CardContent>
-        </Card>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+    <ScrollArea className="max-lg:hidden whitespace-nowrap rounded-md border">
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="font-bold">Printing Info</CardTitle>
+          <div>
+            <DatePickerWithRange date={date} setDate={setDate} />
+          </div>
+        </CardHeader>
+        <CardContent >
+          <DataTable columns={columns} data={data} />
+        </CardContent>
+      </Card>
+      <ScrollBar orientation="horizontal" />
+    </ScrollArea>
   );
 }

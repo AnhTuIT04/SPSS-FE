@@ -101,6 +101,16 @@ body {
   .dropdown-content {
     @apply rounded-lg shadow-lg border border-gray-300;
   }
+
+  .table-head {
+    @apply p-3 text-sm font-semibold tracking-wide text-left;
+  }
+  .table-cell {
+    @apply p-3 text-sm text-gray-700 overflow-hidden whitespace-nowrap text-ellipsis;
+  }
+  .status-success {
+    @apply bg-[#95eee0] font-bold px-3 py-2 text-[#00B69B] rounded-md text-xs;
+  }
 }
 
 @layer base {
