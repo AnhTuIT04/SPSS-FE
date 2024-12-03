@@ -30,5 +30,13 @@
     "role": "student",
     "image": "/assets/guest.png",
     "password": "$2a$10$NHHSXfg2xaiRywQpz.mmMOOTQLH29WRaWWEerc7A9jJnBEdNqdb9."
+  },
+  {
+    "id": "90798dd5-3f88-442c-bc8e-1976e70d9564",
+    "name": "StudentVinh",
+    "email": "khanhvinh123123123@gmail.com",
+    "role": "student",
+    "image": "/assets/guest.png",
+    "password": "$2a$10$UkNtdedJvruqRdNZbhgsqOIraFOUmHBNPjoBLnOSf83Q/V6davImy"
   }
 ]
