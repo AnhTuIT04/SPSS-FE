@@ -1,37 +1,22 @@
-import {
-    Connection,
-    ConnectionOptions,
-    getConnectionManager
-} from "typeorm";
+import { DataSource } from "typeorm";
 
 import { User, Student, Spso } from "@/models";
 
+const AppDataSource = new DataSource({
+    type: "mysql",
+    host: process.env.MYSQL_HOST,
+    port: parseInt(process.env.MYSQL_PORT || "3306"),
+    username: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+    entities: [User, Student, Spso],
+    synchronize: true,
+});
 
-let connection: Connection | null = null;
-
-export const connectDB = async () => {
-    const connectionManager = getConnectionManager();
-
-    if (connectionManager.has("default")) {
-        connection = connectionManager.get("default");
-    } else {
-        connection = connectionManager.create({
-            type: "mysql",
-            host: process.env.MYSQL_HOST || "localhost",
-            port: Number(process.env.MYSQL_PORT) || 3306,
-            username: process.env.MYSQL_USER || "root",
-            password: process.env.MYSQL_PASSWORD || "",
-            database: process.env.MYSQL_DATABASE || "nextjs_db",
-            synchronize: true,
-            logging: false,
-            entities: [User, Student, Spso],
-        } as ConnectionOptions);
-
-        await connection.connect();
+export async function connectDB() {
+    if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
         console.log("Database connected");
     }
-};
-
-export const getConnection = () => {
-    return connection;
+    return AppDataSource;
 }
