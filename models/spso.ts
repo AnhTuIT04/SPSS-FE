@@ -8,7 +8,8 @@ export class Spso {
     @PrimaryColumn('uuid')
     id: string;
 
-    @OneToOne(() => User, user => user.id)
-    @JoinColumn({ name: 'id' })
-    user: User;
+    @Column()
+    // @OneToOne(() => User, user => user.id)
+    // @JoinColumn({ name: 'id' })
+    user: string;
 }

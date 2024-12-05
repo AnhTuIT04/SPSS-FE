@@ -37,23 +37,23 @@ export async function POST(req: any) {
                 studentId: body.studentId,
                 class: body.class,
                 faculty: body.faculty,
-                user: user,
+                user: user.id,
             });
             await studentRepository.save(student);
         } else if (body.role === 'spso') {
             const spso = spsoRepository.create({
                 id: user.id,
-                user: user,
+                user: user.id,
             });
             await spsoRepository.save(spso);
         }
 
         // omit password from response
-        const { password, ...userData } = body;
+        const { password, ...userData } = user;
 
         // sign access token and refresh token
-        const accessToken = signAccessToken(user.id);
-        const refreshToken = signRefreshToken(user.id);
+        const accessToken = await signAccessToken(user.id);
+        const refreshToken = await signRefreshToken(user.id);
         return NextResponse.json({ ...userData, accessToken, refreshToken });
     } catch (error) {
         console.log(error);
@@ -69,62 +69,6 @@ export async function GET(req: any) {
     const users = await userRepository.find()
 
     return NextResponse.json(users)
-}
-
-// update user
-export async function PATCH(req: any) {
-    const AppDataSource = await connectDB()
-    const userRepository = AppDataSource.getRepository(User)
-    const studentRepository = AppDataSource.getRepository(Student)
-
-    try {
-        const body = await req.json()
-        const userHeader = req.headers.get('X-User');
-        if (!userHeader) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        body.user = JSON.parse(userHeader);
-
-        const user = await userRepository.findOne({ where: { id: body.user.id } });
-        if (!user) {
-            return NextResponse.json({ message: 'User not found' }, { status: 404 });
-        }
-
-        // Kiểm tra nếu email đang được thay đổi và giá trị mới đã tồn tại
-        if (body.email && body.email !== user.email) {
-            const existingUser = await userRepository.findOne({ where: { email: body.email } });
-            if (existingUser) {
-                return NextResponse.json({ message: 'Email already exists' }, { status: 409 }); // HTTP 409 Conflict
-            }
-        }
-
-        // Cập nhật các thông tin khác
-        if (body.firstName) user.firstName = body.firstName;
-        if (body.lastName) user.lastName = body.lastName;
-        if (body.email) user.email = body.email;
-        if (body.username) user.username = body.username;
-        if (body.address) user.address = body.address;
-        if (body.gender) user.gender = body.gender;
-        if (body.image) user.image = body.image;
-
-        await userRepository.save(user);
-
-        const student = await studentRepository.findOne({ where: { id: user.id } });
-
-        if (user.role === 'student' && student) {
-            if (body.studentId) student.studentId = body.studentId;
-            if (body.class) student.class = body.class;
-            if (body.faculty) student.faculty = body.faculty;
-
-            await studentRepository.save(student);
-        }
-
-        return NextResponse.json({ ...user, ...student });
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
-    }
 }
 
 // delete user

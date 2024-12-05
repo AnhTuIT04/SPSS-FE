@@ -13,5 +13,8 @@ export class Report {
     date: Date = new Date();
 
     @Column()
+    link: string = "";
+
+    @Column()
     type: "Printing" | "Payment" = "Printing";
 }

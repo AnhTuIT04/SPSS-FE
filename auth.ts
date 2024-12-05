@@ -1,7 +1,8 @@
-import NextAuth, { User } from 'next-auth';
+import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { ZodError } from 'zod';
+import axios from 'axios';
 
 import { LoginSchema } from '@/schemas';
 import { getUserByEmail } from '@/db';
@@ -11,38 +12,33 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        email: {},
-        password: {},
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         try {
-          let user = null;
           const { email, password } = await LoginSchema.parseAsync(credentials);
 
-          // TODO: Change logic when Backend is implemented //
-          user = await getUserByEmail(email);
+          const response = await axios.post('http://localhost:3000/api/v1/user/login', {
+            email, password,
+          });
 
-          if (!user) {
-            throw new Error('User not found.');
-          }
-
-          // User authentication with OAuth does not require password
-          if (!user.password) {
-            return user;
-          }
-
-          const passwordsMatch = await bcrypt.compare(password, user.password);
-          if (passwordsMatch) {
-            return user;
-          }
-        } catch (error) {
-          if (error instanceof ZodError) {
-            // Return `null` to indicate that the credentials are invalid
+          if (response.status !== 200) {
             return null;
           }
-        }
 
-        return null;
+
+          const user = response.data;
+
+          if (user) {
+            return user;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error(error);
+          return null;
+        }
       },
     }),
   ],
@@ -54,23 +50,25 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         return token;
       }
 
-      const existingUser = await getUserById(token.sub);
-      if (!existingUser) {
+      const response = await axios.get(`http://localhost:3000/api/v1/user/${token.sub}`);
+      if (response.status !== 200) {
         return token;
       }
 
-      token.role = existingUser.role;
+      const user = response.data;
+      if (!user) {
+        return token;
+      }
+
+      token.user = user;
 
       return token;
     },
     async session({ token, session }) {
       // TODO add role and id in session
       if (session.user) {
-        if (token.sub) {
-          session.user.id = token.sub;
-        }
-        if (token.role) {
-          session.user.role = token.role;
+        if (token.user) {
+          session.user = token.user;
         }
       }
 

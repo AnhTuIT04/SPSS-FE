@@ -9,13 +9,13 @@
     },
     "location": "Building 2, Room 202, 2nd Floor, Near the entrance",
     "supportedFileTypes": [
-      ".pdf",
-      ".docx"
+      ".docx",
+      ".pdf"
     ],
     "supportedPageSizes": [
-      "A4",
       "A0",
-      "A2"
+      "A2",
+      "A4"
     ],
     "status": "ENABLE"
   },
@@ -96,7 +96,7 @@
   {
     "id": "10",
     "name": "Printer 12",
-    "image": "https://upcdn.io/W142hJk/raw/demo/4kAxwyv27S.jpg",
+    "image": "/assets/printer.jpg",
     "resetCycle": {
       "pages": 200,
       "days": 60
@@ -123,7 +123,7 @@
   {
     "id": "0ef531dc-920e-465c-8516-7ba9ded63edc",
     "name": "May in 012",
-    "image": "https://upcdn.io/W142hJk/raw/demo/4kAyiDpS9i.jpg",
+    "image": "/assets/printer.jpg",
     "location": "H1 101",
     "status": "ENABLE",
     "supportedFileTypes": [

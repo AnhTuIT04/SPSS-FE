@@ -47,9 +47,9 @@ const Profile = ({ student }: { student: Student }) => {
   return (
     <div className="flex flex-col gap-10 bg-white rounded-lg p-4 w-full">
       <div className="flex items-center gap-10">
-        <Image
+        <img
           priority
-          src={`https://github.com/shadcn.png`}
+          src={`https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/2217f1ac-b900-4077-a791-7918c6923eed.jpg`}
           alt={student.name}
           width={150}
           height={150}

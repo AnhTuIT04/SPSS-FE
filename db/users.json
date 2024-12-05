@@ -4,7 +4,7 @@
     "name": "Tu Huynh Van",
     "email": "tuvantulc@gmail.com",
     "role": "spso",
-    "image": "/assets/guest.png",
+    "image": "https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/51e5b944-fa2b-45f7-a6a3-2602be392ab0.png",
     "password": "$2a$10$Utcjk1T/zgUspNCPjJ0QEesbIdVTzdEG5sDwZQpSSrcP9xJPb8AbO"
   },
   {
@@ -12,7 +12,7 @@
     "name": "Tu Huynh Van",
     "email": "tu.huynhit2901@hcmut.edu.vn",
     "role": "student",
-    "image": "/assets/guest.png",
+    "image": "https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/2217f1ac-b900-4077-a791-7918c6923eed.jpg",
     "password": "$2a$10$FJxoQgADEFJJGoWQvvQFi.djgIbsW5NVJ6AnapCR5tKYUyLswUgFe"
   },
   {
@@ -20,7 +20,7 @@
     "name": "Lê Hoàng Khánh Vinh",
     "email": "khanhvinh123123@gmail.com",
     "role": "spso",
-    "image": "/assets/guest.png",
+    "image": "https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/51e5b944-fa2b-45f7-a6a3-2602be392ab0.png",
     "password": "$2a$10$aFkkisggOWc8TYmYO81vYuTNboS75HrEwjjHAOs1CfUcxdbkUbvsG"
   },
   {
@@ -28,7 +28,7 @@
     "name": "Han",
     "email": "han.lehoangngoc@hcmut.edu.vn",
     "role": "student",
-    "image": "/assets/guest.png",
+    "image": "https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/2217f1ac-b900-4077-a791-7918c6923eed.jpg",
     "password": "$2a$10$NHHSXfg2xaiRywQpz.mmMOOTQLH29WRaWWEerc7A9jJnBEdNqdb9."
   },
   {
@@ -36,7 +36,7 @@
     "name": "StudentVinh",
     "email": "khanhvinh123123123@gmail.com",
     "role": "student",
-    "image": "/assets/guest.png",
+    "image": "https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/2217f1ac-b900-4077-a791-7918c6923eed.jpg",
     "password": "$2a$10$UkNtdedJvruqRdNZbhgsqOIraFOUmHBNPjoBLnOSf83Q/V6davImy"
   }
 ]

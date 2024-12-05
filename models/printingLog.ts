@@ -8,9 +8,10 @@ export class PrintingLog {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => User, user => user.id)
-    @JoinColumn({ name: 'studentId' })
-    user: User;
+    @Column()
+    // @ManyToOne(() => User, user => user.id)
+    // @JoinColumn({ name: 'user' })
+    user: string;
 
     @Column()
     date: Date = new Date();
@@ -24,9 +25,10 @@ export class PrintingLog {
     @Column()
     numberOfPage: number = 0;
 
-    @ManyToOne(() => Printer, printer => printer.id)
-    @JoinColumn({ name: 'printerId' })
-    printer: Printer;
+    @Column()
+    // @ManyToOne(() => Printer, printer => printer.id)
+    // @JoinColumn({ name: 'printer' })
+    printer: string;
 
     @Column()
     status: 'Completed' | 'Pending' | 'Rejected' = 'Pending'

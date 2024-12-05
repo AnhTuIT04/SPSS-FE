@@ -20,7 +20,8 @@ import { MoreIcon, PrinterIcon, StudentIcon } from '@/constants/icons';
 
 const TopBar = async () => {
   const session = await auth();
-  const isAuthenticated = !!session;
+  const isAuthenticated = !!session?.user;
+  const userName = session?.user?.firstName.charAt(0).toUpperCase() + session?.user?.firstName.slice(1) + ' ' + session?.user?.lastName.charAt(0).toUpperCase() + session?.user?.lastName.slice(1);
 
   return (
     <nav className="fixed top-0 left-0 w-full h-[70px] bg-white flex justify-between items-center px-6 shadow-sm z-50">
@@ -36,7 +37,7 @@ const TopBar = async () => {
       <div className="relative flex items-center gap-4">
         {isAuthenticated ? (
           <>
-            <Image
+            <img
               src={session.user.image || '/assets/guest.png'}
               alt="avatar"
               width={44}
@@ -44,7 +45,7 @@ const TopBar = async () => {
               className="rounded-full"
             />
             <div>
-              <p className="text-sm font-medium">{session.user.name}</p>
+              <p className="text-sm font-medium">{userName}</p>
               <p className="text-xs text-muted-foreground">
                 {session.user.role.charAt(0).toUpperCase() + session.user.role.slice(1)}
               </p>
