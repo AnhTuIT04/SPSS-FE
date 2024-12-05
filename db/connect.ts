@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { User, Student, Spso } from "@/models";
+import { User, Student, Spso, Printer, PrintingLog, PaymentLog, Report } from "@/models";
 
 const AppDataSource = new DataSource({
     type: "mysql",
@@ -9,7 +9,7 @@ const AppDataSource = new DataSource({
     username: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
-    entities: [User, Student, Spso],
+    entities: [User, Student, Spso, Printer, PrintingLog, PaymentLog, Report],
     synchronize: true,
 });
 
