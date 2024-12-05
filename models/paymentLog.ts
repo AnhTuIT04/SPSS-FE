@@ -7,9 +7,10 @@ export class PaymentLog {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => User, user => user.id)
-    @JoinColumn({ name: 'user' })
-    user: User;
+    @Column()
+    // @ManyToOne(() => User, user => user.id)
+    // @JoinColumn({ name: 'user' })
+    user: string;
 
     @Column()
     date: Date;

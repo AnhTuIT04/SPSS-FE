@@ -37,7 +37,7 @@ export async function GET () {
     try {
         const printingLogs = await printingLogRepository.find();
 
-        return NextResponse.json({ printingLogs });
+        return NextResponse.json(printingLogs);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })

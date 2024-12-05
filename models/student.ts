@@ -21,7 +21,8 @@ export class Student {
     @Column()
     pages: number = 0;
 
-    @OneToOne(() => User, user => user.id)
-    @JoinColumn({ name: 'id' })
-    user: User;
+    @Column()
+    // @OneToOne(() => User, user => user.id)
+    // @JoinColumn({ name: 'id' })
+    user: string;
 }
