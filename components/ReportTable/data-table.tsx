@@ -37,6 +37,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [globalFilter, setGlobalFilter] = useState<any>('');
 
   const table = useReactTable({
     data,
@@ -50,7 +51,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     state: {
       sorting,
       columnFilters,
+      globalFilter,
     },
+    onGlobalFilterChange: setGlobalFilter,
   });
 
   return (
@@ -58,13 +61,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
       <div>
         <div className="flex justify-between items-center py-4">
           <Input
-            placeholder="Filter name..."
-            value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
+            placeholder="Filter..."
+            value={globalFilter}
+            onChange={(event) => table.setGlobalFilter(String(event.target.value))}
             className="max-w-sm"
           />
           <div className='flex flex-wrap gap-2'>
-            
           </div>
         </div>
       </div>
