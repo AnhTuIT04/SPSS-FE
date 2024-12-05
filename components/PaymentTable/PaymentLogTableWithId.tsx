@@ -16,19 +16,15 @@ import { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
 
 
-async function getData(data?: PaymentLog[] | PromiseLike<PaymentLog[]> | undefined): Promise<PaymentLog[]> {
-  if (data) {
-    return data;
-  }
+async function getData(id : string): Promise<PaymentLog[]> {
 
-  const response = await fetch('http://localhost:3000/api/v1/paymentLog');
+  const response = await fetch('http://localhost:3000/api/v1/user/' + id + '/paymentLog');
 
   // Check if the request was successful
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
-  const res = await response.json();
-  const paymentLogs: PaymentLog[] = res.paymentLogs;
+  const paymentLogs: PaymentLog[] = await response.json();
 
   const resUser = await fetch('http://localhost:3000/api/v1/user');
   if (!resUser.ok) {
@@ -45,7 +41,7 @@ async function getData(data?: PaymentLog[] | PromiseLike<PaymentLog[]> | undefin
   return enrichedLogs;
 }
 
-export default function DemoPage({paymentData}: {paymentData?: PaymentLog[]}) {
+export default function DemoPage({id}: {id: string}) {
   
   const [tableData, setTableData] = useState<PaymentLog[]>([]);
 
@@ -58,7 +54,7 @@ export default function DemoPage({paymentData}: {paymentData?: PaymentLog[]}) {
   // Fetching payment data on component mount
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedData = await getData(paymentData? paymentData : undefined);
+      const fetchedData = await getData(id);
       setTableData(fetchedData); // No need to spread, just set fetched data
     };
     fetchData();

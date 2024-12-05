@@ -18,9 +18,10 @@ export type PaymentLog = {
   id: number;
   name: string;
   date: string;
-  numberOfPages: number;
+  numberOfPage: number;
   amount: number;
   status: string;
+  user: string;
 };
 
 export const columns: ColumnDef<PaymentLog>[] = [
@@ -65,10 +66,10 @@ export const columns: ColumnDef<PaymentLog>[] = [
     },
   },
   {
-    accessorKey: 'numberOfPages',
-    header: 'Number of pages',
+    accessorKey: 'numberOfPage',
+    header: 'Number of page',
     cell: ({ row }) => {
-      return <span className="text-left">{row.getValue('numberOfPages')}</span>;
+      return <span className="text-left">{row.getValue('numberOfPage')}</span>;
     },
   },
   {
@@ -91,25 +92,25 @@ export const columns: ColumnDef<PaymentLog>[] = [
         return <span className='status-success'>{row.getValue('status')}</span>;
     },
   },
-  {
-    id: 'actions',
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
+  // {
+  //   id: 'actions',
+  //   cell: ({ row }) => {
+  //     return (
+  //       <DropdownMenu>
+  //         <DropdownMenuTrigger asChild>
+  //           <Button variant="ghost" className="h-8 w-8 p-0">
+  //             <span className="sr-only">Open menu</span>
+  //             <MoreHorizontal className="h-4 w-4" />
+  //           </Button>
+  //         </DropdownMenuTrigger>
+  //         <DropdownMenuContent align="end">
+  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+  //           <DropdownMenuSeparator />
+  //           <DropdownMenuItem>View customer</DropdownMenuItem>
+  //           <DropdownMenuItem>View payment details</DropdownMenuItem>
+  //         </DropdownMenuContent>
+  //       </DropdownMenu>
+  //     );
+  //   },
+  // },
 ];

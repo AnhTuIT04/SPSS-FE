@@ -1,8 +1,9 @@
 'use client';
 
-import { Student, columns } from './columns';
+import { Student as StudentType, columns } from './columns';
 import { DataTable } from './data-table';
-
+import { connectDB } from "@/db/connect";
+import { Student } from "@/models";
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import {
   Card,
@@ -14,22 +15,33 @@ import {
 } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
 
-async function getData(): Promise<Student[]> {
-  const response = await fetch('https://67143dff690bf212c76102cb.mockapi.io/api/v1/student');
+async function getData(): Promise<StudentType[]> {
+  const response = await fetch('http://localhost:3000/api/v1/user');
 
   // Check if the request was successful
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
+  const students: StudentType[] = await response.json();
 
-  const students: Student[] = await response.json();
+  const studentRes = await fetch('http://localhost:3000/api/v1/student');
+  const studentList: {id: string; pages: number; studentId: string}[] = await studentRes.json();
 
-  return students;
+
+  const studentMap = new Map(studentList.map((student) => [student.id, student.pages]));
+  const studentIdMap = new Map(studentList.map((student) => [student.id, student.studentId]));
+  const modifiedStudents = students.map((student) => ({
+    ...student,
+    page: studentMap.get(student.id) || 10,
+    name: student.firstName + ' ' + student.lastName,
+    studentId: studentIdMap.get(student.id) || 'Unknown Student ID',
+  }));
+  return modifiedStudents;
 }
 
 export default function DemoPage() {
   // const data = await getData();
-  const [data, setData] = useState<Student[]>([]);
+  const [data, setData] = useState<StudentType[]>([]);
 
   // Fetching payment data on component mount
   useEffect(() => {

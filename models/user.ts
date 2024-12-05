@@ -31,5 +31,8 @@ export class User {
     image: string = '';
 
     @Column()
+    pages: number = 10;
+
+    @Column()
     role: 'spso' | 'student' = 'student';
 }

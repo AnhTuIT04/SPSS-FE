@@ -11,10 +11,14 @@ import { useEffect, useState } from 'react';
 
 import PrintingLogTable from '@/components/PrintTable/PrintingLogTable';
 import PaymentLogTable from '@/components/PaymentTable/PaymentLogTable';
+import PrintingLogTableWithId from '@/components/PrintTable/PrintingLogTableWithId';
+import PaymentLogTableWithId from '@/components/PaymentTable/PaymentLogTableWithId';
 
 type Student = {
-  id: number;
+  id: string;
   name: string;
+  firstName: string;
+  lastName: string;
   studentId: string;
   email: string;
   page: number;
@@ -22,8 +26,20 @@ type Student = {
 };
 
 const getStuddentData = async (id: string) => {
-  const response = await fetch(`https://67143dff690bf212c76102cb.mockapi.io/api/v1/student/${id}`);
-  return response.json();
+  const response = await fetch(`http://localhost:3000/api/v1/user/${id}`);
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+  const studentData = await response.json();
+
+  const studentRes = await fetch(`http://localhost:3000/api/v1/student/${id}`);
+  if (!studentRes.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+  const student = await studentRes.json();
+
+  return { ...studentData, name: studentData.firstName + ' ' + studentData.lastName, studentId: student.studentId, page: student.pages };
+
 };
 
 export function InputWithLabel({
@@ -47,9 +63,8 @@ const Profile = ({ student }: { student: Student }) => {
   return (
     <div className="flex flex-col gap-10 bg-white rounded-lg p-4 w-full">
       <div className="flex items-center gap-10">
-        <Image
-          priority
-          src={`https://github.com/shadcn.png`}
+        <img
+          src={student.image}
           alt={student.name}
           width={150}
           height={150}
@@ -119,10 +134,10 @@ const StudentIdPage = () => {
         {studentData && <Profile student={studentData} />}
       </TabsContent>
       <TabsContent value="printing" className="flex flex-col gap-10">
-        <PrintingLogTable />
+        <PrintingLogTableWithId id={Array.isArray(id) ? id[0] : id} />
       </TabsContent>
       <TabsContent value="payment" className="flex flex-col gap-10">
-        <PaymentLogTable />
+        <PaymentLogTableWithId id={Array.isArray(id) ? id[0] : id} />
       </TabsContent>
     </Tabs>
   );

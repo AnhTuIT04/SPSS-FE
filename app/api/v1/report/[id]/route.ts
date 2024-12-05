@@ -27,6 +27,7 @@ export async function PATCH(req: any, context: any) {
             name: body.name ?? report.name, 
             date: body.date ?? report.date,
             type: body.type ?? report.type,
+            link: body.link ?? report.link,
         });
 
         // Save the updated record.
@@ -50,9 +51,9 @@ export async function GET(req: Request, context: any) {
     try {
         const report = await reportRepository.findOneBy({ id });
         if (!report) {
-            return NextResponse.json({ message: 'Payment log not found' }, { status: 404 });
+            return NextResponse.json({ message: 'Report not found' }, { status: 404 });
         }
-        return NextResponse.json({ report });
+        return NextResponse.json(report);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })

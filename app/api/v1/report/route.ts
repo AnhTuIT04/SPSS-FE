@@ -15,12 +15,13 @@ export async function POST(req: any) {
         const report = reportRepository.create({
             name: body.name,
             date: body.date,
-            type: body.type
+            type: body.type,
+            link: body.link,
         });
         await reportRepository.save(report);
 
 
-        return NextResponse.json({ ...report });
+        return NextResponse.json(report);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
@@ -31,9 +32,9 @@ export async function GET () {
     const AppDataSource = await connectDB();
     const reportRepository = AppDataSource.getRepository(Report);
     try {
-        const printingLogs = await reportRepository.find();
+        const reports = await reportRepository.find();
 
-        return NextResponse.json({ printingLogs });
+        return NextResponse.json(reports);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })

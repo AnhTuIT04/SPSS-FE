@@ -30,13 +30,13 @@ async function getData(): Promise<PrintingLog[]> {
   if (!resUser.ok) {
     throw new Error(`Error: ${resUser.status}`);
   }
+  const userResponse = await resUser.json();
+  const users: { id: string; firstName: string, lastName: string }[] = userResponse;
+
   const resPrinter = await fetch('http://localhost:3000/api/v1/printer');
   if (!resPrinter.ok) {
     throw new Error(`Error: ${resPrinter.status}`);
   }
-  const userResponse = await resUser.json();
-  const users: { id: string; firstName: string, lastName: string }[] = userResponse;
-
   const printerResponse = await resPrinter.json();
   const printers: { id: string; name: string }[] = printerResponse.printers;
   // Create a map of userId to userName
@@ -49,6 +49,7 @@ async function getData(): Promise<PrintingLog[]> {
     name: userMap.get(log.user) || 'Unknown User',
     printer: printerMap.get(log.printer) || 'Unknown Printer',
   }));
+
 
   return enrichedLogs;
 }

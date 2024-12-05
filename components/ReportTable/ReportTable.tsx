@@ -29,7 +29,7 @@ import { subDays } from 'date-fns';
 import { DatePickerWithRange } from './DateRangePicker';
 
 async function getData(): Promise<Report[]> {
-  const response = await fetch('https://671bd0b12c842d92c38167df.mockapi.io/api/v1/report');
+  const response = await fetch('http://localhost:3000/api/v1/report');
 
   // Check if the request was successful
   if (!response.ok) {
@@ -37,7 +37,7 @@ async function getData(): Promise<Report[]> {
   }
 
   const reports: Report[] = await response.json();
-
+  console.log(reports);
   return reports;
 }
 
@@ -90,12 +90,12 @@ export default function ReportTable() {
       const isDateMatch =
         reportDate >= (date?.from ?? new Date(0)) && reportDate <= (date?.to ?? new Date());
       const isReportTypeMatch =
-        reportType === 'All' || report.type === (reportType === 'Printing' ? true : false);
+        reportType === 'All' || report.type === reportType;
       return isReportTypeMatch && isDateMatch;
     });
 
     setTableData(filteredData);
-  }, [date, reportType]);
+  }, [data, date, reportType]);
 
   const resetFilter = () => {
     setReportType('All');

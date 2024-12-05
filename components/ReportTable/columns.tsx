@@ -11,7 +11,8 @@ export type Report = {
   id: number;
   name: string;
   date: string;
-  type: boolean;
+  type: string;
+  link: string;
 };
 
 export const columns: ColumnDef<Report>[] = [
@@ -44,6 +45,9 @@ export const columns: ColumnDef<Report>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      return <span className="text-right w-10 table-cell">{row.getValue('name')}</span>;
     },
   },
   {
@@ -81,7 +85,7 @@ export const columns: ColumnDef<Report>[] = [
     cell: ({ row }) => {
       return (
         <span className="text-right table-cell">
-          {row.getValue('type') ? 'Printing' : 'Payment'}
+          {row.getValue('type')}
         </span>
       );
     },
