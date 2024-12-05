@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 import { connectDB } from "@/db/connect"
 import { User, Student, Spso } from "@/models"
 import { signAccessToken, signRefreshToken } from "@/lib/jwt-token"
-import { auth } from "@/middleware/auth/check-auth";
 
 const saltRounds = 10;
 
@@ -27,6 +26,8 @@ export async function POST(req: any) {
             username: body.username,
             role: body.role,
             gender: body.gender,
+            image: body.role === 'student' ? 'https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/2217f1ac-b900-4077-a791-7918c6923eed.jpg' :
+                'https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/51e5b944-fa2b-45f7-a6a3-2602be392ab0.png',
         });
         await userRepository.save(user);
 
@@ -62,10 +63,6 @@ export async function POST(req: any) {
 
 // get all users
 export async function GET(req: any) {
-    // check authentication
-    const authResponse = auth(req)
-
-
     const AppDataSource = await connectDB()
     const userRepository = AppDataSource.getRepository(User)
 
@@ -79,28 +76,84 @@ export async function PATCH(req: any) {
     const AppDataSource = await connectDB()
     const userRepository = AppDataSource.getRepository(User)
     const studentRepository = AppDataSource.getRepository(Student)
-    const spsoRepository = AppDataSource.getRepository(Spso)
 
     try {
         const body = await req.json()
+        const userHeader = req.headers.get('X-User');
+        if (!userHeader) {
+            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        }
 
-        const user = await userRepository.findOne({ where: { id: body.id } });
+        body.user = JSON.parse(userHeader);
+
+        const user = await userRepository.findOne({ where: { id: body.user.id } });
+        if (!user) {
+            return NextResponse.json({ message: 'User not found' }, { status: 404 });
+        }
+
+        // Kiểm tra nếu email đang được thay đổi và giá trị mới đã tồn tại
+        if (body.email && body.email !== user.email) {
+            const existingUser = await userRepository.findOne({ where: { email: body.email } });
+            if (existingUser) {
+                return NextResponse.json({ message: 'Email already exists' }, { status: 409 }); // HTTP 409 Conflict
+            }
+        }
+
+        // Cập nhật các thông tin khác
+        if (body.firstName) user.firstName = body.firstName;
+        if (body.lastName) user.lastName = body.lastName;
+        if (body.email) user.email = body.email;
+        if (body.username) user.username = body.username;
+        if (body.address) user.address = body.address;
+        if (body.gender) user.gender = body.gender;
+        if (body.image) user.image = body.image;
+
+        await userRepository.save(user);
+
+        const student = await studentRepository.findOne({ where: { id: user.id } });
+
+        if (user.role === 'student' && student) {
+            if (body.studentId) student.studentId = body.studentId;
+            if (body.class) student.class = body.class;
+            if (body.faculty) student.faculty = body.faculty;
+
+            await studentRepository.save(student);
+        }
+
+        return NextResponse.json({ ...user, ...student });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
+    }
+}
+
+// delete user
+export async function DELETE(req: any) {
+    const AppDataSource = await connectDB();
+    const userRepository = AppDataSource.getRepository(User);
+    const studentRepository = AppDataSource.getRepository(Student);
+    const spsoRepository = AppDataSource.getRepository(Spso);
+
+    try {
+        const { id } = await req.json();
+
+        const user = await userRepository.findOne({ where: { id } });
 
         if (!user) {
-            return NextResponse.json({ message: 'User not found' }, { status: 404 })
+            return NextResponse.json({ message: 'User not found' }, { status: 404 });
         }
 
-        const { password, ...userData } = user
-
-        let userDetails = null
-        if (userData.role === 'student') {
-            userDetails = await studentRepository.findOne({ where: { id: userData.id } });
-        } else if (userData.role === 'spso') {
-            userDetails = await spsoRepository.findOne({ where: { id: userData.id } });
+        if (user.role === 'student') {
+            await studentRepository.delete({ id: user.id });
+        } else if (user.role === 'spso') {
+            await spsoRepository.delete({ id: user.id });
         }
 
-        return NextResponse.json({ ...userData, ...userDetails })
+        await userRepository.delete({ id: user.id });
+
+        return NextResponse.json({ message: 'User deleted successfully' });
     } catch (error) {
-        return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
+        console.log(error);
+        return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });
     }
 }
