@@ -8,20 +8,4 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "cSpell.words": ["spso"],
-  "sqltools.connections": [
-    {
-      "mysqlOptions": {
-        "authProtocol": "default",
-        "enableSsl": "Disabled"
-      },
-      "previewLimit": 50,
-      "server": "spso-hcmut-admin.e.aivencloud.com",
-      "port": 22710,
-      "driver": "MySQL",
-      "name": "spss",
-      "database": "defaultdb",
-      "username": "avnadmin",
-      "password": "AVNS_YHbr_TQiw_tCcvi-5_C"
-    }
-  ]
 }
