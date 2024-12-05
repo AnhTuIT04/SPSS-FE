@@ -1,5 +1,7 @@
 'use client';
+import { Report } from "@/components/ReportTable/columns";
 import { useParams } from "next/navigation"
+import { useEffect, useState } from "react";
 
 
 const fetchReport = async (id: string) => {
@@ -14,13 +16,20 @@ const fetchReport = async (id: string) => {
 
 const ReportIdPage = async () => {
   const { id } = useParams()
+  const [data, setData] = useState<Report>();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedData = await fetchReport(Array.isArray(id) ? id[0] : id);
+      setData(fetchedData); // No need to spread, just set fetched data
+    };
+    fetchData();
+  }, []);
 
-  const report = await fetchReport(Array.isArray(id) ? id[0] : id)
 
   return (
     <div className="w-full h-[calc(100vh-10rem)]">
-      <iframe className="w-full h-full" src={report.link} />
+      <iframe className="w-full h-full" src={data?.link} />
     </div>
   )
 }
