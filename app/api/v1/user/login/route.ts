@@ -37,8 +37,8 @@ export async function POST(req: any) {
         }
 
         // sign access token and refresh token
-        const accessToken = signAccessToken(user.id);
-        const refreshToken = signRefreshToken(user.id);
+        const accessToken = await signAccessToken(user.id);
+        const refreshToken = await signRefreshToken(user.id);
 
         return NextResponse.json({ ...userData, ...userDetails, accessToken, refreshToken });
     } catch (error) {
