@@ -10,10 +10,6 @@ export default function handler(req: NextRequest) {
     // auth routes
     const AuthRoutes = [
         {
-            method: 'GET',
-            pathname: '/api/v1/user',
-        },
-        {
             method: 'PATCH',
             pathname: '/api/v1/user',
         },

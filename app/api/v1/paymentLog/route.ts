@@ -17,7 +17,7 @@ export async function POST(req: any) {
             date: body.date,
             numberOfPage: body.numberOfPage,
             amount: body.amount,
-            status: body.status
+            status: body.status,
         });
         await paymentLogRepository.save(paymentLog);
 

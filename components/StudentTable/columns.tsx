@@ -8,8 +8,10 @@ import { ChevronRightIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 
 export type Student = {
-  id: number;
+  id: string;
   name: string;
+  firstName: string;
+  lastName: string;
   studentId: string;
   email: string;
   page: number;
