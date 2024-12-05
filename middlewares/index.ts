@@ -17,9 +17,13 @@ export default function handler(req: NextRequest) {
             method: 'PATCH',
             pathname: '/api/v1/user',
         },
+        {
+            method: 'POST',
+            pathname: '/api/v1/printer/[id]/print',
+        }
     ]
 
-    if (AuthRoutes.some(route => route.pathname === pathname && route.method === req.method)) {
+    if (AuthRoutes.some(route => new RegExp(`^${route.pathname.replace(/\[.*?\]/g, '[^/]+')}$`).test(pathname) && route.method === req.method)) {
         return auth(req);
     }
 
