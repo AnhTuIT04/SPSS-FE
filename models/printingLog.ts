@@ -9,7 +9,7 @@ export class PrintingLog {
     id: string;
 
     @ManyToOne(() => User, user => user.id)
-    @JoinColumn({ name: 'studentId' })
+    @JoinColumn({ name: 'user' })
     user: User;
 
     @Column()
@@ -25,7 +25,7 @@ export class PrintingLog {
     numberOfPage: number = 0;
 
     @ManyToOne(() => Printer, printer => printer.id)
-    @JoinColumn({ name: 'printerId' })
+    @JoinColumn({ name: 'printer' })
     printer: Printer;
 
     @Column()

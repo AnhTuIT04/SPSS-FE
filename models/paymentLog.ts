@@ -8,7 +8,7 @@ export class PaymentLog {
     id: string;
 
     @ManyToOne(() => User, user => user.id)
-    @JoinColumn({ name: 'studentId' })
+    @JoinColumn({ name: 'user' })
     user: User;
 
     @Column()
