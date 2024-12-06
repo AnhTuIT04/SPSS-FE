@@ -1,10 +1,23 @@
-# SPSS-FE
+# SPSS - FULL STACK
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Phân chia công việc
+
+| STT | Họ và tên           | MSSV    | Vai trò                                                                                                            | Tổng tỉ lệ đóng góp |
+| --- | ------------------- | ------- | ------------------------------------------------------------------------------------------------------------------ | ------------------- |
+| 1   | Lê Hoàng Ngọc Hân   | 2210935 | Hoàn thành task 1.3, 2.1, 2.4, 3.2. Front-end                                                                      | 15%                 |
+| 2   | Huỳnh Văn Tú        | 2213841 | Hoàn thành task 1.3, 2.1, 2.4, 3.2, 4. Full-stack (Phải làm thêm Back-End vì các thành viên ở dưới không chịu làm) | 30%                 |
+| 3   | Lê Hoàng Khánh Vinh | 2213963 | Hoàn thành task 1.3, 2.1, 2.4, 3.2, 4. Full-stack (Phải làm thêm Back-End vì các thành viên ở dưới không chịu làm) | 30%                 |
+| 4   | Chu Minh Tâm        | 2213009 | Hoàn thành task 1.1, 1.2, 2.2, 3.1. Authentication (Được giao việc nhưng không hoàn thành)                         | 3%                  |
+| 5   | Huỳnh Thị Minh Tâm  | 2213013 | Hoàn thành task 1.1, 1.2, 1.3, 2.2, 3.1. Logging and Reporting (Được giao việc nhưng không hoàn thành)             | 3%                  |
+| 6   | Trần Mạnh Tuấn      | 2213807 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Payment                                                                        | 13%                 |
+| 7   | Phạm Việt Anh       | 2210128 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Printe Process (Được giao việc nhưng không hoàn thành)                         | 3%                  |
+| 8   | Võ Quốc Huy         | 2211303 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Printer Management (Được giao việc nhưng không hoàn thành)                     | 3%                  |
+
 ## Description
 
-SPSS-FE is a Smart Printing Service for Students at HCMUT. It allows students to print documents using various printers available on campus.
+SPSS is a Smart Printing Service for Students at HCMUT. It allows students to print documents using various printers available on campus.
 
 ## Getting Started
 
