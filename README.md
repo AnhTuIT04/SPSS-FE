@@ -1,36 +1,100 @@
+# SPSS-FE
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Description
+
+SPSS-FE is a Smart Printing Service for Students at HCMUT. It allows students to print documents using various printers available on campus.
 
 ## Getting Started
 
-First, run the development server:
+### Cloning the Repository
+
+To clone the repository, run the following command:
+
+```bash
+git clone https://github.com/your-username/spss-fe.git
+cd spss-fe
+```
+
+# Installing Packages
+
+Install the necessary packages using npm:
+
+```bash
+npm install
+```
+
+Or using yarn:
+
+```bash
+yarn install
+```
+
+# Configuration
+
+## Creating the `.env` File
+
+Create a `.env` file in the root directory of the project and add the following environment variables:
+
+```bash
+AUTH_SECRET=your_secret
+EDGE_STORE_ACCESS_KEY=your_edge_store_access_key
+EDGE_STORE_SECRET_KEY=your_edge_store_secret_key
+
+MYSQL_HOST=your_mysql_host
+MYSQL_PORT=your_mysql_port
+MYSQL_DATABASE=your_mysql_db
+MYSQL_USER=your_mysql_user
+MYSQL_PASSWORD=your_mysql_password
+
+JWT_SECRET=your_secret
+REFRESH_TOKEN_SECRET=your_secret
+```
+
+## Getting keys
+
+You need to set up your MySQL database and get the necessary credentials to fill in the `.env` file.
+
+# Run the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+.env
+.gitignore
+.next/
+.prettierrc
+.vscode/
+actions/
+app/
+[auth.ts](http://_vscodecontentref_/1)
+components/
+[components.json](http://_vscodecontentref_/2)
+constants/
+db/
+hooks/
+lib/
+[middleware.ts](http://_vscodecontentref_/3)
+middlewares/
+models/
+[next-auth.d.ts](http://_vscodecontentref_/4)
+[next-env.d.ts](http://_vscodecontentref_/5)
+[next.config.mjs](http://_vscodecontentref_/6)
+[package.json](http://_vscodecontentref_/7)
+[postcss.config.mjs](http://_vscodecontentref_/8)
+public/
+[README.md](http://_vscodecontentref_/9)
+[routes.ts](http://_vscodecontentref_/10)
+schemas/
+[tailwind.config.ts](http://_vscodecontentref_/11)
+[tsconfig.json](http://_vscodecontentref_/12)
+```
