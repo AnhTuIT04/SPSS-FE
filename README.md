@@ -12,12 +12,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | 4   | Chu Minh Tâm        | 2213009 | Hoàn thành task 1.1, 1.2, 2.2, 3.1. Authentication (Được giao việc nhưng không hoàn thành)                         | 3%                  |
 | 5   | Huỳnh Thị Minh Tâm  | 2213013 | Hoàn thành task 1.1, 1.2, 1.3, 2.2, 3.1. Logging and Reporting (Được giao việc nhưng không hoàn thành)             | 3%                  |
 | 6   | Trần Mạnh Tuấn      | 2213807 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Payment                                                                        | 13%                 |
-| 7   | Phạm Việt Anh       | 2210128 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Print Process (Được giao việc nhưng không hoàn thành)                          | 3%                  |
+| 7   | Phạm Việt Anh       | 2210128 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Printe Process (Được giao việc nhưng không hoàn thành)                         | 3%                  |
 | 8   | Võ Quốc Huy         | 2211303 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Printer Management (Được giao việc nhưng không hoàn thành)                     | 3%                  |
 
 ## Report
 
-Truy cập vào link https://www.overleaf.com/project/675153d9c7ff1501ec086352 để xem báo cáo.
+Truy cập vào link https://www.overleaf.com/read/srchjmsvpmhp#cbe34b để xem báo cáo.
 
 ## Description
 
