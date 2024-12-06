@@ -15,6 +15,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | 7   | Phạm Việt Anh       | 2210128 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Printe Process (Được giao việc nhưng không hoàn thành)                         | 3%                  |
 | 8   | Võ Quốc Huy         | 2211303 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Printer Management (Được giao việc nhưng không hoàn thành)                     | 3%                  |
 
+## Report
+
+Truy cập vào link https://www.overleaf.com/project/675153d9c7ff1501ec086352 để xem báo cáo.
+
 ## Description
 
 SPSS is a Smart Printing Service for Students at HCMUT. It allows students to print documents using various printers available on campus.
