@@ -30,7 +30,7 @@ SPSS is a Smart Printing Service for Students at HCMUT. It allows students to pr
 To clone the repository, run the following command:
 
 ```bash
-git clone https://github.com/your-username/spss-fe.git
+git clone https://github.com/AnhTuIT04/SPSS-FE.git
 cd spss-fe
 ```
 
