@@ -45,8 +45,8 @@ async function getData(data?: PaymentLog[] | PromiseLike<PaymentLog[]> | undefin
   return enrichedLogs;
 }
 
-export default function DemoPage({paymentData}: {paymentData?: PaymentLog[]}) {
-  
+export default function DemoPage({ paymentData }: { paymentData?: PaymentLog[] }) {
+
   const [tableData, setTableData] = useState<PaymentLog[]>([]);
 
   const [data, setData] = useState(tableData);
@@ -58,7 +58,7 @@ export default function DemoPage({paymentData}: {paymentData?: PaymentLog[]}) {
   // Fetching payment data on component mount
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedData = await getData(paymentData? paymentData : undefined);
+      const fetchedData = await getData(paymentData ? paymentData : undefined);
       setTableData(fetchedData); // No need to spread, just set fetched data
     };
     fetchData();

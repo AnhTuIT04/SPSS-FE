@@ -25,7 +25,7 @@ async function getData(): Promise<StudentType[]> {
   const students: StudentType[] = await response.json();
 
   const studentRes = await fetch('http://localhost:3000/api/v1/student');
-  const studentList: {id: string; pages: number; studentId: string}[] = await studentRes.json();
+  const studentList: { id: string; pages: number; studentId: string }[] = await studentRes.json();
 
 
   const studentMap = new Map(studentList.map((student) => [student.id, student.pages]));

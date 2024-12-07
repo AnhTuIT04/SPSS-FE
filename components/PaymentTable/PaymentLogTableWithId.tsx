@@ -16,7 +16,7 @@ import { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
 
 
-async function getData(id : string): Promise<PaymentLog[]> {
+async function getData(id: string): Promise<PaymentLog[]> {
 
   const response = await fetch('http://localhost:3000/api/v1/user/' + id + '/paymentLog');
 
@@ -41,8 +41,8 @@ async function getData(id : string): Promise<PaymentLog[]> {
   return enrichedLogs;
 }
 
-export default function DemoPage({id}: {id: string}) {
-  
+export default function DemoPage({ id }: { id: string }) {
+
   const [tableData, setTableData] = useState<PaymentLog[]>([]);
 
   const [data, setData] = useState(tableData);

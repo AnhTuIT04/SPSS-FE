@@ -3,9 +3,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/db/connect";
 import { Student } from "@/models";
 
-
-
-export async function GET (req: any, context: any) {
+export async function GET(req: any, context: any) {
 
     const { params } = context;
 

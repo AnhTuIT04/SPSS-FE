@@ -1,16 +1,13 @@
 'use client';
 
-
 import React, { useState, useEffect } from 'react';
 import { Table, DatePicker, Spin, message } from 'antd';
 import dayjs from 'dayjs';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import isBetween from 'dayjs/plugin/isBetween';
 
 dayjs.extend(isBetween);
 
-import DashboardCard from '@/components/dashboard/DashboardCard';
 // import { dashboardCards } from "@/constants/student"
 import Image from 'next/image';
 import pageBalance from '@/public/assets/pagebalance.svg';
@@ -20,15 +17,6 @@ import trendDown from '@/public/assets/trend_down.svg';
 
 export default function Home() {
     const { RangePicker } = DatePicker;
-
-    // Mock data
-    // const data = [
-    //     { id: 1, filename: 'doc1.pdf', size: '2MB', date: '2024-10-01', printer: 'Printer A', status: 'Completed' },
-    //     { id: 2, filename: 'doc2.docx', size: '3MB', date: '2024-10-03', printer: 'Printer B', status: 'Pending' },
-    //     { id: 3, filename: 'doc3.jpg', size: '1MB', date: '2024-10-05', printer: 'Printer C', status: 'Failed' },
-    //     { id: 4, filename: 'doc4.png', size: '500KB', date: '2024-10-07', printer: 'Printer A', status: 'Completed' },
-    //     { id: 5, filename: 'doc5.txt', size: '800KB', date: '2024-10-09', printer: 'Printer B', status: 'Pending' },
-    // ];
 
     const [activeTab, setActiveTab] = useState<'printLog' | 'paymentLog'>('printLog');
 
@@ -45,6 +33,8 @@ export default function Home() {
         setLoadingPrint(true);
         try {
             const response = await fetch('https://673760e4aafa2ef222339c88.mockapi.io/student'); // Replace with your API URL
+
+            console.log(response);
             if (!response.ok) throw new Error('Failed to fetch data');
             const result = await response.json();
             setDataPrint(result);
