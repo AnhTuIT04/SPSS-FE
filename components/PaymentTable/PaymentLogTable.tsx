@@ -21,28 +21,26 @@ async function getData(data?: PaymentLog[] | PromiseLike<PaymentLog[]> | undefin
     return data;
   }
 
-  const response = await fetch('http://localhost:3000/api/v1/paymentLog');
+  const response = await fetch('http://localhost:3000/api/v1/student/paymentLog');
 
   // Check if the request was successful
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
   const res = await response.json();
-  const paymentLogs: PaymentLog[] = res.paymentLogs;
+  const paymentLogs: PaymentLog[] = res.map((log: any) => {
+    return {
+      id: log.id,
+      name: log.firstName + " " + log.lastName,
+      date: log.date,
+      amount: log.amount,
+      status: log.status,
+      numberOfPage: log.numberOfPage,
+      type: log.type,
+    }
+  });
 
-  const resUser = await fetch('http://localhost:3000/api/v1/user');
-  if (!resUser.ok) {
-    throw new Error(`Error: ${resUser.status}`);
-  }
-  const userResponse = await resUser.json();
-  const users: { id: string; firstName: string, lastName: string }[] = userResponse;
-  const userMap = new Map(users.map((user) => [user.id, user.firstName + ' ' + user.lastName]));
-  const enrichedLogs = paymentLogs.map((log) => ({
-    ...log,
-    name: userMap.get(log.user) || 'Unknown User',
-  }));
-
-  return enrichedLogs;
+  return paymentLogs;
 }
 
 export default function DemoPage({ paymentData }: { paymentData?: PaymentLog[] }) {

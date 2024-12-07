@@ -18,40 +18,28 @@ import { subDays } from 'date-fns';
 
 async function getData(): Promise<PrintingLog[]> {
   // Fetch data from your API here.
-  const response = await fetch('http://localhost:3000/api/v1/printingLog');
+  const response = await fetch('http://localhost:3000/api/v1/student/printingLog');
   // Check if the request was successful
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
 
   const res = await response.json();
-  const printingLogs: PrintingLog[] = res.printingLogs;
-  const resUser = await fetch('http://localhost:3000/api/v1/user');
-  if (!resUser.ok) {
-    throw new Error(`Error: ${resUser.status}`);
-  }
-  const userResponse = await resUser.json();
-  const users: { id: string; firstName: string, lastName: string }[] = userResponse;
+  const printingLogs = res.map((log: any) => {
+    return {
+      id: log.printingLogId,
+      name: log.firstName + " " + log.lastName,
+      date: log.date,
+      fileName: log.fileName,
+      fileType: log.fileType,
+      numberOfPage: log.numberOfPage,
+      printer: log.printerName,
+      status: log.status,
+      user: log.user,
+    };
+  })
 
-  const resPrinter = await fetch('http://localhost:3000/api/v1/printer');
-  if (!resPrinter.ok) {
-    throw new Error(`Error: ${resPrinter.status}`);
-  }
-  const printerResponse = await resPrinter.json();
-  const printers: { id: string; name: string }[] = printerResponse.printers;
-  // Create a map of userId to userName
-  const userMap = new Map(users.map((user) => [user.id, user.firstName + ' ' + user.lastName]));
-
-  const printerMap = new Map(printers.map((printer) => [printer.id, printer.name]));
-  // Add userName to each printing log
-  const enrichedLogs = printingLogs.map((log) => ({
-    ...log,
-    name: userMap.get(log.user) || 'Unknown User',
-    printer: printerMap.get(log.printer) || 'Unknown Printer',
-  }));
-
-
-  return enrichedLogs;
+  return printingLogs;
 }
 
 

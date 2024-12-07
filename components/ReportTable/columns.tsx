@@ -30,7 +30,7 @@ export const columns: ColumnDef<Report>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="text-right table-cell">{row.getValue('id')}</span>;
+      return <span className="text-right table-cell max-w-40">{row.getValue('id')}</span>;
     },
   },
   {
