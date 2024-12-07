@@ -10,10 +10,11 @@ export async function GET(req: any, context: any) {
     const AppDataSource = await connectDB();
 
     const query = `
-        SELECT "u".*, "s".*, "pl"."id" as "printingLogId", "pl"."date", "pl"."fileName", "pl"."fileType", "pl"."numberOfPage", "pl"."printer", "pl"."status"
+        SELECT "u".*, "s".*, "pl"."id" as "printingLogId", "pl"."date", "pl"."fileName", "pl"."fileType", "pl"."numberOfPage", "p"."name" AS "printerName", "pl"."status"
         FROM "users" u
         JOIN "students" s ON "u"."id" = "s"."id"
         JOIN "PrintingLogs" pl ON "s"."id" = "pl"."user"
+        JOIN "Printers" p ON "pl"."printer" = "p"."id"
         WHERE "u"."id" = '${id}'
     `;
 
@@ -26,7 +27,7 @@ export async function GET(req: any, context: any) {
                 fileName: student.fileName,
                 fileType: student.fileType,
                 numberOfPage: student.numberOfPage,
-                printer: student.printer,
+                printerName: student.printerName,
                 status: student.status,
             }
         });
@@ -44,6 +45,8 @@ export async function GET(req: any, context: any) {
                 image: student.image,
                 class: student.class,
                 faculty: student.faculty,
+                pages: student.pages,
+                totalPrinted: students.reduce((acc: number, student: any) => acc + student.numberOfPage, 0),
             }
             returnData = { studentInfo, returnData }
         }

@@ -13,14 +13,14 @@ export class Printer {
     @Column()
     name: string = "";
 
-    @Column({type: 'json'})
+    @Column({ type: 'json' })
     fileType: string[] = ["pdf", "docx", "xlsx", "pptx", "jpg", "png", "jpeg"];
 
     @Column()
     location: string = "";
 
-    @Column({type: 'json'})
-    pageSize: string[] = ["A4", "A3"];
+    @Column({ type: 'json' })
+    pageSize: string[] = ["A2", "A3", "A4", "A5"];
 
     @Column()
     status: boolean = true;

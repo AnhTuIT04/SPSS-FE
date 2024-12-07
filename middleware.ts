@@ -1,14 +1,9 @@
 import { auth } from '@/auth';
 
 import { DEFAULT_AUTH_REDIRECT, apiAuthPrefix, publicRoutes, authRoutes } from '@/routes';
-import apiHandler from '@/middlewares'
 
 export default auth((req) => {
   const { nextUrl } = req;
-
-  if (nextUrl.pathname.startsWith('/api')) {
-    return apiHandler(req);
-  }
 
   const pathname = nextUrl.pathname;
   const isLoggedIn = !!req.auth;

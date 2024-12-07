@@ -21,7 +21,6 @@ export async function GET(req: any, context: any) {
         const students = await AppDataSource.query(query)
 
         let returnData = students.map((student: any) => {
-            console.log(student);
             return {
                 id: student.paymentLogId,
                 date: student.date,
@@ -44,6 +43,7 @@ export async function GET(req: any, context: any) {
                 image: student.image,
                 class: student.class,
                 faculty: student.faculty,
+                pages: student.pages,
             }
             returnData = { studentInfo, returnData }
         }

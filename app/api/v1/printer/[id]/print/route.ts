@@ -13,17 +13,11 @@ export async function POST(req: any, context: any) {
     const { id } = context.params;
 
     try {
-        const body = await req.json()
-        const userHeader = req.headers.get('X-User');
-        if (!userHeader) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        body.user = JSON.parse(userHeader);
+        const body = await req.json();
 
         // get user
-        const user = await userRepository.findOne({ where: { id: body.user.id } });
-        const student = await studentRepository.findOne({ where: { id: body.user.id } });
+        const user = await userRepository.findOne({ where: { id: body.userId } });
+        const student = await studentRepository.findOne({ where: { id: body.userId } });
 
         if (!user || !student) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -52,14 +46,15 @@ export async function POST(req: any, context: any) {
         student.pages -= numberOfPage;
         await studentRepository.save(student);
 
+        const AllStatus = ['Completed', 'Pending', 'Rejected', 'Completed', 'Completed', 'Completed', 'Completed', 'Pending'];
         const printingLog = printingLogRepository.create({
-            user: body.user,
+            user: body.userId,
             date: body.date,
             fileName: body.fileName,
             fileType: body.fileType,
             numberOfPage: body.numberOfPage,
-            printer: printer,
-            status: 'Pending'
+            printer: printer.id,
+            status: AllStatus[Math.floor(Math.random() * AllStatus.length)] as "Completed" | "Pending" | "Rejected",
         })
 
         await printingLogRepository.save(printingLog);
