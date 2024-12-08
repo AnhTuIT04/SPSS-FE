@@ -11,7 +11,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | 3   | Lê Hoàng Khánh Vinh | 2213963 | Hoàn thành task 1.3, 2.1, 2.4, 3.2, 4. Full-stack                                                                  | 25%                 |
 | 4   | Chu Minh Tâm        | 2213009 | Hoàn thành task 1.1, 1.2, 2.2, 3.1. Back-end: Authentication (Không hoàn thành công việc)                          | 7.5%                |
 | 5   | Huỳnh Thị Minh Tâm  | 2213013 | Hoàn thành task 1.1, 1.2, 1.3, 2.2, 3.1. Back-end: Logging and Reporting (Không hoàn thành công việc)              | 7.5%                |
-| 6   | Trần Mạnh Tuấn      | 2213807 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Back-end: Payment                                                              | 7.5%                |
+| 6   | Trần Mạnh Tuấn      | 2213807 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Back-end: Payment (Không hoàn thành công việc)                                 | 7.5%                |
 | 7   | Phạm Việt Anh       | 2210128 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Back-end: Print Process (Không hoàn thành công việc)                           | 7.5%                |
 | 8   | Võ Quốc Huy         | 2211303 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Back-end: Printer Management (Không hoàn thành công việc)                      | 7.5%                |
 
