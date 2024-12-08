@@ -39,7 +39,7 @@ export const columns: ColumnDef<PaymentLog>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="text-right table-cell">{row.getValue('id')}</span>;
+      return <span className="text-right table-cell max-w-40">{row.getValue('id')}</span>;
     },
   },
   {
@@ -77,10 +77,7 @@ export const columns: ColumnDef<PaymentLog>[] = [
     header: 'Amount',
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
+      const formatted = `${amount}` + " VNĐ"
  
       return <div className="text-left font-medium">{formatted}</div>
     },

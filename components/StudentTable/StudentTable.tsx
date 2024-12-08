@@ -16,27 +16,26 @@ import {
 import { useEffect, useState } from 'react';
 
 async function getData(): Promise<StudentType[]> {
-  const response = await fetch('http://localhost:3000/api/v1/user');
+  const response = await fetch('http://localhost:3000/api/v1/student');
 
   // Check if the request was successful
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
-  const students: StudentType[] = await response.json();
-
-  const studentRes = await fetch('http://localhost:3000/api/v1/student');
-  const studentList: { id: string; pages: number; studentId: string }[] = await studentRes.json();
-
-
-  const studentMap = new Map(studentList.map((student) => [student.id, student.pages]));
-  const studentIdMap = new Map(studentList.map((student) => [student.id, student.studentId]));
-  const modifiedStudents = students.map((student) => ({
-    ...student,
-    page: studentMap.get(student.id) || 10,
-    name: student.firstName + ' ' + student.lastName,
-    studentId: studentIdMap.get(student.id) || 'Unknown Student ID',
-  }));
-  return modifiedStudents;
+  const res = await response.json();
+  const students = res.map((student : any) => {
+    return {
+      id: student.id,
+      name: student.firstName + " " + student.lastName,
+      firstName: student.firstName,
+      lastName: student.lastName,
+      studentId: student.studentId,
+      email: student.email,
+      page: student.pages,
+      image: student.image,
+    };
+  })
+  return students
 }
 
 export default function DemoPage() {

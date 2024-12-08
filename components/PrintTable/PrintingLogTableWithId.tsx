@@ -18,40 +18,28 @@ import { subDays } from 'date-fns';
 
 async function getData(id: string): Promise<PrintingLog[]> {
   // Fetch data from your API here.
-  const response = await fetch('http://localhost:3000/api/v1/user/' + id + '/printingLog');
+  const response = await fetch('http://localhost:3000/api/v1/student/' + id + '/printingLog');
   // Check if the request was successful
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
-
   const res = await response.json();
-  const printingLogs: PrintingLog[] = res.printingLog;
-  const resUser = await fetch('http://localhost:3000/api/v1/user');
-  if (!resUser.ok) {
-    throw new Error(`Error: ${resUser.status}`);
-  }
-  const userResponse = await resUser.json();
-  const users: { id: string; firstName: string, lastName: string }[] = userResponse;
+  const returnData = res.returnData;
+  const studentInfo = res.studentInfo;
+  const printingLogs = returnData.map((log: any) => {
+    return {
+      id: log.id,
+      name: studentInfo.firstName + " " + studentInfo.lastName,
+      fileName: log.fileName,
+      fileType: log.fileType,
+      date: log.date,
+      numberOfPage: log.numberOfPage,
+      printer: log.printer,
+      status: log.status,
+    }
+  })
 
-  const resPrinter = await fetch('http://localhost:3000/api/v1/printer');
-  if (!resPrinter.ok) {
-    throw new Error(`Error: ${resPrinter.status}`);
-  }
-  const printerResponse = await resPrinter.json();
-  const printers: { id: string; name: string }[] = printerResponse.printers;
-  // Create a map of userId to userName
-  const userMap = new Map(users.map((user) => [user.id, user.firstName + ' ' + user.lastName]));
-
-  const printerMap = new Map(printers.map((printer) => [printer.id, printer.name]));
-  // Add userName to each printing log
-  const enrichedLogs = printingLogs.map((log) => ({
-    ...log,
-    name: userMap.get(log.user) || 'Unknown User',
-    printer: printerMap.get(log.printer) || 'Unknown Printer',
-  }));
-
-
-  return enrichedLogs;
+  return printingLogs;
 }
 
 

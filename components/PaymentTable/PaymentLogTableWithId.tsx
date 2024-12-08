@@ -18,27 +18,26 @@ import { subDays } from 'date-fns';
 
 async function getData(id: string): Promise<PaymentLog[]> {
 
-  const response = await fetch('http://localhost:3000/api/v1/user/' + id + '/paymentLog');
+  const response = await fetch('http://localhost:3000/api/v1/student/' + id + '/paymentLog');
 
   // Check if the request was successful
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
-  const paymentLogs: PaymentLog[] = await response.json();
-
-  const resUser = await fetch('http://localhost:3000/api/v1/user');
-  if (!resUser.ok) {
-    throw new Error(`Error: ${resUser.status}`);
-  }
-  const userResponse = await resUser.json();
-  const users: { id: string; firstName: string, lastName: string }[] = userResponse;
-  const userMap = new Map(users.map((user) => [user.id, user.firstName + ' ' + user.lastName]));
-  const enrichedLogs = paymentLogs.map((log) => ({
-    ...log,
-    name: userMap.get(log.user) || 'Unknown User',
-  }));
-
-  return enrichedLogs;
+  const res = await response.json();
+  const returnData = res.returnData;
+  const studentInfo = res.studentInfo;
+  const paymentLogs = returnData.map((log: any) => {
+    return {
+      id: log.id,
+      name: studentInfo.firstName + " " + studentInfo.lastName,
+      amount: log.amount,
+      date: log.date,
+      status: log.status,
+      numberOfPage: log.numberOfPage,
+    }
+  })
+  return paymentLogs;
 }
 
 export default function DemoPage({ id }: { id: string }) {

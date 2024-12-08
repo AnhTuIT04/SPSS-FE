@@ -8,9 +8,14 @@ import { Student } from "@/models";
 export async function GET () {
     
     const AppDataSource = await connectDB();
-    const studentRepository = AppDataSource.getRepository(Student);
+    const query = `
+        SELECT "u".*, "s".*
+        FROM "users" u
+        JOIN "students" s ON "u"."id" = "s"."id"
+    `;
+
     try {
-        const students = await studentRepository.find();
+        const students = await AppDataSource.query(query)
 
         return NextResponse.json(students);
     } catch (error) {

@@ -6,10 +6,11 @@ export async function GET(req: any, context: any) {
     const AppDataSource = await connectDB();
 
     const query = `
-        SELECT "u".*, "s".*, "pl"."id" as "printingLogId", "pl"."date", "pl"."fileName", "pl"."fileType", "pl"."numberOfPage", "pl"."printer", "pl"."status"
+        SELECT "u".*, "s".*, "pl"."id" as "printingLogId", "pl"."date", "pl"."fileName", "pl"."fileType", "pl"."numberOfPage", "pl"."printer", "pl"."status", "p"."name" as "printerName"
         FROM "users" u
         JOIN "students" s ON "u"."id" = "s"."id"
         JOIN "PrintingLogs" pl ON "s"."id" = "pl"."user"
+        JOIN "Printers" p ON "pl"."printer" = "p"."id"
     `;
 
     try {
