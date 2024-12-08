@@ -146,7 +146,7 @@ const Print = ({ user }: { user: any }) => {
                 date: new Date().toISOString(),
                 fileName: uploadRes[0].filename,
                 fileType: uploadRes[0].filename.split('.').pop(),
-                numberOfPage: uploadRes[0] ? Math.ceil((uploadRes[0].size || 3000) / 50000) : 0,
+                numberOfPage: uploadRes[0] ? Math.ceil((uploadRes[0].size || 3000) / Math.pow(2, 20)) : 0,
                 userId: user.id
             }
 
