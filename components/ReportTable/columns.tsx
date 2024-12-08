@@ -83,8 +83,11 @@ export const columns: ColumnDef<Report>[] = [
       );
     },
     cell: ({ row }) => {
+      const type = row.getValue('type');
+      const style = type === 'Printing' ? 'status-success' : 'status-pending';
+
       return (
-        <span className="text-right table-cell">
+        <span className={`text-right table-cell ${style}`}>
           {row.getValue('type')}
         </span>
       );

@@ -51,10 +51,25 @@ const BuyPage = ({ user }: { user: any }) => {
             setOutputValue(0); // Reset output when input is cleared
         }
     };
-    // Input
-    // const handleInputChange: InputNumberProps['onChange'] = (value) => {
-    //     console.log('changed', value);
-    // };
+
+    const handleBuyPage = async () => {
+        alert(`Bạn đã đặt mua ${Math.floor(outputValue / 1000)} trang. Vui lòng thanh toán ${outputValue}VNĐ để hoàn tất giao dịch.`);
+
+        await fetch(`http://localhost:3000/api/v1/student/buyPage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: user.id,
+                numberOfPage: Math.floor(outputValue / 1000),
+                amount: outputValue,
+            }),
+        });
+
+        fetchDataPayment();
+    }
+
     const formatNumber = (value: number | null): string => {
         if (value === null) return '0';
         return new Intl.NumberFormat('vi-VN').format(value); // Định dạng cho locale Việt Nam
@@ -153,7 +168,9 @@ const BuyPage = ({ user }: { user: any }) => {
                             {formatNumber(outputValue)}VNĐ
                         </span>
                     </div>
-                    <div className='absolute right-0 bottom-0'>
+                    <div className='absolute right-0 bottom-0'
+                        onClick={handleBuyPage}
+                    >
                         <button className={styles.buttonNext}>Pay with BKPay</button>
                     </div>
                 </div>

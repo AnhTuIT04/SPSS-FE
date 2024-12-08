@@ -111,6 +111,12 @@ body {
   .status-success {
     @apply bg-[#95eee0] font-bold px-3 py-2 text-[#00B69B] rounded-md text-xs;
   }
+  .status-pending {
+    @apply bg-[#f9f1ff] font-bold px-3 py-2 text-[#8B5CF6] rounded-md text-xs;
+  }
+  .status-failed {
+    @apply bg-[#fde8e8] font-bold px-3 py-2 text-[#DC2626] rounded-md text-xs;
+  }
 }
 
 @layer base {

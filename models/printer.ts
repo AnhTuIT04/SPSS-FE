@@ -8,7 +8,7 @@ export class Printer {
     id: string;
 
     @Column()
-    image: string = "";
+    image: string = 'https://files.edgestore.dev/m9qevt33wkdo0rzg/publicFiles/_public/adc9b825-f911-464a-ae07-fd15a9bcffae.png'
 
     @Column()
     name: string = "";

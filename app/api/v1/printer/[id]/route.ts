@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/db/connect";
 import { Printer } from "@/models";
 
-
-
 export async function PATCH(req: any, context: any) {
     const { params } = context;
     const id = params.id as string;
@@ -55,7 +53,7 @@ export async function GET(req: Request, context: any) {
         if (!printer) {
             return NextResponse.json({ message: 'Payment log not found' }, { status: 404 });
         }
-        return NextResponse.json({ printer });
+        return NextResponse.json(printer);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })

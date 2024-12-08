@@ -1,18 +1,10 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
 import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { stat } from 'fs';
 
 export type PaymentLog = {
   id: number;
@@ -78,7 +70,7 @@ export const columns: ColumnDef<PaymentLog>[] = [
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"))
       const formatted = `${amount}` + " VNĐ"
- 
+
       return <div className="text-left font-medium">{formatted}</div>
     },
   },
@@ -86,7 +78,9 @@ export const columns: ColumnDef<PaymentLog>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-        return <span className='status-success'>{row.getValue('status')}</span>;
+      const status = row.getValue('status');
+      const style = status === 'Pending' ? 'status-pending' : status === 'Completed' ? 'status-success' : 'status-failed';
+      return <span className={style}>{row.getValue('status')}</span>;
     },
   },
   // {

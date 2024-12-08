@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Uploader } from 'uploader';
 import { UploadDropzone } from 'react-uploader';
-import * as z from 'zod';
 
 import {
   Dialog,
@@ -44,9 +43,6 @@ import {
   SelectItem,
   SelectTrigger,
 } from '@/components/ui/select';
-import { useToast } from "@/hooks/use-toast"
-import { PrinterSchema } from '@/schemas';
-import { getPrinterById, updatePrinter, deletePrinter } from '@/db/printer';
 
 const uploader = Uploader({
   apiKey: 'free',
@@ -63,7 +59,23 @@ const options = {
   },
 };
 
-const EditPrinterImage = (printer: z.infer<typeof PrinterSchema>) => {
+const updatePrinter = async (printer: any) => {
+  const response = await fetch(`http://localhost:3000/api/v1/printer/${printer.id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(printer),
+  });
+
+  if (response.ok) {
+    return await response.json();
+  }
+
+  throw new Error('Failed to update printer');
+}
+
+const EditPrinterImage = (printer: any) => {
   const [image, setImage] = useState(printer.image);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -119,7 +131,7 @@ const EditPrinterImage = (printer: z.infer<typeof PrinterSchema>) => {
   );
 };
 
-const EditPrinterName = (printer: z.infer<typeof PrinterSchema>) => {
+const EditPrinterName = (printer: any) => {
   const [name, setName] = useState(printer.name);
 
   const handleSaveChanges = async () => {
@@ -173,7 +185,7 @@ const EditPrinterName = (printer: z.infer<typeof PrinterSchema>) => {
   );
 };
 
-const EditPrinterLocation = (printer: z.infer<typeof PrinterSchema>) => {
+const EditPrinterLocation = (printer: any) => {
   const [location, setLocation] = useState(printer.location);
 
   const handleSaveChanges = async () => {
@@ -227,15 +239,15 @@ const EditPrinterLocation = (printer: z.infer<typeof PrinterSchema>) => {
   );
 };
 
-const EditPrinterStatus = (printer: z.infer<typeof PrinterSchema>) => {
-  const [status, setStatus] = useState(printer.status);
+const EditPrinterStatus = (printer: any) => {
+  const [status, setStatus] = useState(printer.status ? 'ENABLE' : 'DISABLED');
 
   const handleSaveChanges = async () => {
-    await updatePrinter({ ...printer, status });
+    await updatePrinter({ ...printer, status: status === 'ENABLE' });
   }
 
   const handleChanges = (value: string) => {
-    setStatus(value as 'ENABLE' | 'DISABLED');
+    setStatus(value as string);
   }
 
   return (
@@ -294,9 +306,9 @@ const EditPrinterStatus = (printer: z.infer<typeof PrinterSchema>) => {
   );
 };
 
-const EditSupportedFileTypes = (printer: z.infer<typeof PrinterSchema>) => {
-  const [allFileTypes, setAllFileTypes] = useState<string[]>(['.csv', '.doc', '.docx', '.jpeg', '.jpg', '.pdf', '.png', '.ppt', '.pptx', '.txt', '.xls', '.xlsx'].sort());
-  const [supportedFileTypes, setSupportedFileTypes] = useState<string[]>(printer.supportedFileTypes.sort());
+const EditFileType = (printer: any) => {
+  const [allFileTypes, setAllFileTypes] = useState<string[]>(["pdf", "docx", "xlsx", "pptx", "jpg", "png", "jpeg"].sort());
+  const [supportedFileTypes, setSupportedFileTypes] = useState<string[]>(printer.fileType.sort());
 
   useEffect(() => {
     const newFileTypes = allFileTypes.filter((type) => !supportedFileTypes.includes(type));
@@ -306,24 +318,24 @@ const EditSupportedFileTypes = (printer: z.infer<typeof PrinterSchema>) => {
   const handleAddFileType = (type: string) => {
     const updatedTypes = [...supportedFileTypes, type].sort();
     setSupportedFileTypes(updatedTypes);
-    updatePrinter({ ...printer, supportedFileTypes: updatedTypes });
+    updatePrinter({ ...printer, fileType: updatedTypes });
   };
 
   const handleRemoveFileType = (index: number) => {
     const updatedTypes = supportedFileTypes.filter((_, i) => i !== index);
     setSupportedFileTypes(updatedTypes);
     setAllFileTypes([...allFileTypes, supportedFileTypes[index]].sort());
-    updatePrinter({ ...printer, supportedFileTypes: updatedTypes });
+    updatePrinter({ ...printer, fileType: updatedTypes });
   };
 
   const handleSaveChanges = async () => {
-    await updatePrinter({ ...printer, supportedFileTypes });
+    await updatePrinter({ ...printer, fileType: supportedFileTypes });
   };
 
   return (
     <Card className="max-w-2xl">
       <CardHeader>
-        <CardTitle>Supported File Types</CardTitle>
+        <CardTitle>File Type</CardTitle>
         <CardDescription>Manage the supported file types for this printer.</CardDescription>
         <Separator className="max-w-2xl" />
       </CardHeader>
@@ -403,9 +415,9 @@ const EditSupportedFileTypes = (printer: z.infer<typeof PrinterSchema>) => {
   );
 };
 
-const EditSupportedPageSizes = (printer: z.infer<typeof PrinterSchema>) => {
-  const [allPageSizes, setAllPageSizes] = useState<string[]>(['A0', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6'].sort());
-  const [supportedPageSizes, setSupportedPageSizes] = useState<string[]>(printer.supportedPageSizes.sort());
+const EditPageSize = (printer: any) => {
+  const [allPageSizes, setAllPageSizes] = useState<string[]>(["A2", "A3", "A4", "A5"]);
+  const [supportedPageSizes, setSupportedPageSizes] = useState<string[]>(printer.pageSize.sort());
 
   useEffect(() => {
     const newPageSizes = allPageSizes.filter((size) => !supportedPageSizes.includes(size));
@@ -415,24 +427,24 @@ const EditSupportedPageSizes = (printer: z.infer<typeof PrinterSchema>) => {
   const handleAddPageSize = (size: string) => {
     const updatedSizes = [...supportedPageSizes, size].sort();
     setSupportedPageSizes(updatedSizes);
-    updatePrinter({ ...printer, supportedPageSizes: updatedSizes });
+    updatePrinter({ ...printer, pageSize: updatedSizes });
   };
 
   const handleRemovePageSize = (index: number) => {
     const updatedSizes = supportedPageSizes.filter((_, i) => i !== index);
     setSupportedPageSizes(updatedSizes);
     setAllPageSizes([...allPageSizes, supportedPageSizes[index]].sort());
-    updatePrinter({ ...printer, supportedPageSizes: updatedSizes });
+    updatePrinter({ ...printer, pageSize: updatedSizes });
   };
 
   const handleSaveChanges = async () => {
-    await updatePrinter({ ...printer, supportedPageSizes });
+    await updatePrinter({ ...printer, pageSize: supportedPageSizes });
   };
 
   return (
     <Card className="max-w-2xl">
       <CardHeader>
-        <CardTitle>Supported Page Sizes</CardTitle>
+        <CardTitle>Page Size</CardTitle>
         <CardDescription>Manage the supported page sizes for this printer.</CardDescription>
         <Separator className="max-w-2xl" />
       </CardHeader>
@@ -514,15 +526,14 @@ const EditSupportedPageSizes = (printer: z.infer<typeof PrinterSchema>) => {
 
 const PrinterConfigPage = () => {
   const { id } = useParams();
-  const [printer, setPrinter] = useState<z.infer<typeof PrinterSchema> | null>(null);
+  const [printer, setPrinter] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { toast } = useToast()
 
   useEffect(() => {
     const fetchPrinter = async () => {
       try {
-        const data = await getPrinterById(id as string);
+        const response = await fetch(`http://localhost:3000/api/v1/printer/${id}`);
+        const data = await response.json();
         setPrinter(data);
       } catch (error) {
         console.error("Error fetching printer:", error);
@@ -533,10 +544,6 @@ const PrinterConfigPage = () => {
 
     fetchPrinter();
   }, [id]);
-
-  const handleDeletePrinter = async () => {
-    await deletePrinter(id as string);
-  };
 
   return (
     <Card className="w-full">
@@ -562,45 +569,11 @@ const PrinterConfigPage = () => {
               <EditPrinterStatus {...printer} />
             </div>
             <div className="mb-6">
-              <EditSupportedFileTypes {...printer} />
+              <EditFileType {...printer} />
             </div>
             <div className="mb-6">
-              <EditSupportedPageSizes {...printer} />
+              <EditPageSize {...printer} />
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="destructive">Remove Printer</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Confirm Removal</DialogTitle>
-                  <DialogDescription>
-                    Are you sure you want to remove this printer? This action cannot be undone.
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                  </DialogClose>
-                  <DialogClose asChild>
-                    <Link href="/spso/printer">
-                      <Button
-                        variant="destructive"
-                        onClick={async () => {
-                          await handleDeletePrinter(),
-                            toast({
-                              title: "Notification",
-                              description: "Printer removed successfully",
-                            })
-                        }}
-                      >
-                        Remove Printer
-                      </Button>
-                    </Link>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
           </>
         ) : (
           <div className="text-gray-500 text-center">Printer not found or doesn't exist.</div>

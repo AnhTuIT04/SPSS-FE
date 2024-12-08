@@ -51,7 +51,7 @@ export const AddPrinterSchema = z.object({
   location: z.string().min(1, {
     message: 'Location is required',
   }),
-  supportedFileTypes: z.array(z.string()),
+  pageSize: z.array(z.string()),
   status: z.enum(['DISABLED', 'ENABLE']),
-  supportedPageSizes: z.array(z.string()),
+  fileType: z.array(z.string()),
 });

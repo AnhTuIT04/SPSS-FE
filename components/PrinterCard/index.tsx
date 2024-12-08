@@ -1,81 +1,84 @@
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
 
 interface PrinterCardProps {
   id: string;
   name: string;
   image: string;
+  status: boolean;
   location: string;
-  supportedFileTypes: string[];
-  supportedPageSizes: string[];
+  fileType: string[];
+  pageSize: string[];
+  showConfigure?: boolean;
 }
 
 const PrinterCard: React.FC<PrinterCardProps> = ({
   id,
   name,
   image,
+  status,
   location,
-  supportedFileTypes,
-  supportedPageSizes,
+  fileType,
+  pageSize,
+  showConfigure = false,
 }) => {
   return (
-    <div className="relative w-[340px] h-[670px] rounded-lg shadow-xl bg-white overflow-hidden">
-      {/* Image Section */}
-      <div className="w-full h-[220px] bg-gray-400 flex justify-center items-center">
+    <div
+      className="bg-white shadow-md rounded-lg cursor-pointer hover:bg-blue-100 transition w-[300px] h-fit"
+    >
+      <div className="h-[222px] bg-[#DEDEDE] rounded-tl-lg rounded-tr-lg">
         <img
           src={image}
-          alt={`${name} image`}
-          className="w-full h-[220px] object-cover rounded-t-lg"
+          alt='printer'
+          width={5000}
+          height={5000}
+          className="w-full h-full object-cover"
         />
       </div>
-
-      {/* Content Section */}
-      <div className="p-6">
+      <div className="p-4">
+        <p className="text-xl font-bold my-[8px]">{name}</p>
+        <p>Status: {status ? "ENABLE" : "DISABLE"}</p>
+        <hr className="my-4 border-gray-300" />
         <div>
-          <h2 className="text-xl font-semibold">{name}</h2>
-
-          <p className="text-gray-500 mt-1 leading-5">{location}</p>
-
-          <div className="border-t border-gray-300 my-2"></div>
-
-          {/* File Types Section with Scroll */}
-          <div className="h-[124px]">
-            <h3 className="text-lg font-semibold mt-2">File Types</h3>
-            <div className="grid grid-cols-3 gap-3 mt-2 max-h-[84px] overflow-y-auto pr-2">
-              {supportedFileTypes.map((file, index) => (
-                <span
-                  key={index}
-                  className="bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-center text-sm"
-                >
-                  {file}
-                </span>
-              ))}
+          <div className="h-[120px]">
+            <h3 className="text-lg font-semibold mt-2">File Type</h3>
+            <div className="grid grid-cols-4 gap-3 mt-2 max-h-[84px] overflow-y-auto pr-2">
+              {fileType.length &&
+                fileType.map((type, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-center items-center mx-[2px] px-[12px] py-[8px] w-full h-[31px] border-[1px] border-[solid] border-[#546FFF] rounded-[100px] text-[12px] text-[#546FFF]"
+                  >
+                    {type}
+                  </div>
+                ))}
             </div>
           </div>
-
-          {/* Page Sizes Section with Scroll */}
-          <div className="h-[124px]">
-            <h3 className="text-lg font-semibold mt-2">Page Sizes</h3>
-            <div className="grid grid-cols-3 gap-3 mt-2 max-h-[84px] overflow-y-auto pr-2">
-              {supportedPageSizes.map((size, index) => (
-                <span
-                  key={index}
-                  className="relative bg-green-100 text-green-600 px-4 py-2 rounded-full text-center text-sm"
-                >
-                  {size}
-                </span>
-              ))}
+          <div className="h-[76px] mt-1">
+            <h3 className="text-lg font-semibold mt-2">Page Size</h3>
+            <div className="grid grid-cols-4 gap-3 mt-2 max-h-[84px] overflow-y-auto pr-2">
+              {pageSize.length &&
+                pageSize.map((size, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-center items-center mx-[2px] px-[12px] py-[8px] w-full h-[31px] border-[1px] border-[solid] border-[#ccc] rounded-[100px] text-[12px] text-[#111]"
+                  >
+                    {size}
+                  </div>
+                ))}
             </div>
           </div>
         </div>
+        <p className="text-gray-500 my-[8px]">Location: {location}</p>
+      </div>
 
-        {/* Configure Button */}
+      {showConfigure && (
         <Link href={`/spso/printer/${id}`}>
-          <button className="absolute left-6 bottom-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+          <button className="ml-4 mb-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
             Configure
           </button>
         </Link>
-      </div>
+      )}
     </div>
   );
 };

@@ -139,7 +139,9 @@ export const columns: ColumnDef<PrintingLog>[] = [
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-        return <span className='status-success'>{row.getValue('status')}</span>;
+      const status = row.getValue('status');
+      const style = status === 'Pending' ? 'status-pending' : status === 'Completed' ? 'status-success' : 'status-failed';
+      return <span className={style}>{row.getValue('status')}</span>;
     },
   },
   // {

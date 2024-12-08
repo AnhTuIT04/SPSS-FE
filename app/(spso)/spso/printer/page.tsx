@@ -1,76 +1,110 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import * as z from 'zod';
+import { useEffect, useState } from "react";
 
-import SearchBox from '@/components/SearchBox';
-import CardLayout from '@/app/(spso)/spso/printer/card-layout';
-import AddPrinter from '@/components/AddPrinterForm';
-import { searchPrinters } from '@/db/printer';
-import { PrinterSchema } from '@/schemas';
+import PrinterCard from "@/components/PrinterCard";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-interface PrinterSearchResult {
-  text: string; // The text to display in the suggestion, required
+interface Printer {
   id: string;
+  image: string;
   name: string;
   location: string;
+  fileType: string[];
+  status: boolean;
+  pageSize: string[];
 }
 
-interface SuggestionProps {
-  text: string;
-  data?: any;
-}
+const Page = () => {
+  const [printers, setPrinters] = useState<Printer[]>([]);
+  const [searchVal, setSearchVal] = useState("");
+  const [searchResults, setSearchResults] = useState<Printer[]>([]);
 
-const PrinterPage = () => {
-  const [searchResults, setSearchResults] = React.useState<z.infer<typeof PrinterSchema>[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const Suggestion: React.FC<SuggestionProps> = ({ data }) => {
-    return (
-      <span
-        onClick={() => setSearchResults(searchResults.filter((printer) => printer.id === data.id))}
-        className="flex items-center justify-start text-nowrap"
-      >
-        <p className="font-bold">{data.name}</p>
-        <span>&nbsp;-&nbsp;</span>
-        <p>{data.location}</p>
-      </span>
-    );
-  };
+  useEffect(() => {
+    const fetchPrinter = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/printer');
+        if (!response.ok) {
+          throw new Error('Failed to fetch printer data');
+        }
 
-  const fetchSuggestions = async (query: string): Promise<PrinterSearchResult[]> => {
-    console.log('fetchSuggestions', query);
-    return searchPrinters(query).then((printers) => {
-      setSearchResults(printers);
-      return printers.map((printer: z.infer<typeof PrinterSchema>) => ({
-        text: printer.name,
-        id: printer.id,
-        name: printer.name,
-        location: printer.location,
-        data: {
-          id: printer.id,
-          name: printer.name,
-          location: printer.location,
-        },
-      }));
+        const data = await response.json();
+        setPrinters(data);
+        setSearchResults(data); // Khởi tạo kết quả tìm kiếm là toàn bộ dữ liệu
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrinter();
+  }, []);
+
+  useEffect(() => {
+    const results = printers.filter(printer => {
+      const searchLower = searchVal.trim().toLowerCase();
+
+      return (
+        printer.name.toLowerCase().includes(searchLower) ||
+        printer.location.toLowerCase().includes(searchLower) ||
+        printer.fileType.some(type => type.toLowerCase().includes(searchLower)) ||
+        printer.pageSize.some(size => size.toLowerCase().includes(searchLower)) ||
+        (printer.status ? "ENABLE" : "DISABLE").toLowerCase().includes(searchLower)
+      );
     });
-  };
+
+    setSearchResults(results);
+  }, [searchVal, printers]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="relative flex flex-col justify-center items-center">
-      <div className="max-w-[1086px] w-full flex flex-wrap justify-between items-center mb-8">
-        <SearchBox
-          placeholder="Search for a printer or location ..."
-          Suggestion={Suggestion}
-          fetchSuggestions={fetchSuggestions}
-          maxWidth="480px"
-        />
+    <div className="w-full h-full">
+      <h1 className="text-2xl font-bold mb-4">Select Printer</h1>
+      <div className="relative flex justify-between">
+        <div>
+          <input
+            className="search-input mb-4 p-2 w-[400px] border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+            type="text"
+            placeholder="Search by keywords..."
+            value={searchVal}
+            onChange={(e) => setSearchVal(e.target.value)}
+          />
+        </div>
 
-        <AddPrinter />
+        <Link href="/spso/printer/add">
+          <Button
+            className="h-10 bg-[hsl(217,91%,50%)] hover:bg-[hsl(217,91%,45%)]"
+          >
+            Add Printer
+          </Button>
+        </Link>
       </div>
-
-      <CardLayout searchResults={searchResults} page={1} limit={6} />
+      <div className="flex items-center justify-center m-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {searchResults && searchResults.map((printer) => (
+            <PrinterCard
+              key={printer.id}
+              id={printer.id}
+              name={printer.name}
+              image={printer.image}
+              status={printer.status}
+              location={printer.location}
+              fileType={printer.fileType}
+              pageSize={printer.pageSize}
+              showConfigure
+            />
+          ))}
+        </div>
+      </div>
     </div>
-  );
+  )
 };
 
-export default PrinterPage;
+export default Page;

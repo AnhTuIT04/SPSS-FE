@@ -16,8 +16,6 @@ import {
     type FileState,
 } from '@/components/MultiFileDropzone';
 import { Button } from '@/components/ui/button';
-import { set } from 'date-fns';
-import { is } from 'date-fns/locale';
 
 interface Printer {
     id: string;
@@ -92,8 +90,8 @@ const Print = ({ user }: { user: any }) => {
                 }
 
                 const data = await response.json();
-                setPrinters(data.printers);
-                setSearchResults(data.printers); // Khởi tạo kết quả tìm kiếm là toàn bộ dữ liệu
+                setPrinters(data);
+                setSearchResults(data); // Khởi tạo kết quả tìm kiếm là toàn bộ dữ liệu
             } catch (err: any) {
                 setError(err.message);
             } finally {
@@ -148,7 +146,7 @@ const Print = ({ user }: { user: any }) => {
                 date: new Date().toISOString(),
                 fileName: uploadRes[0].filename,
                 fileType: uploadRes[0].filename.split('.').pop(),
-                numberOfPage: uploadRes[0] ? Math.ceil((uploadRes[0].size || 3000) / 3000) : 0,
+                numberOfPage: uploadRes[0] ? Math.ceil((uploadRes[0].size || 3000) / 50000) : 0,
                 userId: user.id
             }
 

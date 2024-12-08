@@ -10,11 +10,7 @@ export async function GET(req: any, context: any) {
     const AppDataSource = await connectDB();
 
     const query = `
-<<<<<<< HEAD
-        SELECT "u".*, "s".*, "pl"."id" as "printingLogId", "pl"."date", "pl"."fileName", "pl"."fileType", "pl"."numberOfPage", "p"."name" AS "printerName", "pl"."status"
-=======
         SELECT "u".*, "s".*, "pl"."id" as "printingLogId", "pl"."date", "pl"."fileName", "pl"."fileType", "pl"."numberOfPage", "pl"."printer", "pl"."status", "p"."name" AS "printerName"
->>>>>>> 32f8fa047963c1bc0c27c5cf8ae420cd06b3e38a
         FROM "users" u
         JOIN "students" s ON "u"."id" = "s"."id"
         JOIN "PrintingLogs" pl ON "s"."id" = "pl"."user"
@@ -31,11 +27,8 @@ export async function GET(req: any, context: any) {
                 fileName: student.fileName,
                 fileType: student.fileType,
                 numberOfPage: student.numberOfPage,
-<<<<<<< HEAD
                 printerName: student.printerName,
-=======
                 printer: student.printerName,
->>>>>>> 32f8fa047963c1bc0c27c5cf8ae420cd06b3e38a
                 status: student.status,
             }
         });
