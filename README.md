@@ -6,14 +6,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 | STT | Họ và tên           | MSSV    | Vai trò                                                                                                                                  | Tổng tỉ lệ đóng góp |
 | --- | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| 1   | Lê Hoàng Ngọc Hân   | 2210935 | Hoàn thành task 1.3, 2.1, 2.4, 3.2. Front-end                                                                                            | 12.5%               |
-| 2   | Huỳnh Văn Tú        | 2213841 | Hoàn thành task 1.3, 2.1, 2.4, 3.2, 4. Full-stack                                                                                        | 20%                 |
-| 3   | Lê Hoàng Khánh Vinh | 2213963 | Hoàn thành task 1.3, 2.1, 2.4, 3.2, 4. Full-stack                                                                                        | 20%                 |
-| 4   | Chu Minh Tâm        | 2213009 | Hoàn thành task 1.1, 1.2, 2.2, 3.1. Back-end: Authentication (Không hoàn thành)                                                          | 5%                  |
-| 5   | Huỳnh Thị Minh Tâm  | 2213013 | Hoàn thành task 1.1, 1.2, 1.3, 2.2, 3.1. Back-end: Logging and Reporting (Không hoàn thành)                                              | 10%                 |
-| 6   | Trần Mạnh Tuấn      | 2213807 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Back-end: Payment (Có commit trên github nhưng không gửi bài cho Front-end)                          | 12.5%               |
-| 7   | Phạm Việt Anh       | 2210128 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Back-end: Print Process (Không hoàn thành)                                                           | 7.5%                |
-| 8   | Võ Quốc Huy         | 2211303 | Hoàn thành task 1.1, 1.2, 1.3, 2.3. Back-end: Printer Management (Có commit trên github nhưng không gửi bài cho Front-end)               | 12.5%               |
+| 1   | Lê Hoàng Ngọc Hân   | 2210935 | Front-end                                                                                            | 100%               |
+| 2   | Huỳnh Văn Tú        | 2213841 | Full-stack                                                                                        | 100%                 |
+| 3   | Lê Hoàng Khánh Vinh | 2213963 | Full-stack                                                                                        | 100%                 |
 
 ## Report
 
