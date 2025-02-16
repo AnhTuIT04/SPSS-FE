@@ -19,6 +19,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 Truy cập vào link https://www.overleaf.com/read/srchjmsvpmhp#cbe34b để xem báo cáo.
 
+## Demo
+
+Truy cập vào link https://www.youtube.com/watch?v=KPEa9qp02P8 để xem video demo.
+
 ## Description
 
 SPSS is a Smart Printing Service for Students at HCMUT. It allows students to print documents using various printers available on campus.
